@@ -418,16 +418,31 @@ img {
   padding-left: 18px;
 }
 
-.feature-icon {
-  width: 42px;
-  height: 42px;
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.section-icon {
+  width: 48px;
+  height: 48px;
   margin-bottom: 14px;
   border-radius: 14px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, rgba(140, 224, 255, 0.18), rgba(156, 166, 255, 0.18));
-  color: #e9f6ff;
-  font-weight: 800;
+  background: linear-gradient(135deg, rgba(140, 224, 255, 0.22), rgba(156, 166, 255, 0.22));
+  color: #d8f4ff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 10px 24px rgba(84, 198, 255, 0.12);
+}
+
+.section-icon svg {
+  width: 26px;
+  height: 26px;
+  display: block;
 }
 
 .cta-panel {
