@@ -95,10 +95,11 @@
     );
   }
 
-  function fetchLookupSummary() {
+  function fetchLookupJsonp() {
     return new Promise(function (resolve, reject) {
       const callbackName = "stressFreeFlowLookup_" + Date.now();
       let finished = false;
+      let script = null;
 
       function finish(error, data) {
         if (finished) {
@@ -106,8 +107,10 @@
         }
         finished = true;
         clearTimeout(timeoutId);
-        delete window[callbackName];
-        if (script.parentNode) {
+        try {
+          delete window[callbackName];
+        } catch (ignore) {}
+        if (script && script.parentNode) {
           script.parentNode.removeChild(script);
         }
         if (error) {
@@ -121,7 +124,7 @@
         finish(null, data);
       };
 
-      const script = document.createElement("script");
+      script = document.createElement("script");
       script.src = LOOKUP_URL + "&callback=" + callbackName;
       script.onerror = function () {
         finish(new Error("Lookup unavailable"));
@@ -129,10 +132,35 @@
 
       const timeoutId = setTimeout(function () {
         finish(new Error("Lookup timed out"));
-      }, 10000);
+      }, 5000);
 
-      document.body.appendChild(script);
+      document.head.appendChild(script);
     });
+  }
+
+  async function fetchLookupProxy() {
+    const proxyUrl =
+      "https://api.allorigins.win/get?url=" + encodeURIComponent(LOOKUP_URL);
+    const response = await fetch(proxyUrl);
+    if (!response.ok) {
+      throw new Error("Proxy lookup failed");
+    }
+
+    const wrapper = await response.json();
+    const data = JSON.parse(wrapper.contents);
+    if (!data.results || !data.results[0]) {
+      throw new Error("No lookup results");
+    }
+
+    return data.results[0];
+  }
+
+  async function fetchLookupSummary() {
+    try {
+      return await fetchLookupProxy();
+    } catch (proxyError) {
+      return fetchLookupJsonp();
+    }
   }
 
   function getFiveStarCount(lookup) {
@@ -265,60 +293,66 @@
     let feedUpdated = "";
 
     try {
-      lookup = await fetchLookupSummary();
-    } catch (error) {
-      lookup = null;
-    }
-
-    try {
       const writtenResult = await fetchWrittenReviews();
       writtenReviews = writtenResult.reviews;
       feedUpdated = writtenResult.updated;
+
+      try {
+        lookup = await fetchLookupSummary();
+      } catch (lookupError) {
+        lookup = null;
+      }
+
+      const fiveStarCount = lookup ? getFiveStarCount(lookup) : 0;
+
+      if (lookup && fiveStarCount > 0) {
+        renderStatsPanel(lookup, fiveStarCount, writtenReviews.length, feedUpdated);
+        container.innerHTML = buildReviewCards(fiveStarCount, writtenReviews).join("");
+        if (summary) {
+          summary.textContent =
+            "Showing all " +
+            fiveStarCount +
+            " live five-star App Store reviews. Written reviews appear first; star-only ratings are shown too.";
+        }
+        return;
+      }
+
+      if (writtenReviews.length) {
+        const writtenFiveStarCount = writtenReviews.filter(function (review) {
+          return (
+            Number(review["im:rating"] && review["im:rating"].label ? review["im:rating"].label : 0) === 5
+          );
+        }).length;
+
+        renderStatsPanel(lookup, writtenFiveStarCount, writtenReviews.length, feedUpdated);
+        container.innerHTML = writtenReviews.map(renderWrittenReviewCard).join("");
+        if (summary) {
+          summary.textContent = "Written reviews pulled live from Apple.";
+        }
+        return;
+      }
+
+      if (stats) {
+        stats.innerHTML = '<p class="reviews-status">Could not load live App Store ratings right now.</p>';
+      }
+      container.innerHTML =
+        '<p class="reviews-status">Could not load live reviews right now. <a href="' +
+        APP_STORE_REVIEWS_URL +
+        '" target="_blank" rel="noreferrer">See them on the App Store</a>.</p>';
     } catch (error) {
-      writtenReviews = [];
-    }
-
-    const fiveStarCount = getFiveStarCount(lookup);
-
-    if (lookup && fiveStarCount > 0) {
-      renderStatsPanel(lookup, fiveStarCount, writtenReviews.length, feedUpdated);
-
-      const cards = buildReviewCards(fiveStarCount, writtenReviews);
-      container.innerHTML = cards.join("");
-
-      if (summary) {
-        summary.textContent =
-          "Showing all " +
-          fiveStarCount +
-          " live five-star App Store reviews. Written reviews appear first; star-only ratings are shown too.";
+      if (stats) {
+        stats.innerHTML = '<p class="reviews-status">Could not load live App Store ratings right now.</p>';
       }
-      return;
+      container.innerHTML =
+        '<p class="reviews-status">Could not load live reviews right now. <a href="' +
+        APP_STORE_REVIEWS_URL +
+        '" target="_blank" rel="noreferrer">See them on the App Store</a>.</p>';
     }
-
-    if (writtenReviews.length) {
-      renderStatsPanel(
-        lookup,
-        writtenReviews.filter(function (review) {
-          return Number(review["im:rating"] && review["im:rating"].label ? review["im:rating"].label : 0) === 5;
-        }).length,
-        writtenReviews.length,
-        feedUpdated
-      );
-      container.innerHTML = writtenReviews.map(renderWrittenReviewCard).join("");
-      if (summary) {
-        summary.textContent = "Written reviews pulled live from Apple.";
-      }
-      return;
-    }
-
-    if (stats) {
-      stats.innerHTML = '<p class="reviews-status">Could not load live App Store ratings right now.</p>';
-    }
-    container.innerHTML =
-      '<p class="reviews-status">Could not load live reviews right now. <a href="' +
-      APP_STORE_REVIEWS_URL +
-      '" target="_blank" rel="noreferrer">See them on the App Store</a>.</p>';
   }
 
-  loadReviews();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadReviews);
+  } else {
+    loadReviews();
+  }
 })();
