@@ -1,6 +1,9 @@
 (function () {
   const LIKES_URL = "./data/likes.json";
   const STORAGE_KEY = "stressfreeflow-supported";
+  const REPO = "jstakich/StressFreeFlowSite";
+  const DISPATCH_URL = "https://api.github.com/repos/" + REPO + "/dispatches";
+  const config = window.SFF_SUPPORTERS || {};
 
   const listEl = document.getElementById("supporter-names");
   const countEl = document.getElementById("supporter-count");
@@ -10,6 +13,7 @@
   const submitBtn = document.getElementById("supporter-submit");
 
   let supporters = [];
+  let refreshTimer = null;
 
   if (!listEl || !form) {
     return;
@@ -97,12 +101,56 @@
       }
 
       renderSupporters(loaded);
+      return loaded;
     } catch (error) {
       listEl.innerHTML = '<p class="supporter-empty">Supporter names will appear here.</p>';
+      return [];
     }
   }
 
-  form.addEventListener("submit", function (event) {
+  function scheduleRefresh(attempt) {
+    if (refreshTimer) {
+      clearTimeout(refreshTimer);
+    }
+
+    if (attempt > 8) {
+      return;
+    }
+
+    refreshTimer = setTimeout(async function () {
+      const before = supporters.length;
+      await loadSupporters();
+      if (supporters.length > before || attempt >= 8) {
+        return;
+      }
+      scheduleRefresh(attempt + 1);
+    }, attempt === 0 ? 4000 : 3000);
+  }
+
+  async function saveSupporterGlobally(name) {
+    const token = String(config.dispatchToken || "").trim();
+    if (!token) {
+      return false;
+    }
+
+    const response = await fetch(DISPATCH_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      body: JSON.stringify({
+        event_type: "add-supporter",
+        client_payload: { name: name },
+      }),
+    });
+
+    return response.status === 204;
+  }
+
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const name = cleanName(nameInput.value);
@@ -119,12 +167,26 @@
 
     localStorage.setItem(STORAGE_KEY, name);
     renderSupporters(supporters.concat([{ name: name }]));
-    setStatus("Thank you, " + name + ". Your name is on the page.", false);
     nameInput.value = "";
 
     if (submitBtn) {
       submitBtn.disabled = true;
     }
+
+    setStatus("Thank you, " + name + ". Saving your name…", false);
+
+    try {
+      const saved = await saveSupporterGlobally(name);
+      if (saved) {
+        setStatus("Thank you, " + name + ". Your name is on the page.", false);
+        scheduleRefresh(0);
+        return;
+      }
+    } catch (error) {
+      // Fall back to local display below.
+    }
+
+    setStatus("Thank you, " + name + ". Your name is on the page.", false);
   });
 
   if (localStorage.getItem(STORAGE_KEY)) {

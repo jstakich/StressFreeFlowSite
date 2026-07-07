@@ -1,12 +1,8 @@
-name: Add supporter name
+name: Add supporter (automatic)
 
 on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: "Supporter first name"
-        required: true
-        type: string
+  repository_dispatch:
+    types: [add-supporter]
 
 jobs:
   add-supporter:
@@ -18,10 +14,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Add supporter to site data
-        run: python3 tools/add_supporter.py "${{ github.event.inputs.name }}"
+        run: python3 tools/add_supporter.py "${{ github.event.client_payload.name }}"
 
       - name: Commit and push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Add supporter ${{ github.event.inputs.name }}
+          commit_message: Add supporter ${{ github.event.client_payload.name }}
           file_pattern: data/likes.json
