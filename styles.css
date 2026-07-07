@@ -231,6 +231,40 @@ img {
   object-fit: contain;
 }
 
+.preview-tap-video {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.preview-tap-video:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.screen-card:has(.preview-tap-video) {
+  position: relative;
+}
+
+.screen-card:has(.preview-tap-video)::after,
+.preview-frame:has(.preview-tap-video)::after {
+  content: "Tap for fullscreen";
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(6, 14, 30, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.preview-frame:has(.preview-tap-video) {
+  position: relative;
+}
+
 .preview-caption {
   display: flex;
   justify-content: space-between;
