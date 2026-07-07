@@ -223,6 +223,14 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.preview-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #000;
+  object-fit: contain;
+}
+
 .preview-caption {
   display: flex;
   justify-content: space-between;
@@ -311,12 +319,17 @@ img {
 
 .screens-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.screens-grid-phone {
+  max-width: 820px;
 }
 
 .screens-grid-ipad {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 980px;
 }
 
 .screen-card {
@@ -327,10 +340,21 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.screen-card img {
+.screen-card-phone {
+  max-width: 390px;
+  justify-self: center;
   width: 100%;
+}
+
+.screen-card img,
+.screen-card video {
+  width: 100%;
+  height: auto;
   border-radius: 16px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  display: block;
+  background: #000;
+  object-fit: contain;
 }
 
 .card {
