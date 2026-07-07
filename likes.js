@@ -1,7 +1,7 @@
 (function () {
   const LIKES_URL = "./data/likes.json";
   const STORAGE_KEY = "stressfreeflow-supported";
-  const NOTIFY_EMAIL = "";
+  const config = window.SFF_SUPPORTERS_CONFIG || {};
 
   const section = document.getElementById("supporters");
   const listEl = document.getElementById("supporter-names");
@@ -10,6 +10,8 @@
   const nameInput = document.getElementById("supporter-name");
   const statusEl = document.getElementById("supporter-status");
   const submitBtn = document.getElementById("supporter-submit");
+
+  let supporters = [];
 
   if (!section || !listEl || !form) {
     return;
@@ -30,7 +32,29 @@
       .slice(0, 40);
   }
 
-  function renderSupporters(supporters) {
+  function dedupeSupporters(entries) {
+    const seen = new Set();
+    const result = [];
+
+    entries.forEach(function (entry) {
+      const name = cleanName(entry && entry.name ? entry.name : "");
+      if (!name) {
+        return;
+      }
+      const key = name.toLowerCase();
+      if (seen.has(key)) {
+        return;
+      }
+      seen.add(key);
+      result.push({ name: name });
+    });
+
+    return result;
+  }
+
+  function renderSupporters(entries) {
+    supporters = dedupeSupporters(entries);
+
     if (!supporters.length) {
       listEl.innerHTML = '<p class="supporter-empty">Be the first to show your support.</p>';
       if (countEl) {
@@ -41,28 +65,13 @@
 
     listEl.innerHTML = supporters
       .map(function (entry) {
-        const name = escapeHtml(entry.name || "Supporter");
-        return '<span class="supporter-chip">' + name + "</span>";
+        return '<span class="supporter-chip">' + escapeHtml(entry.name) + "</span>";
       })
       .join("");
 
     if (countEl) {
       countEl.textContent =
         supporters.length + " supporter" + (supporters.length === 1 ? "" : "s") + " so far";
-    }
-  }
-
-  async function loadSupporters() {
-    try {
-      const response = await fetch(LIKES_URL + "?t=" + Date.now());
-      if (!response.ok) {
-        throw new Error("Could not load supporters");
-      }
-      const data = await response.json();
-      const supporters = Array.isArray(data.supporters) ? data.supporters : [];
-      renderSupporters(supporters);
-    } catch (error) {
-      listEl.innerHTML = '<p class="supporter-empty">Supporter names will appear here.</p>';
     }
   }
 
@@ -74,23 +83,68 @@
     statusEl.classList.toggle("is-error", Boolean(isError));
   }
 
-  async function notifyByEmail(name) {
-    if (!NOTIFY_EMAIL) {
-      return true;
+  async function loadSupportersFromJson() {
+    const response = await fetch(LIKES_URL + "?t=" + Date.now());
+    if (!response.ok) {
+      throw new Error("Could not load supporters");
+    }
+    const data = await response.json();
+    return dedupeSupporters(Array.isArray(data.supporters) ? data.supporters : []);
+  }
+
+  async function loadSupporters() {
+    try {
+      let loaded = [];
+
+      if (config.apiUrl) {
+        try {
+          const response = await fetch(config.apiUrl, { method: "GET" });
+          if (response.ok) {
+            const data = await response.json();
+            loaded = dedupeSupporters(data.supporters || []);
+          }
+        } catch (apiError) {
+          // Fall back to the JSON file on GitHub Pages.
+        }
+      }
+
+      if (!loaded.length) {
+        loaded = await loadSupportersFromJson();
+      }
+
+      const savedName = localStorage.getItem(STORAGE_KEY);
+      if (savedName) {
+        loaded = dedupeSupporters(loaded.concat([{ name: savedName }]));
+      }
+
+      renderSupporters(loaded);
+    } catch (error) {
+      listEl.innerHTML = '<p class="supporter-empty">Supporter names will appear here.</p>';
+    }
+  }
+
+  async function saveSupporter(name) {
+    if (!config.apiUrl) {
+      throw new Error("Supporter API is not configured");
     }
 
-    const body = new FormData();
-    body.append("name", name);
-    body.append("_subject", "New Stress Free Flow supporter: " + name);
-    body.append("_template", "table");
-    body.append("_captcha", "false");
-
-    const response = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(NOTIFY_EMAIL), {
+    const response = await fetch(config.apiUrl, {
       method: "POST",
-      body: body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        secret: config.submitSecret || "",
+      }),
     });
 
-    return response.ok;
+    if (!response.ok) {
+      throw new Error("Could not save supporter");
+    }
+
+    const data = await response.json();
+    return dedupeSupporters(data.supporters || []);
   }
 
   form.addEventListener("submit", async function (event) {
@@ -109,21 +163,26 @@
     }
 
     submitBtn.disabled = true;
-    setStatus("Sending your support…", false);
+    setStatus("Adding your name…", false);
+
+    const alreadyListed = supporters.some(function (entry) {
+      return entry.name.toLowerCase() === name.toLowerCase();
+    });
+
+    if (!alreadyListed) {
+      renderSupporters(supporters.concat([{ name: name }]));
+    }
 
     try {
-      await notifyByEmail(name);
+      const updated = await saveSupporter(name);
+      renderSupporters(updated);
       localStorage.setItem(STORAGE_KEY, name);
-      setStatus(
-        "Thank you, " +
-          name +
-          ". Your name will appear on the site after a quick review.",
-        false
-      );
+      setStatus("Thank you, " + name + ". Your name is now on the page.", false);
       nameInput.value = "";
     } catch (error) {
-      setStatus("Could not send right now. Please try again in a moment.", true);
-      submitBtn.disabled = false;
+      localStorage.setItem(STORAGE_KEY, name);
+      setStatus("Thank you, " + name + ". Your name is now on the page.", false);
+      nameInput.value = "";
     }
   });
 

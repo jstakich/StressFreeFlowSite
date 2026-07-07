@@ -1,0 +1,7 @@
+{
+  "name": "stressfreeflow-website",
+  "private": true,
+  "dependencies": {
+    "@octokit/rest": "^21.1.1"
+  }
+}
