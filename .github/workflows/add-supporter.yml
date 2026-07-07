@@ -1,0 +1,27 @@
+name: Add supporter name
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Supporter first name"
+        required: true
+        type: string
+
+jobs:
+  add-supporter:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Add supporter to site data
+        run: python3 tools/add_supporter.py "${{ github.event.inputs.name }}"
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Add supporter ${{ github.event.inputs.name }}
+          file_pattern: data/likes.json

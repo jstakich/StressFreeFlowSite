@@ -1,9 +1,7 @@
 (function () {
   const LIKES_URL = "./data/likes.json";
   const STORAGE_KEY = "stressfreeflow-supported";
-  const config = window.SFF_SUPPORTERS_CONFIG || {};
 
-  const section = document.getElementById("supporters");
   const listEl = document.getElementById("supporter-names");
   const countEl = document.getElementById("supporter-count");
   const form = document.getElementById("supporter-form");
@@ -13,7 +11,7 @@
 
   let supporters = [];
 
-  if (!section || !listEl || !form) {
+  if (!listEl || !form) {
     return;
   }
 
@@ -83,34 +81,15 @@
     statusEl.classList.toggle("is-error", Boolean(isError));
   }
 
-  async function loadSupportersFromJson() {
-    const response = await fetch(LIKES_URL + "?t=" + Date.now());
-    if (!response.ok) {
-      throw new Error("Could not load supporters");
-    }
-    const data = await response.json();
-    return dedupeSupporters(Array.isArray(data.supporters) ? data.supporters : []);
-  }
-
   async function loadSupporters() {
     try {
-      let loaded = [];
-
-      if (config.apiUrl) {
-        try {
-          const response = await fetch(config.apiUrl, { method: "GET" });
-          if (response.ok) {
-            const data = await response.json();
-            loaded = dedupeSupporters(data.supporters || []);
-          }
-        } catch (apiError) {
-          // Fall back to the JSON file on GitHub Pages.
-        }
+      const response = await fetch(LIKES_URL + "?t=" + Date.now());
+      if (!response.ok) {
+        throw new Error("Could not load supporters");
       }
 
-      if (!loaded.length) {
-        loaded = await loadSupportersFromJson();
-      }
+      const data = await response.json();
+      let loaded = dedupeSupporters(Array.isArray(data.supporters) ? data.supporters : []);
 
       const savedName = localStorage.getItem(STORAGE_KEY);
       if (savedName) {
@@ -123,31 +102,7 @@
     }
   }
 
-  async function saveSupporter(name) {
-    if (!config.apiUrl) {
-      throw new Error("Supporter API is not configured");
-    }
-
-    const response = await fetch(config.apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        secret: config.submitSecret || "",
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Could not save supporter");
-    }
-
-    const data = await response.json();
-    return dedupeSupporters(data.supporters || []);
-  }
-
-  form.addEventListener("submit", async function (event) {
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const name = cleanName(nameInput.value);
@@ -162,27 +117,13 @@
       return;
     }
 
-    submitBtn.disabled = true;
-    setStatus("Adding your name…", false);
+    localStorage.setItem(STORAGE_KEY, name);
+    renderSupporters(supporters.concat([{ name: name }]));
+    setStatus("Thank you, " + name + ". Your name is on the page.", false);
+    nameInput.value = "";
 
-    const alreadyListed = supporters.some(function (entry) {
-      return entry.name.toLowerCase() === name.toLowerCase();
-    });
-
-    if (!alreadyListed) {
-      renderSupporters(supporters.concat([{ name: name }]));
-    }
-
-    try {
-      const updated = await saveSupporter(name);
-      renderSupporters(updated);
-      localStorage.setItem(STORAGE_KEY, name);
-      setStatus("Thank you, " + name + ". Your name is now on the page.", false);
-      nameInput.value = "";
-    } catch (error) {
-      localStorage.setItem(STORAGE_KEY, name);
-      setStatus("Thank you, " + name + ". Your name is now on the page.", false);
-      nameInput.value = "";
+    if (submitBtn) {
+      submitBtn.disabled = true;
     }
   });
 
