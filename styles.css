@@ -501,6 +501,63 @@ img {
   margin-top: 24px;
 }
 
+.reviews-stats {
+  margin-top: 20px;
+  padding: 22px;
+}
+
+.reviews-stats-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(152, 245, 199, 0.12);
+  border: 1px solid rgba(152, 245, 199, 0.28);
+  color: var(--success);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.live-badge::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 10px rgba(152, 245, 199, 0.8);
+}
+
+.reviews-stat-copy {
+  flex: 1;
+  min-width: 220px;
+}
+
+.reviews-stat-line {
+  margin: 0 0 6px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.reviews-stat-line strong {
+  color: var(--text);
+}
+
+.reviews-live-note {
+  margin: 10px 0 0;
+  color: #9eb5da;
+  font-size: 0.9rem;
+}
+
 .review-card {
   display: flex;
   flex-direction: column;
