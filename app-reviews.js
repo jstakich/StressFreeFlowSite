@@ -95,6 +95,20 @@
     );
   }
 
+  async function fetchLookupDirect() {
+    const response = await fetch(LOOKUP_URL);
+    if (!response.ok) {
+      throw new Error("Lookup unavailable");
+    }
+
+    const data = await response.json();
+    if (!data.results || !data.results[0]) {
+      throw new Error("No lookup results");
+    }
+
+    return data.results[0];
+  }
+
   function fetchLookupJsonp() {
     return new Promise(function (resolve, reject) {
       const callbackName = "stressFreeFlowLookup_" + Date.now();
@@ -157,9 +171,13 @@
 
   async function fetchLookupSummary() {
     try {
-      return await fetchLookupProxy();
-    } catch (proxyError) {
-      return fetchLookupJsonp();
+      return await fetchLookupDirect();
+    } catch (directError) {
+      try {
+        return await fetchLookupJsonp();
+      } catch (jsonpError) {
+        return fetchLookupProxy();
+      }
     }
   }
 
@@ -189,32 +207,48 @@
       ? "Live from Apple • updated " + escapeHtml(feedUpdated)
       : "Live from Apple • refreshes when you open this page";
 
+    const totalRatingsLine = totalRatings
+      ? "<strong>" +
+        totalRatings +
+        "</strong> total App Store rating" +
+        (totalRatings === 1 ? "" : "s")
+      : '<a href="' +
+        APP_STORE_REVIEWS_URL +
+        '" target="_blank" rel="noreferrer">See total ratings on the App Store</a>';
+
     stats.innerHTML =
       '<div class="reviews-stats-layout">' +
       '<div class="reviews-hero-stat">' +
       '<span class="live-badge">Live</span>' +
       renderStars(5) +
       '<p class="reviews-hero-number">' +
-      fiveStarCount +
+      (totalRatings || fiveStarCount) +
       "</p>" +
-      '<p class="reviews-hero-label">five-star App Store review' +
-      (fiveStarCount === 1 ? "" : "s") +
+      '<p class="reviews-hero-label">' +
+      (totalRatings ? "five-star App Store rating" : "written App Store review") +
+      (totalRatings
+        ? totalRatings === 1
+          ? ""
+          : "s"
+        : fiveStarCount === 1
+          ? ""
+          : "s") +
       "</p>" +
       "</div>" +
       '<div class="reviews-stat-copy">' +
       '<p class="reviews-stat-line"><strong>' +
       (average ? average.toFixed(1) : "—") +
       "</strong> average rating</p>" +
-      '<p class="reviews-stat-line"><strong>' +
-      totalRatings +
-      "</strong> total App Store rating" +
-      (totalRatings === 1 ? "" : "s") +
+      '<p class="reviews-stat-line">' +
+      totalRatingsLine +
       "</p>" +
       '<p class="reviews-stat-line"><strong>' +
       writtenCount +
-      "</strong> with written text • <strong>" +
-      Math.max(0, fiveStarCount - writtenCount) +
-      "</strong> star-only</p>" +
+      "</strong> with written text" +
+      (totalRatings
+        ? " • <strong>" + Math.max(0, totalRatings - writtenCount) + "</strong> star-only"
+        : "") +
+      "</p>" +
       '<p class="reviews-live-note">' +
       updatedLine +
       "</p>" +
@@ -293,26 +327,26 @@
     let feedUpdated = "";
 
     try {
-      const writtenResult = await fetchWrittenReviews();
+      const lookupPromise = fetchLookupSummary().catch(function () {
+        return null;
+      });
+      const writtenPromise = fetchWrittenReviews();
+      const writtenResult = await writtenPromise;
       writtenReviews = writtenResult.reviews;
       feedUpdated = writtenResult.updated;
+      lookup = await lookupPromise;
 
-      try {
-        lookup = await fetchLookupSummary();
-      } catch (lookupError) {
-        lookup = null;
-      }
-
+      const totalRatings = Number(lookup && lookup.userRatingCount ? lookup.userRatingCount : 0);
       const fiveStarCount = lookup ? getFiveStarCount(lookup) : 0;
 
-      if (lookup && fiveStarCount > 0) {
+      if (lookup && totalRatings > 0) {
         renderStatsPanel(lookup, fiveStarCount, writtenReviews.length, feedUpdated);
-        container.innerHTML = buildReviewCards(fiveStarCount, writtenReviews).join("");
+        container.innerHTML = buildReviewCards(fiveStarCount || totalRatings, writtenReviews).join("");
         if (summary) {
           summary.textContent =
             "Showing all " +
-            fiveStarCount +
-            " live five-star App Store reviews. Written reviews appear first; star-only ratings are shown too.";
+            totalRatings +
+            " live App Store ratings. Written reviews appear first; star-only ratings are shown too.";
         }
         return;
       }
