@@ -137,6 +137,31 @@ img {
   color: var(--text);
 }
 
+.app-store-badge {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.app-store-badge:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.app-store-badge img {
+  width: auto;
+  display: block;
+}
+
+.app-store-badge-nav img {
+  height: 36px;
+}
+
+.app-store-badge-lg img {
+  height: 54px;
+}
+
 .hero {
   padding: 54px 0 36px;
 }
@@ -763,6 +788,15 @@ img {
 
   .button {
     width: 100%;
+  }
+
+  .app-store-badge {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-store-badge-lg img {
+    height: 50px;
   }
 
   .hero-actions {
