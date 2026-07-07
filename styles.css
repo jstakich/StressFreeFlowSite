@@ -690,87 +690,6 @@ img {
   text-underline-offset: 3px;
 }
 
-.supporter-panel {
-  background: linear-gradient(180deg, rgba(16, 36, 74, 0.95), rgba(8, 18, 37, 0.96));
-}
-
-.supporter-count {
-  margin: 0 0 14px;
-  color: var(--success);
-  font-weight: 700;
-}
-
-.supporter-names {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 22px;
-  min-height: 42px;
-}
-
-.supporter-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text);
-  font-size: 0.96rem;
-}
-
-.supporter-empty {
-  margin: 0;
-  color: var(--muted);
-}
-
-.supporter-form {
-  margin-top: 8px;
-}
-
-.supporter-label {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--muted);
-  font-size: 0.94rem;
-}
-
-.supporter-form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.supporter-form-row input {
-  flex: 1 1 220px;
-  min-height: 48px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text);
-  font: inherit;
-}
-
-.supporter-form-row input:focus {
-  outline: 2px solid rgba(140, 224, 255, 0.35);
-  outline-offset: 2px;
-}
-
-.supporter-submit {
-  flex: 0 0 auto;
-}
-
-.supporter-status {
-  margin: 12px 0 0;
-  color: var(--muted);
-  min-height: 1.4em;
-}
-
-.supporter-status.is-error {
-  color: #ffb4b4;
-}
-
 .cta-panel {
   background: linear-gradient(180deg, rgba(18, 42, 84, 0.95), rgba(7, 18, 37, 0.96));
 }
@@ -878,14 +797,6 @@ img {
 
   .app-store-badge-lg img {
     height: 50px;
-  }
-
-  .supporter-form-row {
-    flex-direction: column;
-  }
-
-  .supporter-submit {
-    width: 100%;
   }
 
   .hero-actions {
