@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jstakich.github.io/StressFreeFlowSite/sitemap.xml
