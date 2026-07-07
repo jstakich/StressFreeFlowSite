@@ -247,7 +247,7 @@ img {
 
 .screen-card:has(.preview-tap-video)::after,
 .preview-frame:has(.preview-tap-video)::after {
-  content: "Tap for fullscreen";
+  content: "Tap for fullscreen + sound";
   position: absolute;
   right: 18px;
   bottom: 18px;

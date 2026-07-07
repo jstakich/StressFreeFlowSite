@@ -1,7 +1,39 @@
 (function () {
   const videos = document.querySelectorAll(".preview-frame video, .screen-card video");
 
+  function enableSound(video) {
+    video.muted = false;
+    video.volume = 1;
+    video.controls = true;
+
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(function () {});
+    }
+  }
+
+  function restoreMutedPreview(video) {
+    video.muted = true;
+    video.controls = false;
+
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(function () {});
+    }
+  }
+
+  function isVideoFullscreen(video) {
+    const doc = document;
+    return (
+      doc.fullscreenElement === video ||
+      doc.webkitFullscreenElement === video ||
+      video.webkitDisplayingFullscreen === true
+    );
+  }
+
   function openVideoFullscreen(video) {
+    enableSound(video);
+
     if (typeof video.webkitEnterFullscreen === "function") {
       video.webkitEnterFullscreen();
       return;
@@ -22,7 +54,7 @@
     video.setAttribute("tabindex", "0");
 
     const label = video.getAttribute("aria-label") || "App preview video";
-    video.setAttribute("aria-label", label + ". Tap to view fullscreen.");
+    video.setAttribute("aria-label", label + ". Tap to view fullscreen with sound.");
 
     function activate(event) {
       event.preventDefault();
@@ -35,5 +67,20 @@
         activate(event);
       }
     });
+
+    video.addEventListener("webkitendfullscreen", function () {
+      restoreMutedPreview(video);
+    });
   });
+
+  function handleFullscreenChange() {
+    videos.forEach(function (video) {
+      if (!isVideoFullscreen(video)) {
+        restoreMutedPreview(video);
+      }
+    });
+  }
+
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
+  document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
 })();
