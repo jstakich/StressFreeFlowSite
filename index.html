@@ -20,36 +20,401 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="./assets/business-card-preview.png" />
-    <meta property="og:url" content="https://apps.apple.com/us/app/id6757947997" />
+    <meta property="og:url" content="https://jstakich.github.io/StressFreeFlowSite/" />
     <link rel="icon" href="./assets/appicon.png" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div id="root">
-      <main class="site-shell" style="padding: 4rem 1rem; text-align: center">
-        <h1>Stress Free Flow</h1>
-        <p style="color: #bfd0ee; max-width: 36rem; margin: 1rem auto 1.5rem">
-          A calming app for stress relief, guided breathing, focus, and sleep.
-        </p>
-        <a
-          class="button button-primary"
-          href="https://apps.apple.com/us/app/id6757947997"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Get the App
+    <header class="topbar">
+      <div class="site-shell topbar-inner">
+        <a class="brand" href="#top">
+          <img src="./assets/appicon.png" alt="Stress Free Flow app icon" />
+          <div class="brand-copy">
+            <p class="brand-title">Stress Free Flow</p>
+            <p class="brand-subtitle">Tap. Breathe. Relax.</p>
+          </div>
         </a>
-      </main>
-    </div>
-    <script
-      crossorigin
-      src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"
-    ></script>
-    <script
-      crossorigin
-      src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.min.js"></script>
-    <script src="./app.js"></script>
+        <nav class="topbar-links" aria-label="Primary">
+          <a class="link-pill" href="#features">Features</a>
+          <a class="link-pill" href="#why">Why it helps</a>
+          <a class="link-pill" href="#faq">FAQ</a>
+          <a
+            class="button button-primary"
+            href="https://apps.apple.com/us/app/id6757947997"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Download on the App Store
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="site-shell hero-grid">
+          <div>
+            <div class="eyebrow">Clean, calming, sensory-friendly</div>
+            <h1>
+              Find a calmer rhythm with
+              <span>Breath Reset, relaxing sounds, and tactile stress relief.</span>
+            </h1>
+            <p class="hero-copy">
+              Stress Free Flow is a calming iPhone and iPad app for stress relief, guided breathing,
+              focus, sensory-friendly interaction, and sleep. It blends Breath Reset, relaxing sound
+              machine features, Stress Relief buttons, and immersive interactive views into one clean
+              experience.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="button button-primary"
+                href="https://apps.apple.com/us/app/id6757947997"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Get the App
+              </a>
+              <a class="button button-secondary" href="#features">See features</a>
+            </div>
+            <div class="hero-meta">
+              <span class="meta-chip">Free download</span>
+              <span class="meta-chip">$4.99 one-time Pro unlock</span>
+              <span class="meta-chip">No subscriptions</span>
+              <span class="meta-chip">No ads</span>
+            </div>
+          </div>
+
+          <div class="hero-card preview-panel">
+            <div class="preview-frame">
+              <img src="./assets/iphone-preview.gif" alt="Stress Free Flow iPhone preview" />
+            </div>
+            <div class="preview-caption">
+              <span>Interactive calm for stress, focus, and sleep</span>
+              <span>Designed for iPhone and iPad</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="site-shell">
+          <h2>A calmer alternative to subscription-heavy wellness apps</h2>
+          <p class="section-lead">
+            Stress Free Flow is positioned for people who want a simple calming app that feels tactile,
+            responsive, and comfortable to use. The focus is not noise or clutter. The focus is relief.
+          </p>
+          <div class="trust-grid">
+            <article class="card">
+              <strong>One-time unlock</strong>
+              <p>$4.99 Pro unlock. No subscriptions. No ads.</p>
+            </article>
+            <article class="card">
+              <strong>Built for calm</strong>
+              <p>
+                Designed for relaxation, focus, wind-down, sleep, and sensory-friendly comfort.
+              </p>
+            </article>
+            <article class="card">
+              <strong>Privacy-first</strong>
+              <p>The App Store listing states that no data is collected from the app.</p>
+            </article>
+            <article class="card">
+              <strong>iPhone + iPad</strong>
+              <p>Native iOS app built for responsive, tactile interactions and background audio.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="site-shell">
+          <h2>What makes Stress Free Flow different</h2>
+          <p class="section-lead">
+            Instead of offering just one thing, Stress Free Flow gives people several ways to calm down:
+            guided breathing, soothing sounds, hold-based sensory interaction, and a responsive visual
+            environment.
+          </p>
+          <div class="feature-grid">
+            <article class="card">
+              <div class="feature-icon">BR</div>
+              <h3>Breath Reset</h3>
+              <p>
+                Five guided breathing sessions for quick resets, slower calming, and more overwhelming
+                moments when you need structure.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon">SR</div>
+              <h3>Stress Relief Buttons</h3>
+              <p>
+                Interactive hold-based calming modes including Heartbeat, Deep Wave, and Rain Drops for
+                tactile relaxation.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon">SM</div>
+              <h3>Relaxing Sound Machine</h3>
+              <p>
+                Background sounds for focus, stress relief, and sleep, with Lock Screen playback and full
+                AirPlay support.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon">IV</div>
+              <h3>Interactive Views</h3>
+              <p>
+                Immersive visual environments with stress balls, goal-seeking motion, and sensory-friendly
+                visual pacing.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon">FM</div>
+              <h3>Focus and sleep modes</h3>
+              <p>
+                Experience modes help people quickly shift toward focus, meditation, relaxation, or
+                bedtime without digging through menus.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon">AD</div>
+              <h3>ADHD and sensory-friendly</h3>
+              <p>
+                Built to feel calm rather than overwhelming, and enjoyed by many users with ADHD,
+                autism, anxiety, and sensory needs.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="site-shell">
+          <h2>Built to answer what people are already searching for</h2>
+          <p class="section-lead">
+            This page is intentionally structured around real search intent like stress relief app,
+            breathing app for anxiety, relaxing sound machine app, sleep sounds app, and sensory
+            calming app.
+          </p>
+          <div class="seo-grid">
+            <article class="card">
+              <h3>For people searching stress relief apps</h3>
+              <p>
+                This page is designed to clearly explain what Stress Free Flow does, who it helps, and
+                why it is different from subscription-heavy wellness apps.
+              </p>
+            </article>
+            <article class="card">
+              <h3>For breathing and sleep searches</h3>
+              <p>
+                Breath Reset, guided calming sessions, sleep sounds, and sensory-friendly interaction
+                give the site strong alignment with breathing, sleep, and calm-focused search intent.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="screens">
+        <div class="site-shell">
+          <h2>App Store preview screens</h2>
+          <p class="section-lead">
+            These are the current Apple Connect preview screens for iPhone and iPad, shown directly on
+            the site so visitors can see the app experience before they tap through to the App Store.
+          </p>
+
+          <div class="screens-wrap">
+            <div class="screen-block">
+              <div class="screen-block-header">
+                <h3>iPhone previews</h3>
+                <span>6 screens</span>
+              </div>
+              <div class="screens-grid">
+                <figure class="screen-card">
+                  <img
+                    src="./assets/screens/iphone/01-deep-sea.gif"
+                    alt="iPhone Preview 1"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card">
+                  <img
+                    src="./assets/screens/iphone/02-preview.gif"
+                    alt="iPhone Preview 2"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card">
+                  <img
+                    src="./assets/screens/iphone/03-preview.gif"
+                    alt="iPhone Preview 3"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card">
+                  <img
+                    src="./assets/screens/iphone/04-preview.gif"
+                    alt="iPhone Preview 4"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card">
+                  <img
+                    src="./assets/screens/iphone/05-preview.gif"
+                    alt="iPhone Preview 5"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card">
+                  <img
+                    src="./assets/screens/iphone/06-country.gif"
+                    alt="iPhone Country Preview"
+                    loading="lazy"
+                  />
+                </figure>
+              </div>
+            </div>
+
+            <div class="screen-block">
+              <div class="screen-block-header">
+                <h3>iPad previews</h3>
+                <span>6 screens</span>
+              </div>
+              <div class="screens-grid screens-grid-ipad">
+                <figure class="screen-card screen-card-ipad">
+                  <img
+                    src="./assets/screens/ipad/01-deep-sea.gif"
+                    alt="iPad Preview 1"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card screen-card-ipad">
+                  <img
+                    src="./assets/screens/ipad/02-preview.gif"
+                    alt="iPad Preview 2"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card screen-card-ipad">
+                  <img
+                    src="./assets/screens/ipad/03-preview.gif"
+                    alt="iPad Preview 3"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card screen-card-ipad">
+                  <img
+                    src="./assets/screens/ipad/04-preview.gif"
+                    alt="iPad Preview 4"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card screen-card-ipad">
+                  <img
+                    src="./assets/screens/ipad/05-preview.gif"
+                    alt="iPad Preview 5"
+                    loading="lazy"
+                  />
+                </figure>
+                <figure class="screen-card screen-card-ipad">
+                  <img
+                    src="./assets/screens/ipad/06-preview.gif"
+                    alt="iPad Preview 6"
+                    loading="lazy"
+                  />
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="site-shell">
+          <div class="card cta-panel">
+            <div class="cta-grid">
+              <div>
+                <h2>Download Stress Free Flow and discover your calm</h2>
+                <p class="section-lead">
+                  If you want a calming app for stress relief, guided breathing, sleep support, focus,
+                  or sensory-friendly interaction, Stress Free Flow is ready on the App Store now.
+                </p>
+                <div class="hero-actions">
+                  <a
+                    class="button button-primary"
+                    href="https://apps.apple.com/us/app/id6757947997"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open App Store
+                  </a>
+                </div>
+                <span class="price-line"
+                  >Free download • $4.99 one-time Pro unlock • No subscriptions</span
+                >
+              </div>
+              <div class="qr-wrap">
+                <div class="qr-card">
+                  <img
+                    src="./assets/appstore-qr.png"
+                    alt="Scan QR code to open the Stress Free Flow App Store listing"
+                  />
+                  <strong>Scan to download</strong>
+                  <p>Fast App Store access for phone visitors, print pieces, and social traffic.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="site-shell">
+          <h2>Frequently asked questions</h2>
+          <div class="faq-grid">
+            <article class="card">
+              <h3>Is Stress Free Flow free?</h3>
+              <p>
+                The app is free to download. Pro is a one-time $4.99 unlock through Apple. No
+                subscriptions.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Does it work for sleep or focus?</h3>
+              <p>
+                Yes. The app is built for calming, focus, winding down, sleep support, and
+                sensory-friendly relaxation.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Does it play in the background?</h3>
+              <p>
+                Yes. The App Store listing describes relaxing sounds that continue on the Lock Screen
+                and while using other apps.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Who is it built for?</h3>
+              <p>
+                People looking for a cleaner, more tactile calm app, including many users with ADHD,
+                autism, anxiety, and sensory sensitivities.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="site-shell footer-box">
+        <div>
+          <strong>Stress Free Flow</strong>
+          <div>Tap. Breathe. Relax.</div>
+        </div>
+        <div>
+          A calming app for stress relief, guided breathing, focus, sleep, and sensory-friendly
+          interaction.
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
