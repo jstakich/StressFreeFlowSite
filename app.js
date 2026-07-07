@@ -1,7 +1,3 @@
-import React from "https://esm.sh/react@18";
-import { createRoot } from "https://esm.sh/react-dom@18/client";
-import htm from "https://esm.sh/htm@3.1.1";
-
 const html = htm.bind(React.createElement);
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/id6757947997";
@@ -381,4 +377,14 @@ function App() {
   `;
 }
 
-createRoot(document.getElementById("root")).render(html`<${App} />`);
+const rootEl = document.getElementById("root");
+
+try {
+  if (rootEl && ReactDOM.createRoot) {
+    ReactDOM.createRoot(rootEl).render(html`<${App} />`);
+  } else if (rootEl && ReactDOM.render) {
+    ReactDOM.render(html`<${App} />`, rootEl);
+  }
+} catch (error) {
+  console.error("Stress Free Flow site failed to load:", error);
+}
