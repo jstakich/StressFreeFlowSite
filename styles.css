@@ -690,6 +690,58 @@ img {
   text-underline-offset: 3px;
 }
 
+.page-like-panel {
+  background: linear-gradient(180deg, rgba(16, 36, 74, 0.95), rgba(8, 18, 37, 0.96));
+}
+
+.page-like-form {
+  display: grid;
+  gap: 14px;
+  max-width: 520px;
+}
+
+.page-like-label {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.page-like-form select {
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font: inherit;
+}
+
+.page-like-form select:focus {
+  outline: 2px solid rgba(140, 224, 255, 0.35);
+  outline-offset: 2px;
+}
+
+.page-like-submit {
+  justify-self: start;
+  margin-top: 4px;
+}
+
+.page-like-status {
+  margin: 0;
+  color: var(--muted);
+  min-height: 1.4em;
+}
+
+.page-like-thanks {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+
+.page-like-note {
+  margin: 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
 .cta-panel {
   background: linear-gradient(180deg, rgba(18, 42, 84, 0.95), rgba(7, 18, 37, 0.96));
 }
