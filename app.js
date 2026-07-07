@@ -6,6 +6,24 @@ const html = htm.bind(React.createElement);
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/id6757947997";
 
+const iphoneScreens = [
+  { src: "./assets/screens/iphone/01-deep-sea.gif", title: "iPhone Preview 1" },
+  { src: "./assets/screens/iphone/02-preview.gif", title: "iPhone Preview 2" },
+  { src: "./assets/screens/iphone/03-preview.gif", title: "iPhone Preview 3" },
+  { src: "./assets/screens/iphone/04-preview.gif", title: "iPhone Preview 4" },
+  { src: "./assets/screens/iphone/05-preview.gif", title: "iPhone Preview 5" },
+  { src: "./assets/screens/iphone/06-country.gif", title: "iPhone Country Preview" },
+];
+
+const ipadScreens = [
+  { src: "./assets/screens/ipad/01-deep-sea.gif", title: "iPad Preview 1" },
+  { src: "./assets/screens/ipad/02-preview.gif", title: "iPad Preview 2" },
+  { src: "./assets/screens/ipad/03-preview.gif", title: "iPad Preview 3" },
+  { src: "./assets/screens/ipad/04-preview.gif", title: "iPad Preview 4" },
+  { src: "./assets/screens/ipad/05-preview.gif", title: "iPad Preview 5" },
+  { src: "./assets/screens/ipad/06-preview.gif", title: "iPad Preview 6" },
+];
+
 const trustItems = [
   { title: "One-time unlock", body: "$4.99 Pro unlock. No subscriptions. No ads." },
   { title: "Built for calm", body: "Designed for relaxation, focus, wind-down, sleep, and sensory-friendly comfort." },
@@ -228,6 +246,54 @@ function SeoSection() {
   `;
 }
 
+function ScreensSection() {
+  return html`
+    <section className="section" id="screens">
+      <div className="site-shell">
+        <h2>App Store preview screens</h2>
+        <p className="section-lead">
+          These are the current Apple Connect preview screens for iPhone and iPad, shown directly on the site
+          so visitors can see the app experience before they tap through to the App Store.
+        </p>
+
+        <div className="screens-wrap">
+          <div className="screen-block">
+            <div className="screen-block-header">
+              <h3>iPhone previews</h3>
+              <span>${iphoneScreens.length} screens</span>
+            </div>
+            <div className="screens-grid">
+              ${iphoneScreens.map(
+                (screen) => html`
+                  <figure className="screen-card" key=${screen.src}>
+                    <img src=${screen.src} alt=${screen.title} loading="lazy" />
+                  </figure>
+                `
+              )}
+            </div>
+          </div>
+
+          <div className="screen-block">
+            <div className="screen-block-header">
+              <h3>iPad previews</h3>
+              <span>${ipadScreens.length} screens</span>
+            </div>
+            <div className="screens-grid screens-grid-ipad">
+              ${ipadScreens.map(
+                (screen) => html`
+                  <figure className="screen-card screen-card-ipad" key=${screen.src}>
+                    <img src=${screen.src} alt=${screen.title} loading="lazy" />
+                  </figure>
+                `
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 function CtaSection() {
   return html`
     <section className="section">
@@ -306,6 +372,7 @@ function App() {
         <${TrustSection} />
         <${FeaturesSection} />
         <${SeoSection} />
+        <${ScreensSection} />
         <${CtaSection} />
         <${FaqSection} />
       </main>

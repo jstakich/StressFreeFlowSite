@@ -277,6 +277,62 @@ img {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.screens-wrap {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.screen-block {
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.screen-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.screen-block-header h3 {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.screen-block-header span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.screens-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.screens-grid-ipad {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.screen-card {
+  margin: 0;
+  padding: 10px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.screen-card img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
 .card {
   padding: 22px;
   border-radius: var(--radius);
@@ -370,7 +426,9 @@ img {
   .feature-grid,
   .seo-grid,
   .faq-grid,
-  .cta-grid {
+  .cta-grid,
+  .screens-grid,
+  .screens-grid-ipad {
     grid-template-columns: 1fr;
   }
 
