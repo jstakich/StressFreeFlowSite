@@ -463,8 +463,27 @@ body.nav-open {
 }
 
 .interactive-views-section,
-.stress-relief-section {
+.stress-relief-section,
+.breath-reset-section {
   padding-top: 44px;
+}
+
+.breath-reset-showcase {
+  display: flex;
+  justify-content: center;
+}
+
+.breath-reset-card {
+  width: min(100%, 420px);
+}
+
+.breath-reset-mockup-slot {
+  width: min(100%, 300px);
+  height: calc(300px * 852 / 393 * 0.92);
+}
+
+.breath-reset-mockup-slot .iphone-mockup-16 {
+  transform: translateX(-50%) scale(0.92);
 }
 
 .interactive-views-header {
