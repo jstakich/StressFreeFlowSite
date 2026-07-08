@@ -7,7 +7,8 @@
   const LOOKUP_URL = "https://itunes.apple.com/lookup?id=" + APP_ID;
   const APP_STORE_REVIEWS_URL =
     "https://apps.apple.com/us/app/id" + APP_ID + "?see-all=reviews";
-  const FETCH_TIMEOUT_MS = 8000;
+  const LOOKUP_TIMEOUT_MS = 5000;
+  const REVIEWS_TIMEOUT_MS = 4500;
 
   const container = document.getElementById("app-reviews");
   const summary = document.getElementById("reviews-summary");
@@ -164,7 +165,7 @@
 
       const timeoutId = setTimeout(function () {
         finish(new Error("Lookup timed out"));
-      }, FETCH_TIMEOUT_MS);
+      }, LOOKUP_TIMEOUT_MS);
 
       document.head.appendChild(script);
     });
@@ -256,11 +257,7 @@
   }
 
   async function fetchReviewPage(page) {
-    const response = await fetchWithTimeout(
-      REVIEWS_FEED.replace("PAGE", String(page)),
-      { cache: "no-store" },
-      FETCH_TIMEOUT_MS
-    );
+    const response = await fetchWithTimeout(REVIEWS_FEED.replace("PAGE", String(page)), { cache: "no-store" }, 2500);
     if (!response.ok) {
       throw new Error("Review feed unavailable");
     }
@@ -355,7 +352,7 @@
   }
 
   async function fetchAppStorePageReviewsFromProxy(proxyUrl) {
-    const response = await fetchWithTimeout(proxyUrl, { cache: "no-store" }, FETCH_TIMEOUT_MS);
+    const response = await fetchWithTimeout(proxyUrl, { cache: "no-store" }, REVIEWS_TIMEOUT_MS);
     if (!response.ok) {
       throw new Error("Proxy request failed");
     }
@@ -374,24 +371,13 @@
 
   async function fetchAppStorePageReviews() {
     const pageUrl = "https://apps.apple.com/us/app/id" + APP_ID + "?see-all=reviews";
-    const proxies = [
-      "https://proxy.cors.sh/" + pageUrl,
-      "https://api.allorigins.win/raw?url=" + encodeURIComponent(pageUrl),
-    ];
-
-    const results = await Promise.allSettled(
-      proxies.map(function (proxyUrl) {
-        return fetchAppStorePageReviewsFromProxy(proxyUrl);
-      })
-    );
-
-    for (let index = 0; index < results.length; index += 1) {
-      if (results[index].status === "fulfilled" && results[index].value.length) {
-        return results[index].value;
-      }
+    try {
+      return await fetchAppStorePageReviewsFromProxy("https://proxy.cors.sh/" + pageUrl);
+    } catch (primaryError) {
+      return fetchAppStorePageReviewsFromProxy(
+        "https://api.allorigins.win/raw?url=" + encodeURIComponent(pageUrl)
+      );
     }
-
-    throw new Error("App Store page fetch failed");
   }
 
   async function fetchWrittenReviewsLive() {
@@ -454,6 +440,13 @@
       const lookupPromise = fetchLookupJsonp().catch(function () {
         return null;
       });
+      lookupPromise.then(function (lookup) {
+        if (!lookup) {
+          return;
+        }
+        renderStatsPanel(lookup, 0, "");
+      });
+
       const writtenResult = await fetchWrittenReviewsLive();
       const lookup = await lookupPromise;
       const totalRatings = lookup ? getRatingCount(lookup) : writtenResult.reviews.length;
