@@ -1,13 +1,17 @@
 ---
-description: Always commit and push website changes to the live site
+description: Always commit and push website changes to the live site (this repo only)
 alwaysApply: true
 ---
 
 # Deploy website changes live
 
-After any change to the Stress Free Flow website, commit and push to `origin/main` without waiting to be asked.
+This rule applies **only** to the Stress Free Flow **website** repo (`StressFreeFlow_Website` / `jstakich/StressFreeFlowSite`).
 
-## Workflow
+Do **not** automatically commit or push changes in the **Stress Free Flow main iOS app** project unless the user explicitly asks.
+
+## Workflow (website only)
+
+After any change to this website, commit and push to `origin/main` without waiting to be asked.
 
 1. Make the requested edit(s) to site files.
 2. Commit only relevant files (never `.DS_Store` or secrets).
@@ -16,6 +20,7 @@ After any change to the Stress Free Flow website, commit and push to `origin/mai
 
 ## Notes
 
-- Repo: `jstakich/StressFreeFlowSite`
+- Website repo: `jstakich/StressFreeFlowSite`
 - Live site: `https://stressfreeflow.com`
-- Do not ask "want me to push?" — pushing live is the default for this project.
+- Main app: no auto-commit or auto-push unless explicitly requested
+- Do not ask "want me to push?" for website changes — pushing live is the default here.
