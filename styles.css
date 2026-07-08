@@ -1001,6 +1001,153 @@ img {
   text-underline-offset: 3px;
 }
 
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+.blog-card h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.35;
+}
+
+.blog-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-card h3 a:hover {
+  color: #d8f4ff;
+}
+
+.blog-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+  flex: 1;
+}
+
+.blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.blog-tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(140, 224, 255, 0.1);
+  border: 1px solid rgba(140, 224, 255, 0.22);
+  color: #c8e8ff;
+  font-size: 0.82rem;
+}
+
+.blog-read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #d8f4ff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.blog-read-link:hover {
+  color: var(--accent);
+}
+
+.blog-index-actions {
+  margin-top: 24px;
+}
+
+.blog-post-page .legal-card {
+  max-width: 760px;
+}
+
+.blog-post-meta {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.blog-post-content h2 {
+  margin: 28px 0 12px;
+  font-size: 1.28rem;
+  color: #d8f4ff;
+}
+
+.blog-post-content h2:first-child {
+  margin-top: 0;
+}
+
+.blog-post-content p,
+.blog-post-content li {
+  color: var(--muted);
+  line-height: 1.78;
+}
+
+.blog-post-content p {
+  margin: 0 0 14px;
+}
+
+.blog-post-content ul,
+.blog-post-content ol {
+  margin: 0 0 16px;
+  padding-left: 1.25rem;
+}
+
+.blog-post-content li {
+  margin-bottom: 8px;
+}
+
+.blog-post-content a {
+  color: #c0d7ff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.blog-cta {
+  margin-top: 28px;
+  padding: 22px;
+  border-radius: 20px;
+  background: rgba(140, 224, 255, 0.08);
+  border: 1px solid rgba(140, 224, 255, 0.22);
+}
+
+.blog-cta strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+  color: #d8f4ff;
+}
+
+.blog-cta p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.blog-back {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #c0d7ff;
+  text-decoration: none;
+}
+
+.blog-back:hover {
+  color: #d8f4ff;
+}
+
 .footer-links {
   display: flex;
   flex-wrap: wrap;
@@ -1040,6 +1187,7 @@ img {
   .story-grid,
   .developer-grid,
   .developer-highlights,
+  .blog-grid,
   .reviews-summary-main,
   .reviews-stats-layout,
   .trust-grid,
