@@ -1,5 +1,7 @@
 (function () {
-  const videos = document.querySelectorAll(".preview-frame video, .screen-card video");
+  const videos = document.querySelectorAll(
+    ".preview-frame video, .screen-card video, .iphone-mockup-video"
+  );
 
   function enableSound(video) {
     video.muted = false;

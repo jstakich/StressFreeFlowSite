@@ -275,6 +275,7 @@ img {
   object-fit: cover;
   object-position: center top;
   background: #000;
+  cursor: pointer;
 }
 
 .iphone-mockup-frame {
@@ -317,7 +318,8 @@ img {
 }
 
 .screen-card:has(.preview-tap-video)::after,
-.preview-frame:has(.preview-tap-video)::after {
+.preview-frame:has(.preview-tap-video)::after,
+.iphone-mockup-screen:has(.preview-tap-video)::after {
   content: "Tap for fullscreen + sound";
   position: absolute;
   right: 18px;
@@ -330,6 +332,14 @@ img {
   font-size: 0.78rem;
   font-weight: 600;
   pointer-events: none;
+  z-index: 3;
+}
+
+.iphone-mockup-screen:has(.preview-tap-video)::after {
+  right: 8px;
+  bottom: 8px;
+  font-size: 0.68rem;
+  padding: 5px 8px;
 }
 
 .preview-frame:has(.preview-tap-video) {
