@@ -1,5 +1,8 @@
 (function () {
   var feedRoots = document.querySelectorAll("[data-blog-feed]");
+  var searchInput = document.querySelector("[data-blog-search]");
+  var searchStatus = document.getElementById("blog-search-status");
+  var allPosts = [];
 
   if (!feedRoots.length) {
     return;
@@ -52,6 +55,32 @@
     });
   }
 
+  function postSearchText(post) {
+    return [
+      post.title,
+      post.excerpt,
+      post.date,
+      formatDate(post.date),
+      (post.tags || []).join(" "),
+    ]
+      .join(" ")
+      .toLowerCase();
+  }
+
+  function filterPosts(posts, query) {
+    var normalized = String(query || "")
+      .trim()
+      .toLowerCase();
+
+    if (!normalized) {
+      return posts;
+    }
+
+    return posts.filter(function (post) {
+      return postSearchText(post).indexOf(normalized) !== -1;
+    });
+  }
+
   function renderPost(post) {
     var tags = (post.tags || [])
       .map(function (tag) {
@@ -88,23 +117,57 @@
     );
   }
 
-  function renderFeed(root, posts) {
+  function renderFeed(root, posts, query) {
     var limit = root.getAttribute("data-blog-limit");
+    var searchable = root.hasAttribute("data-blog-searchable");
     var visiblePosts = posts;
 
-    if (limit) {
+    if (searchable && searchInput && String(query || "").trim()) {
+      visiblePosts = filterPosts(posts, query);
+    } else if (limit) {
       visiblePosts = posts.slice(0, Number(limit));
     }
 
     if (!visiblePosts.length) {
-      root.innerHTML = '<p class="blog-feed-status">No articles yet.</p>';
+      root.innerHTML =
+        '<p class="blog-feed-status">' +
+        (String(query || "").trim()
+          ? "No articles match your search."
+          : "No articles yet.") +
+        "</p>";
       return;
     }
 
     root.innerHTML = visiblePosts.map(renderPost).join("");
   }
 
-  fetch("./blogs.json?v=2")
+  function updateSearchStatus(query, count) {
+    if (!searchStatus) {
+      return;
+    }
+
+    var normalized = String(query || "").trim();
+
+    if (!normalized) {
+      searchStatus.textContent = "";
+      return;
+    }
+
+    searchStatus.textContent =
+      count === 1 ? "1 article found" : count + " articles found";
+  }
+
+  function renderAllFeeds(query) {
+    feedRoots.forEach(function (root) {
+      renderFeed(root, allPosts, root.hasAttribute("data-blog-searchable") ? query : "");
+    });
+
+    if (searchStatus && searchInput) {
+      updateSearchStatus(query, filterPosts(allPosts, query).length);
+    }
+  }
+
+  fetch("./blogs.json?v=3")
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Could not load blog posts.");
@@ -112,11 +175,14 @@
       return response.json();
     })
     .then(function (posts) {
-      var sorted = sortPostsNewestFirst(posts);
+      allPosts = sortPostsNewestFirst(posts);
+      renderAllFeeds("");
 
-      feedRoots.forEach(function (root) {
-        renderFeed(root, sorted);
-      });
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          renderAllFeeds(searchInput.value);
+        });
+      }
     })
     .catch(function () {
       feedRoots.forEach(function (root) {

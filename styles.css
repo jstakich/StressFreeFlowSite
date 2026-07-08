@@ -1017,6 +1017,46 @@ img {
   text-transform: uppercase;
 }
 
+.blog-search-wrap {
+  display: block;
+  margin-top: 18px;
+}
+
+.blog-search-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.blog-search {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.blog-search::placeholder {
+  color: rgba(191, 208, 238, 0.72);
+}
+
+.blog-search:focus {
+  outline: 2px solid rgba(140, 224, 255, 0.35);
+  outline-offset: 2px;
+  border-color: rgba(140, 224, 255, 0.35);
+}
+
+.blog-search-status {
+  min-height: 1.2rem;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .blog-feed-scroll {
   max-height: min(72vh, 760px);
   overflow-y: auto;

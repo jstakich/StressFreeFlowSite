@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://stressfreeflow.com/blog.html" />
     <meta name="theme-color" content="#0c1837" />
     <link rel="icon" href="./assets/appicon.png" />
-    <link rel="stylesheet" href="./styles.css?v=13" />
+    <link rel="stylesheet" href="./styles.css?v=14" />
   </head>
   <body>
     <header class="topbar">
@@ -60,7 +60,25 @@
         </p>
         <p class="blog-feed-order">Newest first</p>
 
-        <div class="blog-feed-scroll" data-blog-feed aria-live="polite">
+        <label class="blog-search-wrap" for="blog-search">
+          <span class="blog-search-label">Search articles</span>
+          <input
+            class="blog-search"
+            id="blog-search"
+            type="search"
+            data-blog-search
+            placeholder="Search by topic, keyword, or title…"
+            autocomplete="off"
+          />
+        </label>
+        <p class="blog-search-status" id="blog-search-status" aria-live="polite"></p>
+
+        <div
+          class="blog-feed-scroll"
+          data-blog-feed
+          data-blog-searchable
+          aria-live="polite"
+        >
           <p class="blog-feed-status">Loading articles…</p>
         </div>
       </div>
@@ -85,6 +103,6 @@
         <p class="footer-copyright">Copyright © 2026 Jeremy Stakich – Stress Free Flow</p>
       </div>
     </footer>
-    <script src="./blog-feed.js?v=2"></script>
+    <script src="./blog-feed.js?v=3"></script>
   </body>
 </html>
