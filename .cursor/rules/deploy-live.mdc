@@ -1,0 +1,21 @@
+---
+description: Always commit and push website changes to the live site
+alwaysApply: true
+---
+
+# Deploy website changes live
+
+After any change to the Stress Free Flow website, commit and push to `origin/main` without waiting to be asked.
+
+## Workflow
+
+1. Make the requested edit(s) to site files.
+2. Commit only relevant files (never `.DS_Store` or secrets).
+3. Push to `origin/main` so GitHub Pages updates `stressfreeflow.com`.
+4. Tell the user the change is live and suggest a hard refresh if needed.
+
+## Notes
+
+- Repo: `jstakich/StressFreeFlowSite`
+- Live site: `https://stressfreeflow.com`
+- Do not ask "want me to push?" — pushing live is the default for this project.
