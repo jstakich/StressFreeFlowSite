@@ -615,6 +615,28 @@ body.nav-open {
   line-height: 1.72;
 }
 
+.interactive-gestures {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  max-width: 68ch;
+}
+
+.interactive-gestures li {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  padding-left: 16px;
+  border-left: 2px solid rgba(140, 224, 255, 0.35);
+}
+
+.interactive-gestures strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .trust-grid,
 .feature-grid,
 .seo-grid,
