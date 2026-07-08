@@ -763,15 +763,82 @@ img {
   min-height: 1.4em;
 }
 
-.page-like-thanks {
-  margin: 0 0 8px;
+.page-like-status.is-error {
+  color: #ffb4b4;
+}
+
+.page-like-feed-wrap {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.page-like-feed-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin-bottom: 14px;
+}
+
+.page-like-feed-head h3 {
+  margin: 0;
   font-size: 1.15rem;
 }
 
-.page-like-note {
+.page-like-count {
+  margin: 0;
+  color: var(--success);
+  font-weight: 700;
+}
+
+.page-like-feed {
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 6px;
+  scroll-behavior: smooth;
+}
+
+.page-like-feed::-webkit-scrollbar {
+  width: 10px;
+}
+
+.page-like-feed::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+}
+
+.page-like-feed-empty {
   margin: 0;
   color: var(--muted);
-  font-style: italic;
+}
+
+.page-like-entry {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.page-like-entry-name {
+  margin: 0 0 6px;
+  font-weight: 700;
+  color: #d8f4ff;
+}
+
+.page-like-entry-comment {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.page-like-entry-when {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 
 .cta-panel {
