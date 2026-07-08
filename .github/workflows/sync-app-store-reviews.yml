@@ -1,0 +1,37 @@
+name: Sync App Store reviews
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 14 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync reviews from App Store
+        run: node scripts/sync-app-store-reviews.js
+        continue-on-error: true
+
+      - name: Commit updated reviews
+        run: |
+          if git diff --quiet reviews-live.json; then
+            echo "No review changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reviews-live.json
+          git commit -m "Sync App Store written reviews."
+          git push
