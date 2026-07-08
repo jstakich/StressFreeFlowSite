@@ -4,7 +4,6 @@
   const APP_STORE_REVIEWS_URL =
     "https://apps.apple.com/us/app/id" + APP_ID + "?see-all=reviews";
   const LOOKUP_TIMEOUT_MS = 5000;
-  const SYNC_TIMEOUT_MS = 2500;
 
   const container = document.getElementById("app-reviews");
   const summary = document.getElementById("reviews-summary");
@@ -21,32 +20,6 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
-  }
-
-  function cleanReviewBody(content) {
-    return String(content || "")
-      .split("\n")
-      .map(function (line) {
-        return line.trim();
-      })
-      .filter(function (line) {
-        return line && !/^Version\s+\d/i.test(line);
-      })
-      .join(" ")
-      .trim();
-  }
-
-  function fetchWithTimeout(url, options, timeoutMs) {
-    const controller = new AbortController();
-    const timer = setTimeout(function () {
-      controller.abort();
-    }, timeoutMs);
-
-    return fetch(url, Object.assign({}, options || {}, { signal: controller.signal })).finally(
-      function () {
-        clearTimeout(timer);
-      }
-    );
   }
 
   function renderAppleMark(label) {
@@ -77,31 +50,6 @@
       ' out of 5 stars">' +
       stars +
       "</div>"
-    );
-  }
-
-  function renderWrittenReviewCard(review) {
-    const title = escapeHtml(review.title || "App Store review");
-    const author = escapeHtml(review.author || "App Store reviewer");
-    const rating = String(review.rating || 5);
-    const body = escapeHtml(cleanReviewBody(review.body || ""));
-
-    return (
-      '<article class="card review-card">' +
-      '<div class="review-card-top">' +
-      renderAppleMark("App Store review") +
-      renderStars(rating) +
-      "</div>" +
-      '<h3 class="review-title">' +
-      title +
-      "</h3>" +
-      '<p class="review-body">' +
-      body +
-      "</p>" +
-      '<p class="review-author">' +
-      author +
-      "</p>" +
-      "</article>"
     );
   }
 
@@ -193,23 +141,7 @@
     return average.toFixed(1);
   }
 
-  function formatSyncedDate(isoDate) {
-    if (!isoDate) {
-      return "";
-    }
-
-    try {
-      return new Date(isoDate).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
-    } catch (error) {
-      return "";
-    }
-  }
-
-  function renderStatsPanel(lookup, writtenCount, syncedAt) {
+  function renderStatsPanel(lookup) {
     if (!stats) {
       return;
     }
@@ -217,10 +149,6 @@
     const average = getAverageRating(lookup);
     const totalRatings = getRatingCount(lookup);
     const averageLabel = formatAverage(average);
-    const syncedLabel = formatSyncedDate(syncedAt);
-    const updatedLine = syncedLabel
-      ? "Written reviews synced from App Store on " + escapeHtml(syncedLabel)
-      : "Live App Store ratings";
 
     stats.innerHTML =
       '<div class="reviews-summary-card">' +
@@ -244,16 +172,7 @@
           (totalRatings === 1 ? "" : "s") +
           " on the App Store</p>"
         : "") +
-      (writtenCount
-        ? "<p><strong>" +
-          writtenCount +
-          "</strong> written review" +
-          (writtenCount === 1 ? "" : "s") +
-          " shown below</p>"
-        : "") +
-      '<p class="reviews-live-note">' +
-      updatedLine +
-      "</p>" +
+      '<p class="reviews-live-note">Live App Store ratings</p>' +
       "</div></div></div>";
   }
 
@@ -264,7 +183,7 @@
 
     let note = "Ratings are pulled live from Apple. ";
     if (totalRatings > 0) {
-      note += "Some App Store ratings are stars only and do not include written text on Apple’s listing.";
+      note += "Written reviews are read on the App Store.";
     }
 
     footnote.innerHTML =
@@ -272,42 +191,6 @@
       ' <a href="' +
       APP_STORE_REVIEWS_URL +
       '" target="_blank" rel="noreferrer">See all on the App Store</a>';
-  }
-
-  async function fetchSyncedReviews() {
-    const response = await fetchWithTimeout("./reviews-live.json", { cache: "no-store" }, SYNC_TIMEOUT_MS);
-    if (!response.ok) {
-      return { reviews: [], syncedAt: "" };
-    }
-
-    const data = await response.json();
-    const reviews = Array.isArray(data.reviews) ? data.reviews : [];
-    return {
-      reviews: reviews.filter(function (review) {
-        return cleanReviewBody(review.body || "");
-      }),
-      syncedAt: data.syncedAt || "",
-    };
-  }
-
-  function renderWrittenReviews(writtenReviews, syncedAt) {
-    if (writtenReviews.length) {
-      container.innerHTML = writtenReviews.map(renderWrittenReviewCard).join("");
-      container.classList.toggle("reviews-grid-single", writtenReviews.length === 1);
-      if (summary) {
-        summary.textContent = syncedAt
-          ? "Written reviews synced from Apple’s App Store."
-          : "Written reviews from Apple’s App Store.";
-      }
-      return;
-    }
-
-    container.classList.remove("reviews-grid-single");
-    container.innerHTML = renderAppStoreCta();
-    if (summary) {
-      summary.textContent =
-        "Live ratings above. Read full written reviews directly on the App Store.";
-    }
   }
 
   async function loadReviews() {
@@ -322,15 +205,13 @@
     try {
       const lookup = await fetchLookupJsonp();
       const totalRatings = getRatingCount(lookup);
-      renderStatsPanel(lookup, 0, "");
+      renderStatsPanel(lookup);
       renderFootnote(totalRatings);
-
-      const syncedResult = await fetchSyncedReviews().catch(function () {
-        return { reviews: [], syncedAt: "" };
-      });
-
-      renderStatsPanel(lookup, syncedResult.reviews.length, syncedResult.syncedAt);
-      renderWrittenReviews(syncedResult.reviews, syncedResult.syncedAt);
+      container.innerHTML = renderAppStoreCta();
+      if (summary) {
+        summary.textContent =
+          "Live ratings above. Read full written reviews directly on the App Store.";
+      }
     } catch (error) {
       if (stats) {
         stats.innerHTML = '<p class="reviews-status">Could not load live App Store ratings right now.</p>';
