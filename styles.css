@@ -1008,6 +1008,87 @@ img {
   margin-top: 24px;
 }
 
+.blog-feed-scroll {
+  max-height: min(72vh, 760px);
+  overflow-y: auto;
+  margin-top: 20px;
+  padding: 8px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 18, 37, 0.55);
+  scrollbar-gutter: stable;
+}
+
+.blog-feed-scroll-home {
+  max-height: 520px;
+}
+
+.blog-feed-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.blog-feed-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(140, 224, 255, 0.28);
+}
+
+.blog-feed-item {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 12px;
+  padding: 18px;
+}
+
+.blog-feed-item:last-child {
+  margin-bottom: 0;
+}
+
+.blog-feed-date-col {
+  position: sticky;
+  top: 0;
+}
+
+.blog-feed-date {
+  display: block;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.blog-feed-body h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.35;
+}
+
+.blog-feed-body h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-feed-body h3 a:hover {
+  color: #d8f4ff;
+}
+
+.blog-feed-body p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.blog-feed-body .blog-read-link {
+  margin-top: 12px;
+}
+
+.blog-feed-status {
+  margin: 0;
+  padding: 18px;
+  color: var(--muted);
+}
+
 .blog-card {
   display: flex;
   flex-direction: column;
@@ -1188,6 +1269,13 @@ img {
   .developer-grid,
   .developer-highlights,
   .blog-grid,
+  .blog-feed-item {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-feed-date-col {
+    position: static;
+  }
   .reviews-summary-main,
   .reviews-stats-layout,
   .trust-grid,

@@ -56,7 +56,7 @@
       }
     </script>
     <link rel="icon" href="./assets/appicon.png" />
-    <link rel="stylesheet" href="./styles.css?v=11" />
+    <link rel="stylesheet" href="./styles.css?v=12" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon-sprite" aria-hidden="true">
@@ -742,64 +742,16 @@
           <div class="eyebrow">From the blog</div>
           <h2>Calm reads for ADHD, sleep, sensory needs, and stress relief</h2>
           <p class="section-lead">
-            Practical guides on finding focus, winding down at night, and choosing a calm app that
-            feels good — not overwhelming.
+            A new article every day — scroll the latest dated guides on ADHD, sensory calm, sleep,
+            and stress relief.
           </p>
-          <div class="blog-grid">
-            <article class="card blog-card">
-              <div class="blog-meta">
-                <span class="blog-tag">ADHD</span>
-                <span class="blog-tag">Calm</span>
-                <span class="blog-tag">Focus</span>
-              </div>
-              <h3>
-                <a href="./blog/adhd-calm-strategies.html"
-                  >7 Calm-Down Strategies for ADHD That Actually Feel Good</a
-                >
-              </h3>
-              <p>
-                Tactile, sensory-friendly ways to reset when your brain will not slow down — without
-                another generic meditation lecture.
-              </p>
-              <a class="blog-read-link" href="./blog/adhd-calm-strategies.html">Read article →</a>
-            </article>
-            <article class="card blog-card">
-              <div class="blog-meta">
-                <span class="blog-tag">Sleep</span>
-                <span class="blog-tag">Sensory</span>
-                <span class="blog-tag">Calm</span>
-              </div>
-              <h3>
-                <a href="./blog/sleep-sounds-sensory-wind-down.html"
-                  >How Sleep Sounds and Sensory Calm Help You Wind Down at Night</a
-                >
-              </h3>
-              <p>
-                A gentler bedtime routine for racing thoughts, sensory overload, and nighttime anxiety.
-              </p>
-              <a class="blog-read-link" href="./blog/sleep-sounds-sensory-wind-down.html"
-                >Read article →</a
-              >
-            </article>
-            <article class="card blog-card">
-              <div class="blog-meta">
-                <span class="blog-tag">Stress relief</span>
-                <span class="blog-tag">Calm app</span>
-                <span class="blog-tag">No subscriptions</span>
-              </div>
-              <h3>
-                <a href="./blog/stress-relief-without-subscriptions.html"
-                  >Stress Relief Without Another Subscription</a
-                >
-              </h3>
-              <p>
-                What to look for in a stress relief app that respects your privacy, your senses, and
-                your wallet.
-              </p>
-              <a class="blog-read-link" href="./blog/stress-relief-without-subscriptions.html"
-                >Read article →</a
-              >
-            </article>
+          <div
+            class="blog-feed-scroll blog-feed-scroll-home"
+            data-blog-feed
+            data-blog-limit="5"
+            aria-live="polite"
+          >
+            <p class="blog-feed-status">Loading articles…</p>
           </div>
           <div class="blog-index-actions">
             <a class="button button-secondary" href="./blog.html">View all articles</a>
@@ -877,5 +829,6 @@
     </footer>
     <script src="./preview-videos.js"></script>
     <script src="./app-reviews.js?v=5"></script>
+    <script src="./blog-feed.js"></script>
   </body>
 </html>
