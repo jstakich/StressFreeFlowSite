@@ -261,17 +261,17 @@ img {
   border-radius: 54px;
   background: linear-gradient(
     168deg,
-    #4e5ec4 0%,
-    #3544a1 18%,
-    #232a63 42%,
-    #171b3f 68%,
-    #101225 100%
+    #fafafa 0%,
+    #f0f0f2 22%,
+    #e3e3e6 50%,
+    #d4d4d8 78%,
+    #c8c8cd 100%
   );
   box-shadow:
-    0 28px 56px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(130, 150, 255, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+    0 28px 56px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
 
 .iphone-mockup-16::before {
@@ -282,8 +282,8 @@ img {
   width: 3px;
   height: 20px;
   border-radius: 2px;
-  background: linear-gradient(180deg, #7b84d6, #434da0);
-  box-shadow: 0 32px 0 #5a63b8, 0 56px 0 #5a63b8;
+  background: linear-gradient(180deg, #ececef, #b8b8bd);
+  box-shadow: 0 32px 0 #c4c4c9, 0 56px 0 #c4c4c9;
   pointer-events: none;
 }
 
@@ -295,7 +295,7 @@ img {
   width: 3px;
   height: 54px;
   border-radius: 2px;
-  background: linear-gradient(180deg, #7b84d6, #434da0);
+  background: linear-gradient(180deg, #ececef, #b8b8bd);
   pointer-events: none;
 }
 
@@ -313,6 +313,11 @@ img {
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.04),
     0 0 0 1px rgba(0, 0, 0, 0.9);
+}
+
+.iphone-mockup-16 .iphone-mockup-camera-control {
+  background: linear-gradient(180deg, #e4e4e8, #aeaeb4);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
 .iphone-mockup-camera-control {
