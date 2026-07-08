@@ -181,9 +181,27 @@
     }
   }
 
-  function getFiveStarCount(lookup) {
+  function getRatingCount(lookup) {
+    const total = Number(lookup && lookup.userRatingCount ? lookup.userRatingCount : 0);
+    const current = Number(
+      lookup && lookup.userRatingCountForCurrentVersion ? lookup.userRatingCountForCurrentVersion : 0
+    );
+
+    return Math.max(total, current);
+  }
+
+  function getAverageRating(lookup) {
     const average = Number(lookup && lookup.averageUserRating ? lookup.averageUserRating : 0);
-    const totalRatings = Number(lookup && lookup.userRatingCount ? lookup.userRatingCount : 0);
+    const current = Number(
+      lookup && lookup.averageUserRatingForCurrentVersion ? lookup.averageUserRatingForCurrentVersion : 0
+    );
+
+    return average || current;
+  }
+
+  function getFiveStarCount(lookup) {
+    const average = getAverageRating(lookup);
+    const totalRatings = getRatingCount(lookup);
 
     if (!totalRatings) {
       return 0;
@@ -196,25 +214,40 @@
     return 0;
   }
 
+  function renderStatRow(label, value) {
+    return (
+      '<div class="reviews-stat-row">' +
+      '<span class="reviews-stat-label">' +
+      escapeHtml(label) +
+      "</span>" +
+      '<strong class="reviews-stat-value">' +
+      escapeHtml(value) +
+      "</strong>" +
+      "</div>"
+    );
+  }
+
   function renderStatsPanel(lookup, fiveStarCount, writtenCount, feedUpdated) {
     if (!stats) {
       return;
     }
 
-    const average = Number(lookup && lookup.averageUserRating ? lookup.averageUserRating : 0);
-    const totalRatings = Number(lookup && lookup.userRatingCount ? lookup.userRatingCount : 0);
+    const average = getAverageRating(lookup);
+    const totalRatings = getRatingCount(lookup);
+    const starOnlyCount = Math.max(0, totalRatings - writtenCount);
     const updatedLine = feedUpdated
       ? "Live from Apple • updated " + escapeHtml(feedUpdated)
       : "Live from Apple • refreshes when you open this page";
 
-    const totalRatingsLine = totalRatings
-      ? "<strong>" +
-        totalRatings +
-        "</strong> total App Store rating" +
-        (totalRatings === 1 ? "" : "s")
-      : '<a href="' +
+    const detailRows = totalRatings
+      ? renderStatRow("Total App Store ratings", String(totalRatings)) +
+        renderStatRow("Average rating", average ? average.toFixed(1) : "—") +
+        renderStatRow("Written reviews", String(writtenCount)) +
+        renderStatRow("Star-only ratings", String(starOnlyCount))
+      : renderStatRow("Written reviews", String(writtenCount)) +
+        '<p class="reviews-stat-note"><a href="' +
         APP_STORE_REVIEWS_URL +
-        '" target="_blank" rel="noreferrer">See total ratings on the App Store</a>';
+        '" target="_blank" rel="noreferrer">See total ratings on the App Store</a></p>';
 
     stats.innerHTML =
       '<div class="reviews-stats-layout">' +
@@ -225,30 +258,11 @@
       (totalRatings || fiveStarCount) +
       "</p>" +
       '<p class="reviews-hero-label">' +
-      (totalRatings ? "five-star App Store rating" : "written App Store review") +
-      (totalRatings
-        ? totalRatings === 1
-          ? ""
-          : "s"
-        : fiveStarCount === 1
-          ? ""
-          : "s") +
+      (totalRatings ? "App Store ratings" : "written App Store review" + (writtenCount === 1 ? "" : "s")) +
       "</p>" +
       "</div>" +
       '<div class="reviews-stat-copy">' +
-      '<p class="reviews-stat-line"><strong>' +
-      (average ? average.toFixed(1) : "—") +
-      "</strong> average rating</p>" +
-      '<p class="reviews-stat-line">' +
-      totalRatingsLine +
-      "</p>" +
-      '<p class="reviews-stat-line"><strong>' +
-      writtenCount +
-      "</strong> with written text" +
-      (totalRatings
-        ? " • <strong>" + Math.max(0, totalRatings - writtenCount) + "</strong> star-only"
-        : "") +
-      "</p>" +
+      detailRows +
       '<p class="reviews-live-note">' +
       updatedLine +
       "</p>" +
@@ -336,7 +350,7 @@
       feedUpdated = writtenResult.updated;
       lookup = await lookupPromise;
 
-      const totalRatings = Number(lookup && lookup.userRatingCount ? lookup.userRatingCount : 0);
+      const totalRatings = lookup ? getRatingCount(lookup) : 0;
       const fiveStarCount = lookup ? getFiveStarCount(lookup) : 0;
 
       if (lookup && totalRatings > 0) {

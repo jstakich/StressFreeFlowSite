@@ -613,6 +613,38 @@ img {
   min-width: 220px;
 }
 
+.reviews-stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.reviews-stat-row:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.reviews-stat-label {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.reviews-stat-value {
+  color: var(--text);
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.reviews-stat-note {
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+
 .reviews-stat-line {
   margin: 0 0 6px;
   color: var(--muted);
