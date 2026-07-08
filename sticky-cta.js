@@ -5,48 +5,60 @@
   }
 
   const hero = document.querySelector(".hero");
-  const ctaPanel = document.querySelector(".cta-panel");
   const mobileLayout = window.matchMedia("(max-width: 1200px)");
+  let threshold = 180;
+  let ticking = false;
 
-  function getThreshold() {
-    if (hero) {
-      return Math.max(hero.offsetHeight - 120, 180);
-    }
-
-    return 180;
-  }
-
-  function update() {
-    if (!mobileLayout.matches) {
-      bar.classList.remove("is-visible");
-      bar.hidden = true;
-      bar.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("has-sticky-cta");
+  function measureThreshold() {
+    if (!hero) {
+      threshold = 180;
       return;
     }
 
-    let show = window.scrollY > getThreshold();
+    threshold = Math.max(hero.offsetHeight - 120, 180);
+  }
 
-    if (ctaPanel && show) {
-      const rect = ctaPanel.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.85) {
-        show = false;
-      }
-    }
-
+  function applyState(show) {
     bar.classList.toggle("is-visible", show);
     bar.hidden = !show;
     bar.setAttribute("aria-hidden", show ? "false" : "true");
     document.body.classList.toggle("has-sticky-cta", show);
   }
 
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  if (mobileLayout.addEventListener) {
-    mobileLayout.addEventListener("change", update);
-  } else if (mobileLayout.addListener) {
-    mobileLayout.addListener(update);
+  function update() {
+    ticking = false;
+
+    if (!mobileLayout.matches) {
+      applyState(false);
+      return;
+    }
+
+    applyState(window.scrollY > threshold);
   }
 
+  function scheduleUpdate() {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }
+
+  function handleResize() {
+    measureThreshold();
+    update();
+  }
+
+  if (mobileLayout.addEventListener) {
+    mobileLayout.addEventListener("change", handleResize);
+  } else if (mobileLayout.addListener) {
+    mobileLayout.addListener(handleResize);
+  }
+
+  window.addEventListener("scroll", scheduleUpdate, { passive: true });
+  window.addEventListener("resize", handleResize);
+
+  measureThreshold();
   update();
 })();
