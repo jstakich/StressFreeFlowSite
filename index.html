@@ -33,26 +33,111 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Stress Free Flow",
-        "alternateName": ["StressFreeFlow", "stressfreeflow"],
-        "url": "https://stressfreeflow.com/"
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "MobileApplication",
-        "name": "Stress Free Flow",
-        "operatingSystem": "iOS",
-        "applicationCategory": "HealthApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "url": "https://stressfreeflow.com/",
-        "downloadUrl": "https://apps.apple.com/us/app/id6757947997"
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://stressfreeflow.com/#website",
+            "name": "Stress Free Flow",
+            "alternateName": ["StressFreeFlow", "stressfreeflow"],
+            "url": "https://stressfreeflow.com/",
+            "publisher": { "@id": "https://stressfreeflow.com/#organization" }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://stressfreeflow.com/#organization",
+            "name": "Stress Free Flow",
+            "url": "https://stressfreeflow.com/",
+            "logo": "https://stressfreeflow.com/assets/appicon.png",
+            "founder": {
+              "@type": "Person",
+              "name": "Jeremy Stakich"
+            }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://stressfreeflow.com/#app",
+            "name": "Stress Free Flow",
+            "operatingSystem": "iOS",
+            "applicationCategory": "HealthApplication",
+            "applicationSubCategory": "Calm App",
+            "description": "A tactile, ad-free calming app for iPhone and iPad with Breath Reset, interactive scenes, relaxing sounds, and Stress Relief buttons — built for ADHD focus, sensory calm, sleep, and stress relief.",
+            "image": "https://stressfreeflow.com/assets/appicon.png",
+            "screenshot": "https://stressfreeflow.com/assets/business-card-preview.png",
+            "url": "https://stressfreeflow.com/",
+            "downloadUrl": "https://apps.apple.com/us/app/id6757947997",
+            "installUrl": "https://apps.apple.com/us/app/id6757947997",
+            "author": { "@id": "https://stressfreeflow.com/#organization" },
+            "publisher": { "@id": "https://stressfreeflow.com/#organization" },
+            "offers": [
+              {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "description": "Free download on the App Store"
+              },
+              {
+                "@type": "Offer",
+                "price": "4.99",
+                "priceCurrency": "USD",
+                "description": "One-time Pro unlock — no subscription"
+              }
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "5.0",
+              "ratingCount": "4",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "featureList": [
+              "Breath Reset guided breathing",
+              "Interactive calming scenes",
+              "Relaxing sound machine with background playback",
+              "Stress Relief tactile buttons",
+              "No ads",
+              "No subscriptions",
+              "Sensory-friendly design"
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://stressfreeflow.com/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is Stress Free Flow free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The app is free to download. Pro is a one-time $4.99 unlock through Apple. No subscriptions."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Stress Free Flow work for sleep or focus?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The app is built for calming, focus, winding down, sleep support, and sensory-friendly relaxation."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Stress Free Flow play sounds in the background?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Relaxing sounds keep playing on the Lock Screen and while you use other apps. Choose from Brown Noise, Pink Noise, White Noise, Train, Ocean Shore, and more — including a blended mix of white, pink, and brown noise with rain."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Who is Stress Free Flow built for?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "People looking for a cleaner, more tactile calm app, including many users with ADHD, autism, anxiety, and sensory sensitivities."
+                }
+              }
+            ]
+          }
+        ]
       }
     </script>
     <link rel="icon" href="./assets/appicon.png" />
