@@ -485,14 +485,87 @@ img {
   margin-bottom: 16px;
 }
 
-.developer-credit {
-  margin: 8px 0 0;
-  color: var(--text);
-  font-size: 1rem;
+.developer-card {
+  background: linear-gradient(180deg, rgba(16, 36, 74, 0.95), rgba(8, 18, 37, 0.96));
 }
 
-.developer-credit strong {
+.developer-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.developer-intro {
+  text-align: center;
+}
+
+.developer-portrait-lg {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+}
+
+.developer-name {
+  margin: 16px 0 4px;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: #d8f4ff;
+}
+
+.developer-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.developer-copy {
+  margin-bottom: 16px;
+}
+
+.developer-credentials {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.developer-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.developer-highlight {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.developer-highlight strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: #d8f4ff;
+}
+
+.developer-highlight p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.developer-portrait {
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+  border: 2px solid rgba(140, 224, 255, 0.35);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .story-aside {
@@ -957,6 +1030,8 @@ img {
 @media (max-width: 980px) {
   .hero-grid,
   .story-grid,
+  .developer-grid,
+  .developer-highlights,
   .reviews-summary-main,
   .reviews-stats-layout,
   .trust-grid,
