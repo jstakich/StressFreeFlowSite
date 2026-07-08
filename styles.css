@@ -250,19 +250,21 @@ img {
 
 .iphone-mockup {
   position: relative;
-  width: min(100%, 360px);
+  width: min(100%, 320px);
   margin: 0 auto;
-  aspect-ratio: 1024 / 711;
+  aspect-ratio: 350 / 690;
+  isolation: isolate;
 }
 
 .iphone-mockup-screen {
   position: absolute;
-  top: 2.6%;
-  left: 6.6%;
-  width: 86.8%;
-  height: 94.6%;
+  top: 3.9%;
+  left: 8%;
+  width: 84.6%;
+  height: 93.3%;
+  z-index: 1;
   overflow: hidden;
-  border-radius: 10% / 7%;
+  border-radius: 9% / 5.5%;
   background: #000;
 }
 
