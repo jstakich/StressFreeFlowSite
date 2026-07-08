@@ -254,6 +254,80 @@ img {
   isolation: isolate;
 }
 
+.iphone-mockup-16 {
+  width: min(100%, 300px);
+  aspect-ratio: 393 / 852;
+  padding: 8px;
+  border-radius: 54px;
+  background: linear-gradient(
+    168deg,
+    #4e5ec4 0%,
+    #3544a1 18%,
+    #232a63 42%,
+    #171b3f 68%,
+    #101225 100%
+  );
+  box-shadow:
+    0 28px 56px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(130, 150, 255, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+}
+
+.iphone-mockup-16::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 124px;
+  width: 3px;
+  height: 20px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #7b84d6, #434da0);
+  box-shadow: 0 32px 0 #5a63b8, 0 56px 0 #5a63b8;
+  pointer-events: none;
+}
+
+.iphone-mockup-16::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 138px;
+  width: 3px;
+  height: 54px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #7b84d6, #434da0);
+  pointer-events: none;
+}
+
+.iphone-mockup-16 .iphone-mockup-screen {
+  inset: 8px;
+  border-radius: 44px;
+}
+
+.iphone-mockup-16 .iphone-mockup-island {
+  top: 20px;
+  width: 32%;
+  height: 24px;
+  border-radius: 18px;
+  background: #000;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.9);
+}
+
+.iphone-mockup-camera-control {
+  position: absolute;
+  right: -2px;
+  top: 206px;
+  z-index: 4;
+  width: 3px;
+  height: 36px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #8b93de, #4a54ab);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
 .iphone-mockup-modern {
   width: min(100%, 292px);
   aspect-ratio: 390 / 844;
