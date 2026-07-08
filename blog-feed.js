@@ -111,6 +111,8 @@
       "</p>" +
       '<a class="blog-read-link" href="' +
       escapeHtml(post.url) +
+      '" aria-label="Read article: ' +
+      escapeHtml(post.title) +
       '">Read article →</a>' +
       "</div>" +
       "</article>"

@@ -220,8 +220,11 @@
       <div class="site-shell topbar-inner">
         <a class="brand" href="#top">
           <picture>
-            <source srcset="./assets/appicon.webp" type="image/webp" />
-            <img src="./assets/appicon-192.png" alt="Stress Free Flow app icon" width="48" height="48" />
+            <source
+              srcset="./assets/appicon-48.webp 1x, ./assets/appicon-96.webp 2x"
+              type="image/webp"
+            />
+            <img src="./assets/appicon-192.png" alt="Stress Free Flow app icon" width="48" height="48" decoding="async" />
           </picture>
           <div class="brand-copy">
             <p class="brand-title">Stress Free Flow</p>
@@ -398,7 +401,10 @@
             <div class="developer-grid">
               <div class="developer-intro">
                 <picture>
-                  <source srcset="./assets/developer-portrait.webp" type="image/webp" />
+                  <source
+                    srcset="./assets/developer-portrait-160.webp 1x, ./assets/developer-portrait-320.webp 2x"
+                    type="image/webp"
+                  />
                   <img
                     class="developer-portrait developer-portrait-lg"
                     src="./assets/developer-portrait.jpg"
@@ -991,6 +997,10 @@
                   <img
                     src="./assets/appstore-qr.png"
                     alt="Scan QR code to open the Stress Free Flow App Store listing"
+                    width="160"
+                    height="160"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <strong>Scan to download</strong>
                   <p>Fast App Store access for phone visitors, print pieces, and social traffic.</p>
@@ -1119,7 +1129,7 @@
     <script src="./nav-menu.js?v=2"></script>
     <script src="./preview-videos.js?v=2"></script>
     <script src="./app-reviews.js?v=14"></script>
-    <script src="./blog-feed.js?v=3"></script>
+    <script src="./blog-feed.js?v=4"></script>
     <script src="./sticky-cta.js?v=1"></script>
   </body>
 </html>
