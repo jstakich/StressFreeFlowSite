@@ -462,7 +462,8 @@ body.nav-open {
   cursor: pointer;
 }
 
-.interactive-views-section {
+.interactive-views-section,
+.stress-relief-section {
   padding-top: 44px;
 }
 
