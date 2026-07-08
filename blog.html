@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://stressfreeflow.com/blog.html" />
     <meta name="theme-color" content="#0c1837" />
     <link rel="icon" href="./assets/appicon.png" />
-    <link rel="stylesheet" href="./styles.css?v=14" />
+    <link rel="stylesheet" href="./styles.css?v=22" />
   </head>
   <body>
     <header class="topbar">
@@ -28,7 +28,18 @@
             <p class="brand-subtitle">Tap. Breathe. Relax.</p>
           </div>
         </a>
-        <nav class="topbar-links" aria-label="Primary">
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          aria-label="Open menu"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primary-nav" class="topbar-links" aria-label="Primary">
           <a class="link-pill" href="./index.html">Home</a>
           <a class="link-pill" href="./blog.html">Blog</a>
           <a
@@ -103,6 +114,7 @@
         <p class="footer-copyright">Copyright © 2026 Jeremy Stakich – Stress Free Flow</p>
       </div>
     </footer>
+    <script src="./nav-menu.js?v=1"></script>
     <script src="./blog-feed.js?v=3"></script>
   </body>
 </html>
