@@ -250,22 +250,71 @@ img {
 
 .iphone-mockup {
   position: relative;
-  width: min(100%, 320px);
   margin: 0 auto;
-  aspect-ratio: 350 / 690;
   isolation: isolate;
+}
+
+.iphone-mockup-modern {
+  width: min(100%, 292px);
+  aspect-ratio: 390 / 844;
+  padding: 11px;
+  border-radius: 46px;
+  background: linear-gradient(165deg, #525255 0%, #313134 38%, #17171a 100%);
+  box-shadow:
+    0 26px 54px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.iphone-mockup-modern::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 118px;
+  width: 3px;
+  height: 28px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #6a6a6d, #3d3d40);
+  box-shadow: 0 40px 0 #4a4a4d, 0 74px 0 #4a4a4d;
+  pointer-events: none;
+}
+
+.iphone-mockup-modern::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 148px;
+  width: 3px;
+  height: 72px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #6a6a6d, #3d3d40);
+  pointer-events: none;
 }
 
 .iphone-mockup-screen {
   position: absolute;
-  top: 3.9%;
-  left: 8%;
-  width: 84.6%;
-  height: 93.3%;
+  inset: 11px;
   z-index: 1;
   overflow: hidden;
-  border-radius: 9% / 5.5%;
+  border-radius: 36px;
   background: #000;
+  border: 1px solid rgba(0, 0, 0, 0.85);
+}
+
+.iphone-mockup-island {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  z-index: 3;
+  width: 30%;
+  height: 27px;
+  border-radius: 999px;
+  background: #050507;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.8);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .iphone-mockup-video {
@@ -276,16 +325,6 @@ img {
   object-position: center top;
   background: #000;
   cursor: pointer;
-}
-
-.iphone-mockup-frame {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
 }
 
 .preview-frame {
