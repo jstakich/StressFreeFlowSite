@@ -522,15 +522,19 @@ img {
 .reviews-section-title {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 0;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  letter-spacing: -0.03em;
 }
 
 .reviews-section-apple {
-  flex: 0 0 auto;
+  flex: 0 0 18px;
   display: block;
-  width: 24px;
-  height: 32px;
+  width: 18px;
+  height: 24px;
+  max-width: 18px;
+  max-height: 24px;
   color: #f5f5f7;
 }
 
@@ -593,9 +597,11 @@ img {
 
 .app-store-mark-icon {
   display: block;
-  flex: 0 0 auto;
-  width: 15px;
-  height: 20px;
+  flex: 0 0 12px;
+  width: 12px;
+  height: 16px;
+  max-width: 12px;
+  max-height: 16px;
   color: #f5f5f7;
 }
 
