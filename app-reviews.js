@@ -1,6 +1,5 @@
 (function () {
   const APP_ID = "6757947997";
-  const APPLE_LOGO = "./assets/apple-logo.svg";
   const REVIEWS_FEED =
     "https://itunes.apple.com/us/rss/customerreviews/page=PAGE/id=" +
     APP_ID +
@@ -41,9 +40,9 @@
   function renderAppleMark(label) {
     return (
       '<span class="app-store-mark">' +
-      '<img class="app-store-mark-icon" src="' +
-      APPLE_LOGO +
-      '" alt="" width="12" height="16" decoding="async" />' +
+      '<svg class="app-store-mark-icon" viewBox="0 0 384 512" aria-hidden="true">' +
+      '<use href="#icon-apple"></use>' +
+      "</svg>" +
       "<span>" +
       escapeHtml(label || "App Store") +
       "</span></span>"

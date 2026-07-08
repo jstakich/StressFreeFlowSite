@@ -529,8 +529,8 @@ img {
 .reviews-section-apple {
   flex: 0 0 auto;
   display: block;
-  width: auto;
-  height: 1.05em;
+  width: 24px;
+  height: 32px;
   color: #f5f5f7;
 }
 
@@ -593,9 +593,10 @@ img {
 
 .app-store-mark-icon {
   display: block;
-  width: auto;
-  height: 1em;
-  aspect-ratio: 384 / 512;
+  flex: 0 0 auto;
+  width: 15px;
+  height: 20px;
+  color: #f5f5f7;
 }
 
 .reviews-hero-number {

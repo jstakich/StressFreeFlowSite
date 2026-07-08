@@ -56,7 +56,7 @@
       }
     </script>
     <link rel="icon" href="./assets/appicon.png" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon-sprite" aria-hidden="true">
@@ -119,6 +119,12 @@
       <symbol id="icon-play-bg" viewBox="0 0 24 24">
         <rect x="5" y="5" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.75" />
         <path d="M10 9v6l5-3-5-3z" fill="currentColor" />
+      </symbol>
+      <symbol id="icon-apple" viewBox="0 0 384 512">
+        <path
+          fill="currentColor"
+          d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.9 107.2 125.2 25-3.3 42.4-20.1 75.1-20.1s47.4 20.4 77.3 19.8c32.2-.8 59.8-50.5 82.5-87.4 25.7-37.6 36.3-74.1 37-76.1-.8-.3-70.9-27.2-71.7-109.5zM256.8 71.7c42.7-5.1 79.4 23.6 95.2 57.1-85.7 41.5-72.2 149.7-2.4 185.6 4.8-44.3-11-92.8-42.7-128.2-22.1-24.8-51.2-39.9-81.6-40.5-3.5 0-7 0-10.5.7z"
+        />
       </symbol>
       <symbol id="icon-heart" viewBox="0 0 24 24">
         <path d="M12 20s-7-4.5-9-9c-1.5-3.5 1-7 4.5-7 2 0 3.5 1.2 4.5 3 1-1.8 2.5-3 4.5-3 3.5 0 6 3.5 4.5 7-2 4.5-9 9-9 9z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" />
@@ -261,10 +267,7 @@
         <div class="site-shell">
           <h2 class="reviews-section-title">
             <svg class="reviews-section-apple" viewBox="0 0 384 512" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.9 107.2 125.2 25-3.3 42.4-20.1 75.1-20.1s47.4 20.4 77.3 19.8c32.2-.8 59.8-50.5 82.5-87.4 25.7-37.6 36.3-74.1 37-76.1-.8-.3-70.9-27.2-71.7-109.5zM256.8 71.7c42.7-5.1 79.4 23.6 95.2 57.1-85.7 41.5-72.2 149.7-2.4 185.6 4.8-44.3-11-92.8-42.7-128.2-22.1-24.8-51.2-39.9-81.6-40.5-3.5 0-7 0-10.5.7z"
-              />
+              <use href="#icon-apple"></use>
             </svg>
             App Store reviews
           </h2>
@@ -721,6 +724,6 @@
       </div>
     </footer>
     <script src="./preview-videos.js"></script>
-    <script src="./app-reviews.js"></script>
+    <script src="./app-reviews.js?v=3"></script>
   </body>
 </html>
