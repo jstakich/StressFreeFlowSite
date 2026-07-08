@@ -162,6 +162,21 @@ body.nav-open {
 .link-pill {
   color: var(--muted);
   font-size: 0.96rem;
+  white-space: nowrap;
+}
+
+.nav-menu-group {
+  display: none;
+}
+
+.nav-menu-label {
+  margin: 0;
+  padding: 10px 20px 4px;
+  color: rgba(140, 224, 255, 0.75);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .button {
@@ -1774,6 +1789,32 @@ body.nav-open {
     padding-top: 8px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     justify-content: center;
+  }
+
+  .nav-link-explore-compact {
+    display: none;
+  }
+
+  .nav-menu-group {
+    display: block;
+    padding: 4px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-menu-group .link-pill {
+    padding-left: 28px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 1201px) {
+  .topbar-links {
+    gap: 10px;
+  }
+
+  .link-pill {
+    font-size: 0.9rem;
   }
 }
 
