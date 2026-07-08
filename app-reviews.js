@@ -325,6 +325,30 @@
     };
   }
 
+  function normalizeFallbackReview(review) {
+    return {
+      title: { label: review.title || "App Store review" },
+      author: { name: { label: review.author || "App Store reviewer" } },
+      "im:rating": { label: String(review.rating || 5) },
+      content: { label: review.body || "" },
+    };
+  }
+
+  async function fetchFallbackReviews() {
+    const response = await fetch("./reviews-fallback.json?v=1", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("Fallback reviews unavailable");
+    }
+
+    const data = await response.json();
+    const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+    return reviews
+      .map(normalizeFallbackReview)
+      .filter(function (review) {
+        return cleanReviewBody(review.content && review.content.label ? review.content.label : "");
+      });
+  }
+
   function parseReviewsFromAppStoreHtml(html) {
     const match = String(html || "").match(
       /<script[^>]*type="application\/json"[^>]*>([\s\S]*?)<\/script>/
@@ -367,14 +391,32 @@
 
   async function fetchAppStorePageReviews() {
     const pageUrl = "https://apps.apple.com/us/app/id" + APP_ID + "?see-all=reviews";
-    const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(pageUrl);
-    const response = await fetch(proxyUrl);
-    if (!response.ok) {
-      throw new Error("App Store page fetch failed");
+    const proxies = [
+      "https://api.allorigins.win/raw?url=" + encodeURIComponent(pageUrl),
+      "https://api.allorigins.win/get?url=" + encodeURIComponent(pageUrl),
+    ];
+
+    for (let index = 0; index < proxies.length; index += 1) {
+      try {
+        const response = await fetch(proxies[index], { cache: "no-store" });
+        if (!response.ok) {
+          continue;
+        }
+
+        const html =
+          proxies[index].indexOf("/raw?") !== -1
+            ? await response.text()
+            : (await response.json()).contents;
+        const reviews = parseReviewsFromAppStoreHtml(html);
+        if (reviews.length) {
+          return reviews;
+        }
+      } catch (proxyError) {
+        continue;
+      }
     }
 
-    const wrapper = await response.json();
-    return parseReviewsFromAppStoreHtml(wrapper.contents);
+    throw new Error("App Store page fetch failed");
   }
 
   async function fetchWrittenReviews() {
@@ -417,6 +459,14 @@
       const writtenResult = await fetchWrittenReviews();
       writtenReviews = writtenResult.reviews;
       feedUpdated = writtenResult.updated;
+
+      if (!writtenReviews.length) {
+        try {
+          writtenReviews = await fetchFallbackReviews();
+        } catch (fallbackError) {
+          writtenReviews = [];
+        }
+      }
 
       if (!writtenReviews.length) {
         try {
