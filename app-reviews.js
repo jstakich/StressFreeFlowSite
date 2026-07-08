@@ -60,7 +60,7 @@
       '<svg viewBox="0 0 24 24"><use href="#icon-apple"></use></svg>' +
       "</div>" +
       "<h3>Read reviews on the App Store</h3>" +
-      "<p>Apple hosts the full written reviews and star ratings. Tap through to read them directly from Apple.</p>" +
+      "<p>See full written reviews and star ratings directly from Apple.</p>" +
       '<a class="button button-secondary reviews-app-store-button" href="' +
       APP_STORE_REVIEWS_URL +
       '" target="_blank" rel="noreferrer">View App Store reviews</a>' +
@@ -176,18 +176,13 @@
       "</div></div></div>";
   }
 
-  function renderFootnote(totalRatings) {
+  function renderFootnote() {
     if (!footnote) {
       return;
     }
 
-    let note = "Ratings are pulled live from Apple. ";
-    if (totalRatings > 0) {
-      note += "Written reviews are read on the App Store.";
-    }
-
     footnote.innerHTML =
-      note +
+      "Ratings are pulled live from Apple. " +
       ' <a href="' +
       APP_STORE_REVIEWS_URL +
       '" target="_blank" rel="noreferrer">See all on the App Store</a>';
@@ -199,18 +194,16 @@
       stats.innerHTML = '<p class="reviews-status">Loading live App Store ratings…</p>';
     }
     if (summary) {
-      summary.textContent = "Loading live App Store ratings…";
+      summary.textContent = "Live App Store ratings.";
     }
 
     try {
       const lookup = await fetchLookupJsonp();
-      const totalRatings = getRatingCount(lookup);
       renderStatsPanel(lookup);
-      renderFootnote(totalRatings);
+      renderFootnote();
       container.innerHTML = renderAppStoreCta();
       if (summary) {
-        summary.textContent =
-          "Live ratings above. Read full written reviews directly on the App Store.";
+        summary.textContent = "Live ratings above. Read full reviews on the App Store.";
       }
     } catch (error) {
       if (stats) {
