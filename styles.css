@@ -604,6 +604,24 @@ body.has-sticky-cta {
   cursor: pointer;
 }
 
+.iphone-mockup-video:fullscreen,
+.iphone-mockup-video:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  background: #000;
+}
+
+.preview-tap-video:fullscreen,
+.preview-tap-video:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  background: #000;
+}
+
 .interactive-views-section,
 .stress-relief-section,
 .breath-reset-section {
