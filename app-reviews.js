@@ -241,26 +241,7 @@
     if (!footnote) {
       return;
     }
-
-    const starOnlyCount = Math.max(0, totalRatings - writtenCount);
-    let note = "Ratings are pulled live from Apple. Written review text is shown here exactly as displayed on the App Store.";
-
-    if (starOnlyCount && writtenCount) {
-      note +=
-        " " +
-        starOnlyCount +
-        " rating" +
-        (starOnlyCount === 1 ? " is" : "s are") +
-        " stars only with no written text.";
-    } else if (starOnlyCount && !writtenCount) {
-      note += " Some App Store ratings may be stars only.";
-    }
-
-    footnote.innerHTML =
-      note +
-      ' <a href="' +
-      APP_STORE_REVIEWS_URL +
-      '" target="_blank" rel="noreferrer">See all on the App Store</a>';
+    footnote.textContent = "";
   }
 
   function renderWrittenReviews(writtenReviews) {
@@ -269,10 +250,7 @@
         writtenReviews.map(renderWrittenReviewCard).join("") + renderAppStoreCta();
       container.classList.toggle("reviews-grid-single", writtenReviews.length === 1);
       if (summary) {
-        summary.textContent =
-          writtenReviews.length === 1
-            ? "Latest written review from Apple’s App Store."
-            : "Written reviews from Apple’s App Store.";
+        summary.textContent = "";
       }
       return;
     }
