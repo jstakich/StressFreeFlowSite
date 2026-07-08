@@ -13,6 +13,26 @@
       .replace(/"/g, "&quot;");
   }
 
+  function postTimestamp(isoDate) {
+    var parts = String(isoDate).split("-");
+    if (parts.length !== 3) {
+      return 0;
+    }
+
+    return Date.UTC(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+  }
+
+  function sortPostsNewestFirst(posts) {
+    return posts.slice().sort(function (a, b) {
+      var dateDiff = postTimestamp(b.date) - postTimestamp(a.date);
+      if (dateDiff !== 0) {
+        return dateDiff;
+      }
+
+      return String(b.title).localeCompare(String(a.title));
+    });
+  }
+
   function formatDate(isoDate) {
     var parts = isoDate.split("-");
     if (parts.length !== 3) {
@@ -84,7 +104,7 @@
     root.innerHTML = visiblePosts.map(renderPost).join("");
   }
 
-  fetch("./blogs.json")
+  fetch("./blogs.json?v=2")
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Could not load blog posts.");
@@ -92,9 +112,7 @@
       return response.json();
     })
     .then(function (posts) {
-      var sorted = posts.slice().sort(function (a, b) {
-        return b.date.localeCompare(a.date);
-      });
+      var sorted = sortPostsNewestFirst(posts);
 
       feedRoots.forEach(function (root) {
         renderFeed(root, sorted);
