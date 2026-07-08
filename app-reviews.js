@@ -1,9 +1,13 @@
 (function () {
   const APP_ID = "6757947997";
+  const REVIEWS_FEED =
+    "https://itunes.apple.com/us/rss/customerreviews/page=PAGE/id=" +
+    APP_ID +
+    "/sortby=mostrecent/json";
   const LOOKUP_URL = "https://itunes.apple.com/lookup?id=" + APP_ID;
   const APP_STORE_REVIEWS_URL =
     "https://apps.apple.com/us/app/id" + APP_ID + "?see-all=reviews";
-  const LOOKUP_TIMEOUT_MS = 5000;
+  const FETCH_TIMEOUT_MS = 8000;
 
   const container = document.getElementById("app-reviews");
   const summary = document.getElementById("reviews-summary");
@@ -20,6 +24,32 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function cleanReviewBody(content) {
+    return String(content || "")
+      .split("\n")
+      .map(function (line) {
+        return line.trim();
+      })
+      .filter(function (line) {
+        return line && !/^Version\s+\d/i.test(line);
+      })
+      .join(" ")
+      .trim();
+  }
+
+  function fetchWithTimeout(url, options, timeoutMs) {
+    const controller = new AbortController();
+    const timer = setTimeout(function () {
+      controller.abort();
+    }, timeoutMs);
+
+    return fetch(url, Object.assign({}, options || {}, { signal: controller.signal })).finally(
+      function () {
+        clearTimeout(timer);
+      }
+    );
   }
 
   function renderAppleMark(label) {
@@ -53,14 +83,43 @@
     );
   }
 
+  function renderWrittenReviewCard(review) {
+    const title = escapeHtml(review.title && review.title.label ? review.title.label : "App Store review");
+    const author = escapeHtml(
+      review.author && review.author.name && review.author.name.label
+        ? review.author.name.label
+        : "App Store reviewer"
+    );
+    const rating = review["im:rating"] && review["im:rating"].label ? review["im:rating"].label : "5";
+    const body = escapeHtml(cleanReviewBody(review.content && review.content.label ? review.content.label : ""));
+
+    return (
+      '<article class="card review-card">' +
+      '<div class="review-card-top">' +
+      renderAppleMark("App Store review") +
+      renderStars(rating) +
+      "</div>" +
+      '<h3 class="review-title">' +
+      title +
+      "</h3>" +
+      '<p class="review-body">' +
+      body +
+      "</p>" +
+      '<p class="review-author">' +
+      author +
+      "</p>" +
+      "</article>"
+    );
+  }
+
   function renderAppStoreCta() {
     return (
       '<article class="card reviews-app-store-cta">' +
       '<div class="section-icon" aria-hidden="true">' +
       '<svg viewBox="0 0 24 24"><use href="#icon-apple"></use></svg>' +
       "</div>" +
-      "<h3>Read reviews on the App Store</h3>" +
-      "<p>See full written reviews and star ratings directly from Apple.</p>" +
+      "<h3>See all App Store reviews</h3>" +
+      "<p>These written reviews are pulled live from Apple. Open the App Store to read every review and rating.</p>" +
       '<a class="button button-secondary reviews-app-store-button" href="' +
       APP_STORE_REVIEWS_URL +
       '" target="_blank" rel="noreferrer">View App Store reviews</a>' +
@@ -105,7 +164,7 @@
 
       const timeoutId = setTimeout(function () {
         finish(new Error("Lookup timed out"));
-      }, LOOKUP_TIMEOUT_MS);
+      }, FETCH_TIMEOUT_MS);
 
       document.head.appendChild(script);
     });
@@ -141,14 +200,18 @@
     return average.toFixed(1);
   }
 
-  function renderStatsPanel(lookup) {
+  function renderStatsPanel(lookup, writtenCount, feedUpdated) {
     if (!stats) {
       return;
     }
 
     const average = getAverageRating(lookup);
     const totalRatings = getRatingCount(lookup);
+    const starOnlyCount = Math.max(0, totalRatings - writtenCount);
     const averageLabel = formatAverage(average);
+    const updatedLine = feedUpdated
+      ? "Updated " + escapeHtml(feedUpdated)
+      : "Live from Apple when you open this page";
 
     stats.innerHTML =
       '<div class="reviews-summary-card">' +
@@ -172,39 +235,234 @@
           (totalRatings === 1 ? "" : "s") +
           " on the App Store</p>"
         : "") +
-      '<p class="reviews-live-note">Live App Store ratings</p>' +
+      (writtenCount
+        ? "<p><strong>" +
+          writtenCount +
+          "</strong> written review" +
+          (writtenCount === 1 ? "" : "s") +
+          "</p>"
+        : "") +
+      (starOnlyCount
+        ? "<p><strong>" +
+          starOnlyCount +
+          "</strong> star-only rating" +
+          (starOnlyCount === 1 ? "" : "s") +
+          "</p>"
+        : "") +
+      '<p class="reviews-live-note">' +
+      updatedLine +
+      "</p>" +
       "</div></div></div>";
   }
 
-  function renderFootnote() {
+  async function fetchReviewPage(page) {
+    const response = await fetchWithTimeout(
+      REVIEWS_FEED.replace("PAGE", String(page)),
+      { cache: "no-store" },
+      FETCH_TIMEOUT_MS
+    );
+    if (!response.ok) {
+      throw new Error("Review feed unavailable");
+    }
+
+    const data = await response.json();
+    let entries = data.feed && data.feed.entry ? data.feed.entry : [];
+    if (!Array.isArray(entries)) {
+      entries = [entries];
+    }
+
+    return {
+      reviews: entries.filter(function (entry) {
+        return entry && entry["im:rating"];
+      }),
+      updated: data.feed && data.feed.updated && data.feed.updated.label ? data.feed.updated.label : "",
+    };
+  }
+
+  function renderFootnote(totalRatings, writtenCount) {
     if (!footnote) {
       return;
     }
 
+    const starOnlyCount = Math.max(0, totalRatings - writtenCount);
+    let note = "Ratings and written reviews are pulled live from Apple.";
+
+    if (starOnlyCount && writtenCount) {
+      note +=
+        " " +
+        starOnlyCount +
+        " rating" +
+        (starOnlyCount === 1 ? " is" : "s are") +
+        " stars only with no written text.";
+    } else if (starOnlyCount && !writtenCount) {
+      note += " Some App Store ratings may be stars only.";
+    }
+
     footnote.innerHTML =
-      "Ratings are pulled live from Apple. " +
+      note +
       ' <a href="' +
       APP_STORE_REVIEWS_URL +
       '" target="_blank" rel="noreferrer">See all on the App Store</a>';
   }
 
-  async function loadReviews() {
+  function normalizeAppStoreReview(review) {
+    return {
+      title: { label: review.title || "App Store review" },
+      author: { name: { label: review.reviewerName || "App Store reviewer" } },
+      "im:rating": { label: String(review.rating || 5) },
+      content: { label: review.contents || "" },
+    };
+  }
+
+  function parseReviewsFromAppStoreHtml(html) {
+    const match = String(html || "").match(
+      /<script[^>]*type="application\/json"[^>]*>([\s\S]*?)<\/script>/
+    );
+    if (!match) {
+      return [];
+    }
+
+    const payload = JSON.parse(match[1]);
+    const shelf = payload.data && payload.data[0] && payload.data[0].data && payload.data[0].data.shelfMapping;
+    if (!shelf) {
+      return [];
+    }
+
+    const items = []
+      .concat((shelf.allProductReviews && shelf.allProductReviews.items) || [])
+      .concat((shelf.userProductReviews && shelf.userProductReviews.items) || []);
+
+    const seen = new Set();
+    const reviews = [];
+
+    items.forEach(function (item) {
+      const review = item && item.review;
+      if (!review || !review.id || seen.has(review.id)) {
+        return;
+      }
+
+      seen.add(review.id);
+
+      const body = String(review.contents || "").trim();
+      if (!body) {
+        return;
+      }
+
+      reviews.push(normalizeAppStoreReview(review));
+    });
+
+    return reviews;
+  }
+
+  async function fetchAppStorePageReviewsFromProxy(proxyUrl) {
+    const response = await fetchWithTimeout(proxyUrl, { cache: "no-store" }, FETCH_TIMEOUT_MS);
+    if (!response.ok) {
+      throw new Error("Proxy request failed");
+    }
+
+    const html =
+      proxyUrl.indexOf("allorigins.win/get?") !== -1
+        ? (await response.json()).contents
+        : await response.text();
+    const reviews = parseReviewsFromAppStoreHtml(html);
+    if (!reviews.length) {
+      throw new Error("No written reviews in App Store page");
+    }
+
+    return reviews;
+  }
+
+  async function fetchAppStorePageReviews() {
+    const pageUrl = "https://apps.apple.com/us/app/id" + APP_ID + "?see-all=reviews";
+    const proxies = [
+      "https://proxy.cors.sh/" + pageUrl,
+      "https://api.allorigins.win/raw?url=" + encodeURIComponent(pageUrl),
+    ];
+
+    const results = await Promise.allSettled(
+      proxies.map(function (proxyUrl) {
+        return fetchAppStorePageReviewsFromProxy(proxyUrl);
+      })
+    );
+
+    for (let index = 0; index < results.length; index += 1) {
+      if (results[index].status === "fulfilled" && results[index].value.length) {
+        return results[index].value;
+      }
+    }
+
+    throw new Error("App Store page fetch failed");
+  }
+
+  async function fetchWrittenReviewsLive() {
+    const results = await Promise.all([
+      fetchReviewPage(1).catch(function () {
+        return { reviews: [], updated: "" };
+      }),
+      fetchAppStorePageReviews().catch(function () {
+        return [];
+      }),
+    ]);
+
+    const rssResult = results[0];
+    const pageReviews = results[1];
+
+    if (rssResult.reviews.length) {
+      return {
+        reviews: rssResult.reviews,
+        updated: rssResult.updated,
+      };
+    }
+
+    return {
+      reviews: pageReviews,
+      updated: "",
+    };
+  }
+
+  function renderWrittenReviews(writtenReviews) {
+    if (writtenReviews.length) {
+      container.innerHTML =
+        writtenReviews.map(renderWrittenReviewCard).join("") + renderAppStoreCta();
+      container.classList.toggle("reviews-grid-single", writtenReviews.length === 1);
+      if (summary) {
+        summary.textContent =
+          writtenReviews.length === 1
+            ? "Latest written review from Apple’s App Store."
+            : "Written reviews from Apple’s App Store.";
+      }
+      return;
+    }
+
+    container.classList.remove("reviews-grid-single");
     container.innerHTML = renderAppStoreCta();
+    if (summary) {
+      summary.textContent = "Live ratings above. Read full reviews on the App Store.";
+    }
+  }
+
+  async function loadReviews() {
+    container.innerHTML = '<p class="reviews-status">Loading written reviews from Apple…</p>';
     if (stats) {
       stats.innerHTML = '<p class="reviews-status">Loading live App Store ratings…</p>';
     }
     if (summary) {
-      summary.textContent = "Live App Store ratings.";
+      summary.textContent = "Loading live App Store reviews…";
     }
 
     try {
-      const lookup = await fetchLookupJsonp();
-      renderStatsPanel(lookup);
-      renderFootnote();
-      container.innerHTML = renderAppStoreCta();
-      if (summary) {
-        summary.textContent = "Live ratings above. Read full reviews on the App Store.";
+      const lookupPromise = fetchLookupJsonp().catch(function () {
+        return null;
+      });
+      const writtenResult = await fetchWrittenReviewsLive();
+      const lookup = await lookupPromise;
+      const totalRatings = lookup ? getRatingCount(lookup) : writtenResult.reviews.length;
+
+      if (lookup) {
+        renderStatsPanel(lookup, writtenResult.reviews.length, writtenResult.updated);
       }
+      renderFootnote(totalRatings, writtenResult.reviews.length);
+      renderWrittenReviews(writtenResult.reviews);
     } catch (error) {
       if (stats) {
         stats.innerHTML = '<p class="reviews-status">Could not load live App Store ratings right now.</p>';
