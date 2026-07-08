@@ -93,8 +93,23 @@ img {
 
 .brand-subtitle {
   margin: 4px 0 0;
-  font-size: 0.88rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
   color: var(--muted);
+  max-width: 22rem;
+}
+
+@media (max-width: 720px) {
+  .brand-subtitle {
+    font-size: 0.68rem;
+    max-width: 11rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-subtitle {
+    display: none;
+  }
 }
 
 .topbar-links {
@@ -349,6 +364,15 @@ body.has-sticky-cta {
 
 .hero h1 span {
   color: #c0d7ff;
+}
+
+.hero-subhead {
+  margin: 0 0 18px;
+  max-width: 36rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  line-height: 1.55;
+  font-weight: 600;
+  color: #c8daf8;
 }
 
 .hero-copy {

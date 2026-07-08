@@ -110,7 +110,7 @@ function Header() {
           <img src="./assets/appicon.png" alt="Stress Free Flow app icon" />
           <div className="brand-copy">
             <p className="brand-title">Stress Free Flow</p>
-            <p className="brand-subtitle">Tap. Breathe. Relax.</p>
+            <p className="brand-subtitle">A tactile, ad-free space for ADHD focus, sensory calm, and sleep.</p>
           </div>
         </a>
         <nav className="topbar-links" aria-label="Primary">
