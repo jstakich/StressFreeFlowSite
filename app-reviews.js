@@ -40,7 +40,7 @@
   function renderAppleMark(label) {
     return (
       '<span class="app-store-mark">' +
-      '<svg class="app-store-mark-icon" viewBox="0 0 384 512" width="12" height="16" aria-hidden="true">' +
+      '<svg class="app-store-mark-icon" viewBox="0 0 814 1000" width="11" height="14" aria-hidden="true">' +
       '<use href="#icon-apple"></use>' +
       "</svg>" +
       "<span>" +
