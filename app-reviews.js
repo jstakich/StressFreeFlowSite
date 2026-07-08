@@ -191,10 +191,6 @@
     const totalRatings = getRatingCount(lookup);
     const starOnlyCount = Math.max(0, totalRatings - writtenCount);
     const averageLabel = formatAverage(average);
-    const updatedLine = feedUpdated
-      ? "Updated " + escapeHtml(feedUpdated)
-      : "Live from Apple when you open this page";
-
     stats.innerHTML =
       '<div class="reviews-summary-card">' +
       '<div class="reviews-summary-brand">' +
@@ -231,9 +227,6 @@
           (starOnlyCount === 1 ? "" : "s") +
           "</p>"
         : "") +
-      '<p class="reviews-live-note">' +
-      updatedLine +
-      "</p>" +
       "</div></div></div>";
   }
 
