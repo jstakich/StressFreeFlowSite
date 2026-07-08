@@ -43,7 +43,7 @@
       '<span class="app-store-mark">' +
       '<img class="app-store-mark-icon" src="' +
       APPLE_LOGO +
-      '" alt="" width="16" height="16" decoding="async" />' +
+      '" alt="" width="12" height="16" decoding="async" />' +
       "<span>" +
       escapeHtml(label || "App Store") +
       "</span></span>"

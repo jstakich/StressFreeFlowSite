@@ -519,21 +519,19 @@ img {
   line-height: 1.65;
 }
 
-.reviews-section-head {
+.reviews-section-title {
   display: flex;
   align-items: center;
   gap: 14px;
-}
-
-.reviews-section-head h2 {
   margin: 0;
 }
 
 .reviews-section-apple {
   flex: 0 0 auto;
   display: block;
-  width: 32px;
-  height: 32px;
+  width: auto;
+  height: 1.05em;
+  color: #f5f5f7;
 }
 
 .reviews-grid {
@@ -595,8 +593,9 @@ img {
 
 .app-store-mark-icon {
   display: block;
-  width: 16px;
-  height: 16px;
+  width: auto;
+  height: 1em;
+  aspect-ratio: 384 / 512;
 }
 
 .reviews-hero-number {
