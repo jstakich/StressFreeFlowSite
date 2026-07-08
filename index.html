@@ -140,7 +140,8 @@
         ]
       }
     </script>
-    <link rel="icon" href="./assets/appicon.png" />
+    <link rel="icon" href="./assets/appicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
     <link rel="stylesheet" href="./styles.css?v=31" />
   </head>
   <body>
@@ -218,7 +219,10 @@
     <header class="topbar">
       <div class="site-shell topbar-inner">
         <a class="brand" href="#top">
-          <img src="./assets/appicon.png" alt="Stress Free Flow app icon" />
+          <picture>
+            <source srcset="./assets/appicon.webp" type="image/webp" />
+            <img src="./assets/appicon-192.png" alt="Stress Free Flow app icon" width="48" height="48" />
+          </picture>
           <div class="brand-copy">
             <p class="brand-title">Stress Free Flow</p>
             <p class="brand-subtitle">A tactile, ad-free space for ADHD focus, sensory calm, and sleep.</p>
@@ -327,13 +331,11 @@
             <div class="iphone-mockup iphone-mockup-16" aria-label="Stress Free Flow running on iPhone 16">
               <div class="iphone-mockup-screen">
                 <video
-                  class="iphone-mockup-video"
-                  src="./assets/iphone-hero-recording.mp4"
-                  autoplay
-                  loop
+                  class="iphone-mockup-video lazy-video lazy-video-hero"
+                  data-lazy-src="./assets/iphone-hero-recording.mp4"
                   muted
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Stress Free Flow iPhone screen recording"
                 ></video>
               </div>
@@ -395,14 +397,18 @@
           <div class="card developer-card">
             <div class="developer-grid">
               <div class="developer-intro">
-                <img
-                  class="developer-portrait developer-portrait-lg"
-                  src="./assets/developer-portrait.jpg"
-                  alt="Portrait of Jeremy Stakich, developer of Stress Free Flow"
-                  width="160"
-                  height="160"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcset="./assets/developer-portrait.webp" type="image/webp" />
+                  <img
+                    class="developer-portrait developer-portrait-lg"
+                    src="./assets/developer-portrait.jpg"
+                    alt="Portrait of Jeremy Stakich, developer of Stress Free Flow"
+                    width="160"
+                    height="160"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
                 <p class="developer-name">Jeremy Stakich</p>
                 <p class="developer-title">Creator of Stress Free Flow</p>
               </div>
@@ -646,13 +652,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Deep Sea interactive scene">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/interactive-views/deep-sea.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/interactive-views/deep-sea.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Deep Sea interactive scene preview"
                     ></video>
                   </div>
@@ -672,13 +676,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Country interactive scene">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/interactive-views/country.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/interactive-views/country.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Country interactive scene preview"
                     ></video>
                   </div>
@@ -698,13 +700,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Beach interactive scene">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/interactive-views/beach.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/interactive-views/beach.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Beach interactive scene preview"
                     ></video>
                   </div>
@@ -724,13 +724,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Ollie's Numbers interactive scene">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/interactive-views/ollies-numbers.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/interactive-views/ollies-numbers.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Ollie's Numbers interactive scene preview"
                     ></video>
                   </div>
@@ -772,13 +770,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Heartbeat Stress Relief Button">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/stress-relief-buttons/heartbeat.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/stress-relief-buttons/heartbeat.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Heartbeat stress relief button preview"
                     ></video>
                   </div>
@@ -798,13 +794,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Deep Wave Stress Relief Button">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/stress-relief-buttons/deep-wave.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/stress-relief-buttons/deep-wave.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Deep Wave stress relief button preview"
                     ></video>
                   </div>
@@ -824,13 +818,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Slow Breath Stress Relief Button">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/stress-relief-buttons/slow-breath.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/stress-relief-buttons/slow-breath.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Slow Breath stress relief button preview"
                     ></video>
                   </div>
@@ -850,13 +842,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Rain Drops Stress Relief Button">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/stress-relief-buttons/rain-drops.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/stress-relief-buttons/rain-drops.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Rain Drops stress relief button preview"
                     ></video>
                   </div>
@@ -899,13 +889,11 @@
                 <div class="iphone-mockup iphone-mockup-16" aria-label="Breath Reset guided breathing session">
                   <div class="iphone-mockup-screen">
                     <video
-                      class="iphone-mockup-video"
-                      src="./assets/breath-reset/breath-reset.mp4"
-                      autoplay
-                      loop
+                      class="iphone-mockup-video lazy-video"
+                      data-lazy-src="./assets/breath-reset/breath-reset.mp4"
                       muted
                       playsinline
-                      preload="metadata"
+                      preload="none"
                       aria-label="Breath Reset guided breathing preview"
                     ></video>
                   </div>
@@ -1127,6 +1115,7 @@
         <p class="footer-copyright">Copyright © 2026 Jeremy Stakich – Stress Free Flow</p>
       </div>
     </footer>
+    <script src="./lazy-videos.js?v=1"></script>
     <script src="./nav-menu.js?v=2"></script>
     <script src="./preview-videos.js?v=2"></script>
     <script src="./app-reviews.js?v=14"></script>
