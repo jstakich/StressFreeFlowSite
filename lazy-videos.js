@@ -27,11 +27,15 @@
     }
   }
 
-  function loadHeroVideo() {
-    const heroVideo = document.querySelector("video.lazy-video-hero[data-lazy-src]");
-    if (heroVideo) {
-      loadVideo(heroVideo);
-    }
+  function loadAllVideos() {
+    lazyVideos.forEach(function (video) {
+      loadVideo(video);
+    });
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    loadAllVideos();
+    return;
   }
 
   const observer = new IntersectionObserver(
@@ -47,15 +51,6 @@
   );
 
   lazyVideos.forEach(function (video) {
-    if (video.classList.contains("lazy-video-hero")) {
-      return;
-    }
     observer.observe(video);
   });
-
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(loadHeroVideo, { timeout: 1800 });
-  } else {
-    window.setTimeout(loadHeroVideo, 1200);
-  }
 })();
