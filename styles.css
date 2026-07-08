@@ -248,6 +248,73 @@ body.nav-open {
   height: 54px;
 }
 
+.sticky-cta-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 25;
+  padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(6, 14, 30, 0.96);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.38);
+  transform: translateY(110%);
+  transition: transform 0.24s ease;
+}
+
+.sticky-cta-bar.is-visible {
+  transform: translateY(0);
+}
+
+.sticky-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.sticky-cta-copy {
+  margin: 0;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.sticky-cta-copy strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.sticky-cta-copy span {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.app-store-badge-sticky {
+  flex-shrink: 0;
+}
+
+.app-store-badge-sticky img {
+  height: 34px;
+}
+
+body.has-sticky-cta {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 1201px) {
+  .sticky-cta-bar {
+    display: none;
+  }
+
+  body.has-sticky-cta {
+    padding-bottom: 0;
+  }
+}
+
 .hero {
   padding: 54px 0 36px;
 }
