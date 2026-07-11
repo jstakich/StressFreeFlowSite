@@ -687,12 +687,38 @@ body.has-sticky-cta {
 
 .sound-list li {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   color: var(--muted);
   font-size: 0.93rem;
   line-height: 1.5;
   counter-increment: sound-counter;
+}
+
+.sound-sample-btn {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(142, 200, 255, 0.35);
+  background: rgba(142, 200, 255, 0.1);
+  color: #b8e4ff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.sound-sample-btn:hover {
+  background: rgba(142, 200, 255, 0.18);
+  border-color: rgba(142, 200, 255, 0.55);
+}
+
+.sound-sample-btn.is-playing {
+  background: rgba(255, 196, 86, 0.16);
+  border-color: rgba(255, 196, 86, 0.42);
+  color: #ffe8a8;
 }
 
 .sound-list li::before {
