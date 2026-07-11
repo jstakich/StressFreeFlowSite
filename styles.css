@@ -624,8 +624,100 @@ body.has-sticky-cta {
 
 .interactive-views-section,
 .stress-relief-section,
+.background-sounds-section,
 .breath-reset-section {
   padding-top: 44px;
+}
+
+.background-sounds-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.background-sounds-preview-card {
+  width: min(100%, 360px);
+  margin: 0 auto;
+}
+
+.sound-catalog {
+  display: grid;
+  gap: 18px;
+}
+
+.sound-tier {
+  padding: 20px 22px;
+  border-radius: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.sound-tier h3 {
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  color: #d8f4ff;
+}
+
+.sound-tier-count {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.sound-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 7px;
+}
+
+.sound-list-free {
+  counter-reset: sound-counter;
+}
+
+.sound-list-pro {
+  counter-reset: sound-counter 8;
+}
+
+.sound-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.5;
+  counter-increment: sound-counter;
+}
+
+.sound-list li::before {
+  content: counter(sound-counter) ".";
+  min-width: 1.6rem;
+  color: #8ec8ff;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.sound-name {
+  flex: 1 1 auto;
+}
+
+.sound-badge {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #ffe8a8;
+  background: rgba(255, 196, 86, 0.14);
+  border: 1px solid rgba(255, 196, 86, 0.28);
+}
+
+.sound-tier-pro {
+  border-color: rgba(255, 196, 86, 0.18);
 }
 
 .breath-reset-showcase {
@@ -1849,6 +1941,7 @@ body.has-sticky-cta {
   .trust-grid,
   .feature-grid,
   .interactive-views-grid,
+  .background-sounds-showcase,
   .seo-grid,
   .faq-grid,
   .cta-grid,
