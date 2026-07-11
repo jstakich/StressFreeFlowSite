@@ -8,6 +8,12 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = Path(__file__).resolve().parent
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+from procedural_sound_synthesis import export_deep_low_hum, export_drone
+
 APP_SOUNDS = Path("/Users/jeremystakich/Developer/SensoryFlow/New Sounds")
 OUT = ROOT / "assets" / "sound-samples"
 DURATION = 7
@@ -111,39 +117,6 @@ def export_amix(dst: Path, filters: list[str], mix_volume: float | None = None) 
     )
 
 
-def export_procedural_bed(dst: Path, filters: list[str], post_filter: str) -> None:
-    """Mix procedural lavfi beds and normalize loudness for web preview."""
-    dst.parent.mkdir(parents=True, exist_ok=True)
-    inputs = []
-    fcs = []
-    for i, fc in enumerate(filters):
-        inputs.extend(["-f", "lavfi", "-i", fc])
-        fcs.append(f"[{i}:a]")
-    fc_str = (
-        "".join(fcs)
-        + f"amix=inputs={len(filters)}:duration=first:dropout_transition=0,"
-        + post_filter
-    )
-    run(
-        [
-            FFMPEG,
-            "-y",
-            *inputs,
-            "-filter_complex",
-            fc_str,
-            "-t",
-            str(DURATION),
-            "-ar",
-            str(SR),
-            "-ac",
-            "2",
-            "-c:a",
-            "libmp3lame",
-            "-b:a",
-            "96k",
-            str(dst),
-        ]
-    )
 
 
 def pick_source(base: str) -> Path | None:
@@ -214,27 +187,9 @@ def main() -> int:
         f"anoisesrc=color=pink:sample_rate={SR}:duration={DURATION},lowpass=f=900,volume=0.85",
     )
     export_trim(pick_source("Pro_Thunder_Storm"), OUT / "thunder-showers.mp3", start=18.0)
-    # Deep Low Hum + Drone are procedural in the app (not recorded files). Match the layered
-    # tones from AudioManager+Sources.swift and normalize loudness so previews are audible.
-    export_procedural_bed(
-        OUT / "deep-low-hum.mp3",
-        [
-            f"sine=frequency=31:sample_rate={SR}:duration={DURATION},volume=0.72",
-            f"sine=frequency=17:sample_rate={SR}:duration={DURATION},volume=0.48",
-            f"sine=frequency=8.6:sample_rate={SR}:duration={DURATION},volume=0.34",
-            f"sine=frequency=62:sample_rate={SR}:duration={DURATION},volume=0.22",
-        ],
-        "volume=3.2,lowpass=f=220,alimiter=limit=0.92,loudnorm=I=-18:TP=-1.5:LRA=11",
-    )
-    export_procedural_bed(
-        OUT / "drone.mp3",
-        [
-            f"sine=frequency=94:sample_rate={SR}:duration={DURATION},volume=0.64",
-            f"sine=frequency=141:sample_rate={SR}:duration={DURATION},volume=0.34",
-            f"sine=frequency=188:sample_rate={SR}:duration={DURATION},volume=0.16",
-        ],
-        "volume=3.4,alimiter=limit=0.92,loudnorm=I=-18:TP=-1.5:LRA=11",
-    )
+    # Deep Low Hum + Drone: same procedural synthesis as AudioManager+Sources.swift.
+    export_deep_low_hum(OUT / "deep-low-hum.mp3")
+    export_drone(OUT / "drone.mp3")
     export_mp3(
         OUT / "blue-noise.mp3",
         f"anoisesrc=color=white:sample_rate={SR}:duration={DURATION},highpass=f=1800,lowpass=f=9000",

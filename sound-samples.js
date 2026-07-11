@@ -1,7 +1,7 @@
 (function () {
   var SAMPLE_SECONDS = 7;
   var SAMPLE_BASE = "/assets/sound-samples/";
-  var SAMPLE_VERSION = "3";
+  var SAMPLE_VERSION = "4";
   var buttons = document.querySelectorAll("[data-sound-sample]");
 
   if (!buttons.length) {
