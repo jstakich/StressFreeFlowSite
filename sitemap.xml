@@ -13,48 +13,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://stressfreeflow.com/blog/tactile-stress-relief-sensory-overload.html</loc>
-    <lastmod>2026-07-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stressfreeflow.com/blog/stress-free-flow-2-1-14-update.html</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stressfreeflow.com/blog/green-grey-violet-noise-focus-sleep.html</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stressfreeflow.com/blog/breath-reset-guided-breathing-anxiety.html</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stressfreeflow.com/blog/adhd-calm-strategies.html</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stressfreeflow.com/blog/sleep-sounds-sensory-wind-down.html</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://stressfreeflow.com/blog/stress-relief-without-subscriptions.html</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://stressfreeflow.com/blog/brown-noise-vs-pink-noise-sleep-focus.html</loc>
     <lastmod>2026-07-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -109,8 +67,50 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://stressfreeflow.com/privacy.html</loc>
+    <loc>https://stressfreeflow.com/blog/tactile-stress-relief-sensory-overload.html</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/stress-free-flow-2-1-14-update.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/green-grey-violet-noise-focus-sleep.html</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/breath-reset-guided-breathing-anxiety.html</loc>
     <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/adhd-calm-strategies.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/sleep-sounds-sensory-wind-down.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/stress-relief-without-subscriptions.html</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/privacy.html</loc>
+    <lastmod>2026-07-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

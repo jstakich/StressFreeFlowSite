@@ -1860,6 +1860,68 @@ body.has-sticky-cta {
   margin-top: 24px;
 }
 
+.blog-start-here {
+  margin: 20px 0 8px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(140, 224, 255, 0.18);
+  background: rgba(140, 224, 255, 0.06);
+}
+
+.blog-start-here-label {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #c8e8ff;
+}
+
+.blog-start-here-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.blog-start-here-list a {
+  color: #d8f4ff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.blog-start-here-list a:hover {
+  color: var(--accent);
+}
+
+.blog-related {
+  margin: 28px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.blog-related h2 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+}
+
+.blog-related-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.blog-related-list a {
+  color: #d8f4ff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.blog-related-list a:hover {
+  color: var(--accent);
+}
+
 .blog-post-page .legal-card {
   max-width: 760px;
 }

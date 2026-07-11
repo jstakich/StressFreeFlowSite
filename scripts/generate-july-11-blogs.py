@@ -753,8 +753,9 @@ def render_post(post: dict) -> str:
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="{canonical}" />
     <meta name="theme-color" content="#0c1837" />
-    <link rel="icon" href="../assets/appicon.png" />
-    <link rel="stylesheet" href="../styles.css?v=33" />
+    <link rel="icon" href="../assets/appicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+    <link rel="stylesheet" href="../styles.css?v=34" />
   </head>
   <body>
     <header class="topbar">
