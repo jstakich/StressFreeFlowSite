@@ -52,6 +52,18 @@
   }
 
   videos.forEach(function (video) {
+    if (video.readyState >= 2) {
+      video.classList.add("is-ready");
+    }
+
+    video.addEventListener(
+      "loadeddata",
+      function () {
+        video.classList.add("is-ready");
+      },
+      { once: true }
+    );
+
     video.classList.add("preview-tap-video");
     video.setAttribute("tabindex", "0");
 

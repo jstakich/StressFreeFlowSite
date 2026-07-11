@@ -604,6 +604,10 @@ body.has-sticky-cta {
   cursor: pointer;
 }
 
+.iphone-mockup-video.is-ready {
+  background: transparent;
+}
+
 .iphone-mockup-video:fullscreen,
 .iphone-mockup-video:-webkit-full-screen {
   width: 100%;
