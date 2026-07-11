@@ -426,6 +426,25 @@ body.has-sticky-cta {
   font-size: 0.92rem;
 }
 
+.platform-notice {
+  margin: 14px 0 0;
+  max-width: 36rem;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(142, 200, 255, 0.22);
+  background: rgba(142, 200, 255, 0.08);
+  color: #cfeaff;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.footer-platform {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .chip-row {
   display: flex;
   flex-wrap: wrap;
