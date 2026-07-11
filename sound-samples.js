@@ -1,6 +1,8 @@
 (function () {
   var SAMPLE_SECONDS = 7;
+  var SAMPLE_BASE = "/assets/sound-samples/";
   var buttons = document.querySelectorAll("[data-sound-sample]");
+
   if (!buttons.length) {
     return;
   }
@@ -14,7 +16,10 @@
     button.setAttribute("aria-pressed", playing ? "true" : "false");
     var label = button.getAttribute("data-sound-label") || "sound";
     button.textContent = playing ? "■ Stop" : "▶ Sample";
-    button.setAttribute("aria-label", (playing ? "Stop" : "Play 7 second") + " " + label + " sample");
+    button.setAttribute(
+      "aria-label",
+      (playing ? "Stop" : "Play 7 second") + " " + label + " sample"
+    );
   }
 
   function stopActive() {
@@ -34,52 +39,85 @@
     }
   }
 
+  function beginPlayback(audio, button) {
+    if (activeAudio !== audio || activeButton !== button) {
+      return;
+    }
+
+    stopTimer = window.setTimeout(function () {
+      stopActive();
+    }, SAMPLE_SECONDS * 1000);
+
+    var playPromise = audio.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(function () {
+        if (activeAudio === audio) {
+          stopActive();
+        }
+      });
+    }
+  }
+
+  function startSample(button, slug) {
+    stopActive();
+    activeButton = button;
+    setPlaying(button, true);
+
+    var audio = new Audio(SAMPLE_BASE + slug + ".mp3");
+    audio.preload = "auto";
+    audio.volume = 1;
+    activeAudio = audio;
+
+    audio.addEventListener(
+      "ended",
+      function () {
+        stopActive();
+      },
+      { once: true }
+    );
+
+    audio.addEventListener(
+      "error",
+      function () {
+        if (activeAudio === audio) {
+          stopActive();
+        }
+      },
+      { once: true }
+    );
+
+    if (audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      beginPlayback(audio, button);
+      return;
+    }
+
+    audio.addEventListener(
+      "canplay",
+      function () {
+        beginPlayback(audio, button);
+      },
+      { once: true }
+    );
+
+    audio.load();
+  }
+
   buttons.forEach(function (button) {
     var slug = button.getAttribute("data-sound-sample");
     if (!slug) {
       return;
     }
 
-    button.addEventListener("click", function () {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+
       if (activeButton === button && activeAudio && !activeAudio.paused) {
         stopActive();
         return;
       }
 
-      stopActive();
-      activeButton = button;
-      setPlaying(button, true);
-
-      var audio = new Audio("./assets/sound-samples/" + slug + ".mp3");
-      audio.preload = "none";
-      activeAudio = audio;
-
-      audio.addEventListener(
-        "ended",
-        function () {
-          stopActive();
-        },
-        { once: true }
-      );
-
-      audio.addEventListener(
-        "error",
-        function () {
-          stopActive();
-        },
-        { once: true }
-      );
-
-      var playPromise = audio.play();
-      if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(function () {
-          stopActive();
-        });
-      }
-
-      stopTimer = window.setTimeout(function () {
-        stopActive();
-      }, SAMPLE_SECONDS * 1000);
+      startSample(button, slug);
     });
   });
 })();
