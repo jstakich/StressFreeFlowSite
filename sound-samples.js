@@ -1,6 +1,7 @@
 (function () {
   var SAMPLE_SECONDS = 7;
   var SAMPLE_BASE = "/assets/sound-samples/";
+  var SAMPLE_VERSION = "3";
   var buttons = document.querySelectorAll("[data-sound-sample]");
 
   if (!buttons.length) {
@@ -63,7 +64,7 @@
     activeButton = button;
     setPlaying(button, true);
 
-    var audio = new Audio(SAMPLE_BASE + slug + ".mp3");
+    var audio = new Audio(SAMPLE_BASE + slug + ".mp3?v=" + SAMPLE_VERSION);
     audio.preload = "auto";
     audio.volume = 1;
     activeAudio = audio;

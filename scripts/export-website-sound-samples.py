@@ -77,14 +77,53 @@ def export_trim(src: Path, dst: Path, start: float = 12.0) -> None:
     )
 
 
-def export_amix(dst: Path, filters: list[str]) -> None:
+def export_amix(dst: Path, filters: list[str], mix_volume: float | None = None) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
     inputs = []
     fcs = []
     for i, fc in enumerate(filters):
         inputs.extend(["-f", "lavfi", "-i", fc])
         fcs.append(f"[{i}:a]")
-    fc_str = "".join(fcs) + f"amix=inputs={len(filters)}:duration=first:dropout_transition=0,volume={min(1.0, 1.6 / len(filters)):.2f}"
+    volume = mix_volume if mix_volume is not None else min(1.0, 1.6 / len(filters))
+    fc_str = (
+        "".join(fcs)
+        + f"amix=inputs={len(filters)}:duration=first:dropout_transition=0,volume={volume:.2f}"
+    )
+    run(
+        [
+            FFMPEG,
+            "-y",
+            *inputs,
+            "-filter_complex",
+            fc_str,
+            "-t",
+            str(DURATION),
+            "-ar",
+            str(SR),
+            "-ac",
+            "2",
+            "-c:a",
+            "libmp3lame",
+            "-b:a",
+            "96k",
+            str(dst),
+        ]
+    )
+
+
+def export_procedural_bed(dst: Path, filters: list[str], post_filter: str) -> None:
+    """Mix procedural lavfi beds and normalize loudness for web preview."""
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    inputs = []
+    fcs = []
+    for i, fc in enumerate(filters):
+        inputs.extend(["-f", "lavfi", "-i", fc])
+        fcs.append(f"[{i}:a]")
+    fc_str = (
+        "".join(fcs)
+        + f"amix=inputs={len(filters)}:duration=first:dropout_transition=0,"
+        + post_filter
+    )
     run(
         [
             FFMPEG,
@@ -175,13 +214,26 @@ def main() -> int:
         f"anoisesrc=color=pink:sample_rate={SR}:duration={DURATION},lowpass=f=900,volume=0.85",
     )
     export_trim(pick_source("Pro_Thunder_Storm"), OUT / "thunder-showers.mp3", start=18.0)
-    export_mp3(
+    # Deep Low Hum + Drone are procedural in the app (not recorded files). Match the layered
+    # tones from AudioManager+Sources.swift and normalize loudness so previews are audible.
+    export_procedural_bed(
         OUT / "deep-low-hum.mp3",
-        f"sine=frequency=58:sample_rate={SR}:duration={DURATION},volume=0.35",
+        [
+            f"sine=frequency=31:sample_rate={SR}:duration={DURATION},volume=0.72",
+            f"sine=frequency=17:sample_rate={SR}:duration={DURATION},volume=0.48",
+            f"sine=frequency=8.6:sample_rate={SR}:duration={DURATION},volume=0.34",
+            f"sine=frequency=62:sample_rate={SR}:duration={DURATION},volume=0.22",
+        ],
+        "volume=3.2,lowpass=f=220,alimiter=limit=0.92,loudnorm=I=-18:TP=-1.5:LRA=11",
     )
-    export_mp3(
+    export_procedural_bed(
         OUT / "drone.mp3",
-        f"sine=frequency=94:sample_rate={SR}:duration={DURATION},volume=0.22",
+        [
+            f"sine=frequency=94:sample_rate={SR}:duration={DURATION},volume=0.64",
+            f"sine=frequency=141:sample_rate={SR}:duration={DURATION},volume=0.34",
+            f"sine=frequency=188:sample_rate={SR}:duration={DURATION},volume=0.16",
+        ],
+        "volume=3.4,alimiter=limit=0.92,loudnorm=I=-18:TP=-1.5:LRA=11",
     )
     export_mp3(
         OUT / "blue-noise.mp3",
