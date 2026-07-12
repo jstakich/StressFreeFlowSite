@@ -16,6 +16,12 @@
     }
   }
 
+  function finishLoading(video) {
+    delete video.dataset.loading;
+    loadingCount = Math.max(0, loadingCount - 1);
+    drainQueue();
+  }
+
   function loadVideo(video) {
     var source = video.getAttribute("data-lazy-src");
     if (!source || video.getAttribute("src") || video.dataset.loading === "true") {
@@ -28,30 +34,38 @@
     video.setAttribute("autoplay", "");
     video.setAttribute("loop", "");
     video.setAttribute("muted", "");
+    video.muted = true;
     video.setAttribute("playsinline", "");
     video.setAttribute("preload", "auto");
-    video.load();
 
-    if (video.readyState >= 2) {
-      video.classList.add("is-ready");
-      delete video.dataset.loading;
-      loadingCount = Math.max(0, loadingCount - 1);
-      startPlayback(video);
-      drainQueue();
-      return;
-    }
+    video.addEventListener(
+      "error",
+      function () {
+        // Keep the poster frame visible if the video cannot decode.
+        video.removeAttribute("src");
+        video.load();
+        finishLoading(video);
+      },
+      { once: true }
+    );
 
     video.addEventListener(
       "loadeddata",
       function () {
         video.classList.add("is-ready");
-        delete video.dataset.loading;
-        loadingCount = Math.max(0, loadingCount - 1);
+        finishLoading(video);
         startPlayback(video);
-        drainQueue();
       },
       { once: true }
     );
+
+    video.load();
+
+    if (video.readyState >= 2) {
+      video.classList.add("is-ready");
+      finishLoading(video);
+      startPlayback(video);
+    }
   }
 
   function drainQueue() {

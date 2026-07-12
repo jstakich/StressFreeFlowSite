@@ -45,8 +45,8 @@
     <link rel="preconnect" href="https://itunes.apple.com" crossorigin />
     <meta name="apple-itunes-app" content="app-id=6757947997, app-argument=https://stressfreeflow.com/" />
     <link rel="home" href="https://stressfreeflow.com/" />
-    <link rel="preload" href="./assets/video-posters/iphone-hero-recording.webp" as="image" type="image/webp" />
-    <link rel="preload" href="./assets/iphone-hero-recording.mp4" as="fetch" type="video/mp4" crossorigin />
+    <link rel="preload" href="./assets/video-posters/iphone-hero-recording.webp?v=5" as="image" type="image/webp" />
+    <link rel="preload" href="./assets/iphone-hero-recording.mp4?v=5" as="fetch" type="video/mp4" crossorigin />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -385,13 +385,13 @@
               <div class="iphone-mockup-screen">
                 <video
                   class="iphone-mockup-video lazy-video-hero"
-                  src="./assets/iphone-hero-recording.mp4"
-                  poster="./assets/video-posters/iphone-hero-recording.webp"
+                  src="./assets/iphone-hero-recording.mp4?v=5"
+                  poster="./assets/video-posters/iphone-hero-recording.webp?v=5"
                   autoplay
                   muted
                   loop
                   playsinline
-                  preload="metadata"
+                  preload="auto"
                   aria-label="Stress Free Flow iPhone screen recording"
                 ></video>
               </div>
@@ -455,17 +455,18 @@
               <div class="developer-intro">
                 <picture>
                   <source
-                    srcset="./assets/developer-portrait-160.webp 1x, ./assets/developer-portrait-320.webp 2x"
+                    srcset="./assets/developer-portrait.webp?v=5"
                     type="image/webp"
                   />
                   <img
                     class="developer-portrait developer-portrait-lg"
-                    src="./assets/developer-portrait.jpg"
+                    src="./assets/developer-portrait.jpg?v=5"
                     alt="Portrait of Jeremy Stakich, developer of Stress Free Flow"
                     width="160"
                     height="160"
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
+                    fetchpriority="high"
                   />
                 </picture>
                 <p class="developer-name">Jeremy Stakich</p>
@@ -720,8 +721,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/interactive-views/deep-sea.mp4"
-                      poster="./assets/video-posters/deep-sea.webp"
+                      data-lazy-src="./assets/interactive-views/deep-sea.mp4?v=5"
+                      poster="./assets/video-posters/deep-sea.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -745,8 +746,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/interactive-views/country.mp4"
-                      poster="./assets/video-posters/country.webp"
+                      data-lazy-src="./assets/interactive-views/country.mp4?v=5"
+                      poster="./assets/video-posters/country.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -770,8 +771,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/interactive-views/beach.mp4"
-                      poster="./assets/video-posters/beach.webp"
+                      data-lazy-src="./assets/interactive-views/beach.mp4?v=5"
+                      poster="./assets/video-posters/beach.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -795,8 +796,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/interactive-views/ollies-numbers.mp4"
-                      poster="./assets/video-posters/ollies-numbers.webp"
+                      data-lazy-src="./assets/interactive-views/ollies-numbers.mp4?v=5"
+                      poster="./assets/video-posters/ollies-numbers.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -842,8 +843,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/stress-relief-buttons/heartbeat.mp4"
-                      poster="./assets/video-posters/heartbeat.webp"
+                      data-lazy-src="./assets/stress-relief-buttons/heartbeat.mp4?v=5"
+                      poster="./assets/video-posters/heartbeat.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -867,8 +868,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/stress-relief-buttons/deep-wave.mp4"
-                      poster="./assets/video-posters/deep-wave.webp"
+                      data-lazy-src="./assets/stress-relief-buttons/deep-wave.mp4?v=5"
+                      poster="./assets/video-posters/deep-wave.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -892,8 +893,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/stress-relief-buttons/slow-breath.mp4"
-                      poster="./assets/video-posters/slow-breath.webp"
+                      data-lazy-src="./assets/stress-relief-buttons/slow-breath.mp4?v=5"
+                      poster="./assets/video-posters/slow-breath.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -917,8 +918,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/stress-relief-buttons/rain-drops.mp4"
-                      poster="./assets/video-posters/rain-drops.webp"
+                      data-lazy-src="./assets/stress-relief-buttons/rain-drops.mp4?v=5"
+                      poster="./assets/video-posters/rain-drops.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -964,8 +965,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/background-sounds/background-sounds.mp4"
-                      poster="./assets/video-posters/background-sounds.webp"
+                      data-lazy-src="./assets/background-sounds/background-sounds.mp4?v=5"
+                      poster="./assets/video-posters/background-sounds.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -1053,8 +1054,8 @@
                   <div class="iphone-mockup-screen">
                     <video
                       class="iphone-mockup-video lazy-video"
-                      data-lazy-src="./assets/breath-reset/breath-reset.mp4"
-                      poster="./assets/video-posters/breath-reset.webp"
+                      data-lazy-src="./assets/breath-reset/breath-reset.mp4?v=5"
+                      poster="./assets/video-posters/breath-reset.webp?v=5"
                       muted
                       playsinline
                       preload="none"
@@ -1329,9 +1330,9 @@
       </div>
     </footer>
     <script src="./sound-samples.js?v=4"></script>
-    <script src="./lazy-videos.js?v=3"></script>
+    <script src="./lazy-videos.js?v=4"></script>
     <script src="./nav-menu.js?v=2"></script>
-    <script src="./preview-videos.js?v=3"></script>
+    <script src="./preview-videos.js?v=4"></script>
     <script src="./app-reviews.js?v=18"></script>
     <script src="./blog-feed.js?v=7"></script>
     <script src="./sticky-cta.js?v=2"></script>
