@@ -4,7 +4,9 @@
   );
 
   function enableSound(video) {
+    video.removeAttribute("muted");
     video.muted = false;
+    video.defaultMuted = false;
     video.volume = 1;
     video.controls = true;
 
