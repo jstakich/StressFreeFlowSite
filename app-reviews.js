@@ -223,9 +223,9 @@
       (starOnlyCount
         ? "<p><strong>" +
           starOnlyCount +
-          "</strong> star-only rating" +
-          (starOnlyCount === 1 ? "" : "s") +
-          "</p>"
+          "</strong> " +
+          (starOnlyCount === 1 ? "user rated" : "users rated") +
+          " the app without writing a review</p>"
         : "") +
       "</div></div></div>";
   }
