@@ -936,6 +936,133 @@ body.has-sticky-cta {
   line-height: 1.72;
 }
 
+.calm-chooser-section {
+  padding-top: 24px;
+}
+
+.calm-chooser-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.calm-chooser-header .eyebrow {
+  margin-bottom: 12px;
+}
+
+.calm-chooser-app-link {
+  flex: 0 0 auto;
+  margin-bottom: 2px;
+}
+
+.calm-chooser-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.calm-choice-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  color: var(--text);
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.calm-choice-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, #8ce0ff, #9ca6ff);
+  opacity: 0.8;
+}
+
+.calm-choice-card:nth-child(2)::before {
+  background: linear-gradient(90deg, #ff9ccf, #b69cff);
+}
+
+.calm-choice-card:nth-child(3)::before {
+  background: linear-gradient(90deg, #8ce0ff, #8fffc1);
+}
+
+.calm-choice-card:nth-child(4)::before {
+  background: linear-gradient(90deg, #b69cff, #7eb7ff);
+}
+
+.calm-choice-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(140, 224, 255, 0.4);
+  background: rgba(20, 39, 75, 0.94);
+}
+
+.calm-choice-card:focus-visible {
+  outline: 2px solid #8ce0ff;
+  outline-offset: 3px;
+}
+
+.calm-choice-icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  color: #d8f4ff;
+  background: linear-gradient(135deg, rgba(140, 224, 255, 0.2), rgba(156, 166, 255, 0.2));
+}
+
+.calm-choice-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.calm-choice-kicker {
+  margin-bottom: 7px;
+  color: #9fdfff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.calm-choice-card strong {
+  margin-bottom: 10px;
+  font-size: 1.16rem;
+  line-height: 1.3;
+}
+
+.calm-choice-copy {
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.calm-choice-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 20px;
+  color: #c6edff;
+  font-size: 0.9rem;
+  font-weight: 750;
+}
+
+.calm-choice-card:hover .calm-choice-action {
+  color: #fff;
+}
+
 .interactive-gestures {
   margin: 18px 0 0;
   padding: 0;
@@ -2075,6 +2202,10 @@ body.has-sticky-cta {
 }
 
 @media (max-width: 980px) {
+  .calm-chooser-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .hero-grid,
   .story-grid,
   .developer-grid,
@@ -2119,6 +2250,20 @@ body.has-sticky-cta {
 @media (max-width: 640px) {
   .site-shell {
     width: min(calc(100% - 20px), var(--max));
+  }
+
+  .calm-chooser-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .calm-chooser-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calm-choice-card {
+    min-height: 0;
   }
 
   .hero {
