@@ -4,7 +4,6 @@
   const APP_STORE_REVIEWS_URL =
     "https://apps.apple.com/us/app/id" + APP_ID + "?see-all=reviews";
   const LOOKUP_TIMEOUT_MS = 5000;
-  const DOWNLOAD_COUNT = 37;
   const WRITTEN_REVIEWS = [
     {
       title: "Stress free flow",
@@ -207,9 +206,6 @@
       '<p class="reviews-hero-label">out of 5</p>' +
       "</div>" +
       '<div class="reviews-summary-details">' +
-      '<p><strong>' +
-      DOWNLOAD_COUNT +
-      "</strong> app downloads</p>" +
       (totalRatings
         ? '<p><strong>' +
           totalRatings +
