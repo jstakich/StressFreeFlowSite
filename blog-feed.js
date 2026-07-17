@@ -169,7 +169,7 @@
     }
   }
 
-  fetch("./blogs.json?v=12")
+  fetch("./blogs.json?v=13")
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Could not load blog posts.");
