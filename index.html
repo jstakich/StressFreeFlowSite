@@ -193,7 +193,114 @@
     </script>
     <link rel="icon" href="./assets/appicon-32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="./styles.css?v=40" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #071225;
+        --text: #f4f8ff;
+        --muted: #bfd0ee;
+        --line: rgba(170, 196, 255, 0.18);
+        --accent: #8ce0ff;
+        --success: #98f5c7;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        --max: 1160px;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(84, 198, 255, 0.28), transparent 32%),
+          radial-gradient(circle at top right, rgba(126, 100, 255, 0.22), transparent 36%),
+          linear-gradient(180deg, #0a1630 0%, #06101f 100%);
+        min-height: 100vh;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { max-width: 100%; display: block; }
+      .site-shell { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; }
+      .topbar {
+        position: sticky; top: 0; z-index: 20;
+        backdrop-filter: blur(16px);
+        background: rgba(6, 14, 30, 0.55);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .topbar-inner {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 20px; min-height: 74px;
+      }
+      .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+      .brand img { width: 48px; height: 48px; border-radius: 14px; }
+      .brand-title { font-weight: 700; letter-spacing: -0.02em; }
+      .brand-subtitle { color: var(--muted); font-size: 0.85rem; }
+      .hero { padding: 54px 0 36px; }
+      .hero-grid {
+        display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: center;
+      }
+      .eyebrow {
+        display: inline-flex; margin-bottom: 18px; padding: 10px 14px;
+        border-radius: 999px; background: rgba(140, 224, 255, 0.1);
+        border: 1px solid rgba(140, 224, 255, 0.14); color: var(--success);
+        font-size: 0.92rem; font-weight: 700;
+      }
+      .hero h1 {
+        margin: 0 0 16px; font-size: clamp(2.6rem, 6vw, 4.6rem);
+        line-height: 0.98; letter-spacing: -0.04em;
+      }
+      .hero h1 span { color: #c0d7ff; }
+      .hero-subhead {
+        margin: 0 0 18px; max-width: 36rem;
+        font-size: clamp(1.05rem, 2.2vw, 1.25rem); line-height: 1.55;
+        font-weight: 600; color: #c8daf8;
+      }
+      .hero-copy {
+        margin: 0 0 24px; max-width: 62ch; color: var(--muted);
+        font-size: 1.06rem; line-height: 1.72;
+      }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+      .button {
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 12px 18px; border-radius: 999px; font-weight: 700;
+      }
+      .button-secondary {
+        border: 1px solid rgba(170, 196, 255, 0.28);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .app-store-badge { display: inline-flex; }
+      .app-store-badge-lg img { height: 54px; width: auto; }
+      .hero-card {
+        background: linear-gradient(180deg, rgba(14, 31, 66, 0.9), rgba(7, 18, 37, 0.95));
+        border: 1px solid var(--line); border-radius: 28px; padding: 22px;
+        box-shadow: var(--shadow);
+      }
+      .iphone-mockup { position: relative; margin: 0 auto; }
+      .iphone-mockup-16 {
+        width: min(100%, 300px); aspect-ratio: 393 / 852; padding: 8px;
+        border-radius: 54px; background: #e8e8ea;
+      }
+      .iphone-mockup-screen {
+        position: absolute; inset: 8px; border-radius: 44px; overflow: hidden; background: #000;
+      }
+      .iphone-mockup-video {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+      }
+      .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+      @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 640px) {
+        .site-shell { width: min(calc(100% - 20px), var(--max)); }
+        .hero { padding-top: 34px; }
+        .hero-card { padding: 18px; }
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="./styles.css?v=41"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript><link rel="stylesheet" href="./styles.css?v=41" /></noscript>
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon-sprite" aria-hidden="true">
@@ -1412,7 +1519,7 @@
       </div>
     </footer>
     <script src="./sound-samples.js?v=7" defer></script>
-    <script src="./lazy-videos.js?v=6" defer></script>
+    <script src="./lazy-videos.js?v=7" defer></script>
     <script src="./nav-menu.js?v=3" defer></script>
     <script src="./preview-videos.js?v=5" defer></script>
     <script src="./app-reviews.js?v=21" defer></script>

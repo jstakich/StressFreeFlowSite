@@ -99,17 +99,26 @@
     }
   });
 
-  // Let the first paint (poster + text) happen, then start the hero video.
+  // Keep the poster up through first paint / LCP, then start the hero MP4.
   function startHero() {
-    if (hero) {
-      enqueue(hero);
+    if (!hero) {
+      return;
     }
+    var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection && (connection.saveData || /2g/.test(connection.effectiveType || ""))) {
+      return;
+    }
+    enqueue(hero);
   }
 
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(startHero, { timeout: 900 });
+  function scheduleHero() {
+    window.setTimeout(startHero, 1800);
+  }
+
+  if (document.readyState === "complete") {
+    scheduleHero();
   } else {
-    window.setTimeout(startHero, 200);
+    window.addEventListener("load", scheduleHero, { once: true });
   }
 
   if (!("IntersectionObserver" in window)) {
