@@ -1,22 +1,27 @@
 (function () {
   var SAMPLE_SECONDS = 7;
   var SAMPLE_BASE = "/assets/sound-samples/";
-  var SAMPLE_VERSION = "6";
+  var SAMPLE_VERSION = "7";
   var buttons = document.querySelectorAll("[data-sound-sample]");
 
   if (!buttons.length) {
     return;
   }
 
-  // One shared media element avoids browser caps on many concurrent Audio() objects.
+  var AudioCtx = window.AudioContext || window.webkitAudioContext;
+  var canWebAudio = typeof AudioCtx === "function";
+
   var player = new Audio();
   player.preload = "auto";
   player.volume = 1;
 
-  var blobCache = Object.create(null);
-  var blobLoading = Object.create(null);
+  var audioContext = null;
+  var bufferCache = Object.create(null);
+  var rawCache = Object.create(null);
+  var bufferLoading = Object.create(null);
   var activeButton = null;
   var activeSlug = null;
+  var activeSource = null;
   var stopTimer = null;
   var playToken = 0;
 
@@ -36,13 +41,6 @@
     );
   }
 
-  function setLoading(button, loading) {
-    button.classList.toggle("is-loading", loading);
-    if (loading) {
-      button.textContent = "…";
-    }
-  }
-
   function clearStopTimer() {
     if (stopTimer) {
       window.clearTimeout(stopTimer);
@@ -50,9 +48,37 @@
     }
   }
 
+  function getAudioContext() {
+    if (!canWebAudio) {
+      return null;
+    }
+    if (!audioContext) {
+      audioContext = new AudioCtx();
+    }
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+    return audioContext;
+  }
+
   function stopActive() {
     clearStopTimer();
     playToken += 1;
+
+    if (activeSource) {
+      try {
+        activeSource.onended = null;
+        activeSource.stop(0);
+      } catch (err) {
+        // Already stopped.
+      }
+      try {
+        activeSource.disconnect();
+      } catch (err) {
+        // Already disconnected.
+      }
+      activeSource = null;
+    }
 
     try {
       player.pause();
@@ -76,64 +102,121 @@
     }, SAMPLE_SECONDS * 1000);
   }
 
-  function loadBlob(slug, attempt) {
+  function fetchRaw(slug, attempt) {
     attempt = attempt || 0;
-    if (blobCache[slug]) {
-      return Promise.resolve(blobCache[slug]);
+    if (rawCache[slug] || bufferCache[slug]) {
+      return Promise.resolve(rawCache[slug] || null);
     }
-    if (blobLoading[slug] && attempt === 0) {
-      return blobLoading[slug];
+    if (bufferLoading[slug] && attempt === 0) {
+      return bufferLoading[slug];
     }
 
-    var request = fetch(sampleUrl(slug), { credentials: "same-origin" })
+    var request = fetch(sampleUrl(slug), { credentials: "same-origin", cache: "force-cache" })
       .then(function (response) {
         if (!response.ok) {
           throw new Error("Failed to load sample");
         }
-        return response.blob();
+        return response.arrayBuffer();
       })
-      .then(function (blob) {
-        var url = URL.createObjectURL(blob);
-        blobCache[slug] = url;
-        delete blobLoading[slug];
-        return url;
+      .then(function (data) {
+        rawCache[slug] = data;
+        delete bufferLoading[slug];
+        return data;
       })
       .catch(function (err) {
-        delete blobLoading[slug];
+        delete bufferLoading[slug];
         if (attempt < 2) {
           return new Promise(function (resolve, reject) {
             window.setTimeout(function () {
-              loadBlob(slug, attempt + 1).then(resolve, reject);
-            }, 250 * (attempt + 1));
+              fetchRaw(slug, attempt + 1).then(resolve, reject);
+            }, 200 * (attempt + 1));
           });
         }
         throw err;
       });
 
     if (attempt === 0) {
-      blobLoading[slug] = request;
+      bufferLoading[slug] = request;
     }
     return request;
   }
 
-  function playFromUrl(button, slug, url, token) {
+  function decodeBuffer(slug) {
+    if (bufferCache[slug]) {
+      return Promise.resolve(bufferCache[slug]);
+    }
+
+    var context = getAudioContext();
+    if (!context) {
+      return Promise.reject(new Error("No Web Audio"));
+    }
+
+    return fetchRaw(slug).then(function (data) {
+      if (bufferCache[slug]) {
+        return bufferCache[slug];
+      }
+      if (!data) {
+        throw new Error("Missing sample data");
+      }
+      return context.decodeAudioData(data.slice(0)).then(function (buffer) {
+        bufferCache[slug] = buffer;
+        return buffer;
+      });
+    });
+  }
+
+  function playBuffer(button, slug, buffer, token) {
+    if (token !== playToken || activeButton !== button) {
+      return;
+    }
+
+    var context = getAudioContext();
+    if (!context) {
+      playHtml(button, slug, token);
+      return;
+    }
+
+    try {
+      player.pause();
+    } catch (err) {
+      // Ignore.
+    }
+
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    activeSource = source;
+    activeSlug = slug;
+
+    source.onended = function () {
+      if (token === playToken && activeSource === source) {
+        stopActive();
+      }
+    };
+
+    source.start(0);
+    setPlaying(button, true);
+    armStopTimer(token);
+  }
+
+  function playHtml(button, slug, token) {
     if (token !== playToken || activeButton !== button) {
       return;
     }
 
     activeSlug = slug;
-    player.src = url;
+    player.src = sampleUrl(slug);
 
     try {
       player.currentTime = 0;
     } catch (err) {
-      // Ignore until metadata is ready.
+      // Ignore.
     }
 
     var playPromise = player.play();
     if (!playPromise || typeof playPromise.then !== "function") {
-      armStopTimer(token);
       setPlaying(button, true);
+      armStopTimer(token);
       return;
     }
 
@@ -152,11 +235,6 @@
         if (err && err.name === "AbortError") {
           return;
         }
-        // Last resort: try the network URL directly once.
-        if (url.indexOf("blob:") === 0) {
-          playFromUrl(button, slug, sampleUrl(slug), token);
-          return;
-        }
         stopActive();
       });
   }
@@ -169,33 +247,42 @@
     activeSlug = slug;
     setPlaying(button, true);
 
-    // Prefer a warm blob for instant start; otherwise play the network URL
-    // immediately inside the user gesture, then upgrade the cache in background.
-    if (blobCache[slug]) {
-      playFromUrl(button, slug, blobCache[slug], token);
+    getAudioContext();
+
+    if (bufferCache[slug]) {
+      playBuffer(button, slug, bufferCache[slug], token);
       return;
     }
 
-    playFromUrl(button, slug, sampleUrl(slug), token);
-    loadBlob(slug).catch(function () {});
-  }
-
-  function warmSlug(slug) {
-    if (!slug) {
+    if (rawCache[slug]) {
+      decodeBuffer(slug).then(
+        function (buffer) {
+          playBuffer(button, slug, buffer, token);
+        },
+        function () {
+          playHtml(button, slug, token);
+        }
+      );
       return;
     }
-    loadBlob(slug).catch(function () {});
+
+    playHtml(button, slug, token);
+    fetchRaw(slug)
+      .then(function () {
+        return decodeBuffer(slug);
+      })
+      .catch(function () {});
   }
 
   var warmQueue = [];
   var warmActive = 0;
-  var WARM_CONCURRENCY = 3;
+  var WARM_CONCURRENCY = 6;
 
   function drainWarmQueue() {
     while (warmActive < WARM_CONCURRENCY && warmQueue.length) {
       var slug = warmQueue.shift();
       warmActive += 1;
-      loadBlob(slug).then(
+      fetchRaw(slug).then(
         function () {
           warmActive = Math.max(0, warmActive - 1);
           drainWarmQueue();
@@ -209,7 +296,7 @@
   }
 
   function enqueueWarm(slug) {
-    if (!slug || blobCache[slug] || blobLoading[slug]) {
+    if (!slug || rawCache[slug] || bufferCache[slug] || bufferLoading[slug]) {
       return;
     }
     if (warmQueue.indexOf(slug) !== -1) {
@@ -220,11 +307,7 @@
   }
 
   player.addEventListener("ended", function () {
-    stopActive();
-  });
-
-  player.addEventListener("error", function () {
-    if (activeButton) {
+    if (!activeSource) {
       stopActive();
     }
   });
@@ -236,17 +319,22 @@
     }
 
     button.addEventListener("pointerenter", function () {
-      warmSlug(slug);
+      enqueueWarm(slug);
     });
     button.addEventListener("focus", function () {
-      warmSlug(slug);
+      enqueueWarm(slug);
     });
 
     button.addEventListener("click", function (event) {
       event.preventDefault();
       event.stopPropagation();
 
-      if (activeButton === button && activeSlug === slug && !player.paused) {
+      var isActive =
+        activeButton === button &&
+        activeSlug === slug &&
+        (activeSource || !player.paused);
+
+      if (isActive) {
         stopActive();
         return;
       }
@@ -255,29 +343,23 @@
     });
   });
 
-  function warmCatalog() {
-    var free = [];
-    var pro = [];
-    buttons.forEach(function (button) {
-      var slug = button.getAttribute("data-sound-sample");
-      if (!slug) {
-        return;
-      }
-      if (button.closest(".sound-list-free")) {
-        free.push(slug);
-      } else {
-        pro.push(slug);
-      }
-    });
-    free.concat(pro).forEach(enqueueWarm);
-  }
+  // Warm free samples immediately; Pro follows as soon as the section is near.
+  buttons.forEach(function (button) {
+    if (!button.closest(".sound-list-free")) {
+      return;
+    }
+    var slug = button.getAttribute("data-sound-sample");
+    if (slug) {
+      enqueueWarm(slug);
+    }
+  });
 
   var section = document.getElementById("background-sounds");
   if (section && "IntersectionObserver" in window) {
-    var warmed = false;
+    var warmedPro = false;
     var observer = new IntersectionObserver(
       function (entries) {
-        if (warmed) {
+        if (warmedPro) {
           return;
         }
         var visible = entries.some(function (entry) {
@@ -286,20 +368,16 @@
         if (!visible) {
           return;
         }
-        warmed = true;
+        warmedPro = true;
         observer.disconnect();
-
-        function startWarm() {
-          window.setTimeout(warmCatalog, 400);
-        }
-
-        if (document.readyState === "complete") {
-          startWarm();
-        } else {
-          window.addEventListener("load", startWarm, { once: true });
-        }
+        buttons.forEach(function (button) {
+          var slug = button.getAttribute("data-sound-sample");
+          if (slug) {
+            enqueueWarm(slug);
+          }
+        });
       },
-      { rootMargin: "300px 0px" }
+      { rootMargin: "600px 0px" }
     );
     observer.observe(section);
   }
