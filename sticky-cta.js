@@ -22,7 +22,6 @@
     bar.classList.toggle("is-visible", show);
     bar.hidden = !show;
     bar.setAttribute("aria-hidden", show ? "false" : "true");
-    document.body.classList.toggle("has-sticky-cta", show);
   }
 
   function update() {

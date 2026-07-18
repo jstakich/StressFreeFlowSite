@@ -337,17 +337,16 @@ body.nav-open {
   }
 }
 
-body.has-sticky-cta {
-  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+@media (max-width: 1200px) {
+  body {
+    /* Reserve sticky CTA space up front so showing the bar does not shift layout. */
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 @media (min-width: 1201px) {
   .sticky-cta-bar {
     display: none;
-  }
-
-  body.has-sticky-cta {
-    padding-bottom: 0;
   }
 }
 

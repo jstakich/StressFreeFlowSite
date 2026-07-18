@@ -276,7 +276,7 @@
 
   var warmQueue = [];
   var warmActive = 0;
-  var WARM_CONCURRENCY = 6;
+  var WARM_CONCURRENCY = 3;
 
   function drainWarmQueue() {
     while (warmActive < WARM_CONCURRENCY && warmQueue.length) {
@@ -343,41 +343,36 @@
     });
   });
 
-  // Warm free samples immediately; Pro follows as soon as the section is near.
-  buttons.forEach(function (button) {
-    if (!button.closest(".sound-list-free")) {
-      return;
-    }
-    var slug = button.getAttribute("data-sound-sample");
-    if (slug) {
-      enqueueWarm(slug);
-    }
-  });
-
+  // Warm only on intent (hover/focus) or when the sounds section is on screen.
+  // Do not prefetch during initial page load — that tanks LCP on Slow 4G.
   var section = document.getElementById("background-sounds");
   if (section && "IntersectionObserver" in window) {
-    var warmedPro = false;
+    var warmedSection = false;
     var observer = new IntersectionObserver(
       function (entries) {
-        if (warmedPro) {
+        if (warmedSection) {
           return;
         }
         var visible = entries.some(function (entry) {
-          return entry.isIntersecting;
+          return entry.isIntersecting && entry.intersectionRatio > 0;
         });
         if (!visible) {
           return;
         }
-        warmedPro = true;
+        warmedSection = true;
         observer.disconnect();
+        // Free samples first, low concurrency so scrolling stays smooth.
         buttons.forEach(function (button) {
+          if (!button.closest(".sound-list-free")) {
+            return;
+          }
           var slug = button.getAttribute("data-sound-sample");
           if (slug) {
             enqueueWarm(slug);
           }
         });
       },
-      { rootMargin: "600px 0px" }
+      { rootMargin: "100px 0px", threshold: 0.05 }
     );
     observer.observe(section);
   }
