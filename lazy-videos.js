@@ -6,7 +6,7 @@
   }
 
   var loadingCount = 0;
-  var MAX_CONCURRENT = 3;
+  var MAX_CONCURRENT = 2;
   var queue = [];
 
   function startPlayback(video) {
@@ -79,12 +79,41 @@
     if (video.getAttribute("src") || video.dataset.loading === "true") {
       return;
     }
-    queue.push(video);
+    if (queue.indexOf(video) !== -1) {
+      return;
+    }
+    // Hero first so below-fold videos do not steal bandwidth.
+    if (video.classList.contains("lazy-video-hero")) {
+      queue.unshift(video);
+    } else {
+      queue.push(video);
+    }
     drainQueue();
   }
 
+  var hero = document.querySelector("video.lazy-video-hero[data-lazy-src]");
+  var others = [];
+  lazyVideos.forEach(function (video) {
+    if (video !== hero) {
+      others.push(video);
+    }
+  });
+
+  // Let the first paint (poster + text) happen, then start the hero video.
+  function startHero() {
+    if (hero) {
+      enqueue(hero);
+    }
+  }
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(startHero, { timeout: 900 });
+  } else {
+    window.setTimeout(startHero, 200);
+  }
+
   if (!("IntersectionObserver" in window)) {
-    lazyVideos.forEach(enqueue);
+    others.forEach(enqueue);
     return;
   }
 
@@ -97,10 +126,10 @@
         }
       });
     },
-    { rootMargin: "700px 0px", threshold: 0.01 }
+    { rootMargin: "400px 0px", threshold: 0.01 }
   );
 
-  lazyVideos.forEach(function (video) {
+  others.forEach(function (video) {
     observer.observe(video);
   });
 })();
