@@ -1,16 +1,24 @@
 (function () {
   var SAMPLE_SECONDS = 7;
   var SAMPLE_BASE = "/assets/sound-samples/";
-  var SAMPLE_VERSION = "5";
+  var SAMPLE_VERSION = "6";
   var buttons = document.querySelectorAll("[data-sound-sample]");
 
   if (!buttons.length) {
     return;
   }
 
-  var audioCache = Object.create(null);
+  var AudioCtx = window.AudioContext || window.webkitAudioContext;
+  var useWebAudio = typeof AudioCtx === "function" && typeof window.fetch === "function";
+
+  var audioContext = null;
+  var bufferCache = Object.create(null);
+  var bufferLoading = Object.create(null);
+  var htmlAudioCache = Object.create(null);
+
   var activeButton = null;
-  var activeAudio = null;
+  var activeSource = null;
+  var activeHtmlAudio = null;
   var stopTimer = null;
   var playToken = 0;
 
@@ -20,6 +28,7 @@
 
   function setPlaying(button, playing) {
     button.classList.toggle("is-playing", playing);
+    button.classList.toggle("is-loading", false);
     button.setAttribute("aria-pressed", playing ? "true" : "false");
     var label = button.getAttribute("data-sound-label") || "sound";
     button.textContent = playing ? "■ Stop" : "▶ Sample";
@@ -29,18 +38,11 @@
     );
   }
 
-  function ensureAudio(slug) {
-    var cached = audioCache[slug];
-    if (cached) {
-      return cached;
+  function setLoading(button, loading) {
+    button.classList.toggle("is-loading", loading);
+    if (loading) {
+      button.textContent = "…";
     }
-
-    var audio = new Audio();
-    audio.preload = "auto";
-    audio.volume = 1;
-    audio.src = sampleUrl(slug);
-    audioCache[slug] = audio;
-    return audio;
   }
 
   function clearStopTimer() {
@@ -50,22 +52,43 @@
     }
   }
 
+  function getAudioContext() {
+    if (!audioContext) {
+      audioContext = new AudioCtx();
+    }
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+    return audioContext;
+  }
+
   function stopActive() {
     clearStopTimer();
     playToken += 1;
 
-    if (activeAudio) {
+    if (activeSource) {
       try {
-        activeAudio.pause();
+        activeSource.onended = null;
+        activeSource.stop(0);
       } catch (err) {
-        // Ignore pause errors from interrupted loads.
+        // Already stopped.
       }
       try {
-        activeAudio.currentTime = 0;
+        activeSource.disconnect();
       } catch (err) {
-        // Ignore if metadata is not ready yet.
+        // Already disconnected.
       }
-      activeAudio = null;
+      activeSource = null;
+    }
+
+    if (activeHtmlAudio) {
+      try {
+        activeHtmlAudio.pause();
+        activeHtmlAudio.currentTime = 0;
+      } catch (err) {
+        // Ignore.
+      }
+      activeHtmlAudio = null;
     }
 
     if (activeButton) {
@@ -83,20 +106,80 @@
     }, SAMPLE_SECONDS * 1000);
   }
 
-  function startSample(button, slug) {
-    stopActive();
+  function loadBuffer(slug) {
+    if (bufferCache[slug]) {
+      return Promise.resolve(bufferCache[slug]);
+    }
+    if (bufferLoading[slug]) {
+      return bufferLoading[slug];
+    }
 
-    var token = playToken;
-    var audio = ensureAudio(slug);
+    bufferLoading[slug] = fetch(sampleUrl(slug), { credentials: "same-origin" })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Failed to load sample");
+        }
+        return response.arrayBuffer();
+      })
+      .then(function (data) {
+        return getAudioContext().decodeAudioData(data.slice(0));
+      })
+      .then(function (buffer) {
+        bufferCache[slug] = buffer;
+        delete bufferLoading[slug];
+        return buffer;
+      })
+      .catch(function (err) {
+        delete bufferLoading[slug];
+        throw err;
+      });
 
-    activeButton = button;
-    activeAudio = audio;
+    return bufferLoading[slug];
+  }
+
+  function playBuffer(button, slug, buffer, token) {
+    if (token !== playToken || activeButton !== button) {
+      return;
+    }
+
+    var context = getAudioContext();
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    activeSource = source;
+
+    source.onended = function () {
+      if (token === playToken && activeSource === source) {
+        stopActive();
+      }
+    };
+
+    source.start(0);
+    armStopTimer(token);
+    setPlaying(button, true);
+  }
+
+  function ensureHtmlAudio(slug) {
+    if (htmlAudioCache[slug]) {
+      return htmlAudioCache[slug];
+    }
+    var audio = new Audio();
+    audio.preload = "auto";
+    audio.volume = 1;
+    audio.src = sampleUrl(slug);
+    htmlAudioCache[slug] = audio;
+    return audio;
+  }
+
+  function startHtmlSample(button, slug, token) {
+    var audio = ensureHtmlAudio(slug);
+    activeHtmlAudio = audio;
     setPlaying(button, true);
 
     try {
       audio.currentTime = 0;
     } catch (err) {
-      // Ignore until the media element has metadata.
+      // Ignore until metadata is ready.
     }
 
     var playPromise = audio.play();
@@ -107,31 +190,66 @@
 
     playPromise
       .then(function () {
-        if (token !== playToken || activeAudio !== audio) {
+        if (token !== playToken || activeHtmlAudio !== audio) {
           return;
         }
         armStopTimer(token);
       })
       .catch(function (err) {
-        if (token !== playToken || activeAudio !== audio) {
+        if (token !== playToken || activeHtmlAudio !== audio) {
           return;
         }
-        // Switching samples aborts the previous play(); ignore that.
         if (err && err.name === "AbortError") {
           return;
         }
         stopActive();
       });
+  }
 
-    audio.addEventListener(
-      "ended",
-      function onEnded() {
-        if (token === playToken && activeAudio === audio) {
-          stopActive();
+  function startSample(button, slug) {
+    stopActive();
+
+    var token = playToken;
+    activeButton = button;
+    setPlaying(button, true);
+
+    if (!useWebAudio) {
+      startHtmlSample(button, slug, token);
+      return;
+    }
+
+    getAudioContext();
+
+    if (bufferCache[slug]) {
+      playBuffer(button, slug, bufferCache[slug], token);
+      return;
+    }
+
+    setLoading(button, true);
+    loadBuffer(slug)
+      .then(function (buffer) {
+        playBuffer(button, slug, buffer, token);
+      })
+      .catch(function () {
+        if (token !== playToken || activeButton !== button) {
+          return;
         }
-      },
-      { once: true }
-    );
+        // Fall back to HTMLAudio if decode/fetch fails.
+        startHtmlSample(button, slug, token);
+      });
+  }
+
+  function warmSlug(slug) {
+    if (!slug) {
+      return;
+    }
+    if (useWebAudio) {
+      loadBuffer(slug).catch(function () {
+        ensureHtmlAudio(slug);
+      });
+      return;
+    }
+    ensureHtmlAudio(slug);
   }
 
   buttons.forEach(function (button) {
@@ -140,18 +258,18 @@
       return;
     }
 
-    function warm() {
-      ensureAudio(slug);
-    }
-
-    button.addEventListener("pointerenter", warm);
-    button.addEventListener("focus", warm);
+    button.addEventListener("pointerenter", function () {
+      warmSlug(slug);
+    });
+    button.addEventListener("focus", function () {
+      warmSlug(slug);
+    });
 
     button.addEventListener("click", function (event) {
       event.preventDefault();
       event.stopPropagation();
 
-      if (activeButton === button && activeAudio && !activeAudio.paused) {
+      if (activeButton === button && (activeSource || (activeHtmlAudio && !activeHtmlAudio.paused))) {
         stopActive();
         return;
       }
@@ -160,7 +278,7 @@
     });
   });
 
-  // Warm the free-tier samples once the section is near view.
+  // Decode every sample as soon as the section is near view so clicks start instantly.
   var section = document.getElementById("background-sounds");
   if (section && "IntersectionObserver" in window) {
     var warmed = false;
@@ -177,16 +295,26 @@
         }
         warmed = true;
         observer.disconnect();
-        document
-          .querySelectorAll(".sound-list-free [data-sound-sample]")
-          .forEach(function (button) {
-            var slug = button.getAttribute("data-sound-sample");
-            if (slug) {
-              ensureAudio(slug);
-            }
-          });
+
+        var free = [];
+        var pro = [];
+        buttons.forEach(function (button) {
+          var slug = button.getAttribute("data-sound-sample");
+          if (!slug) {
+            return;
+          }
+          if (button.closest(".sound-list-free")) {
+            free.push(slug);
+          } else {
+            pro.push(slug);
+          }
+        });
+
+        free.concat(pro).forEach(function (slug) {
+          warmSlug(slug);
+        });
       },
-      { rootMargin: "200px 0px" }
+      { rootMargin: "400px 0px" }
     );
     observer.observe(section);
   }
