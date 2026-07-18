@@ -770,6 +770,12 @@ body.has-sticky-cta {
   border: 1px solid rgba(255, 196, 86, 0.28);
 }
 
+.sound-badge-free {
+  color: #b8e4ff;
+  background: rgba(142, 200, 255, 0.12);
+  border-color: rgba(142, 200, 255, 0.28);
+}
+
 .sound-tier-pro {
   border-color: rgba(255, 196, 86, 0.18);
 }
