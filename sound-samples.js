@@ -252,6 +252,39 @@
     ensureHtmlAudio(slug);
   }
 
+  // Limit background warm-up so sample fetches don't saturate the connection.
+  var warmQueue = [];
+  var warmActive = 0;
+  var WARM_CONCURRENCY = 2;
+
+  function drainWarmQueue() {
+    while (warmActive < WARM_CONCURRENCY && warmQueue.length) {
+      var slug = warmQueue.shift();
+      warmActive += 1;
+      var done = function () {
+        warmActive = Math.max(0, warmActive - 1);
+        drainWarmQueue();
+      };
+      if (useWebAudio) {
+        loadBuffer(slug).then(done, done);
+      } else {
+        ensureHtmlAudio(slug);
+        done();
+      }
+    }
+  }
+
+  function enqueueWarm(slug) {
+    if (!slug || bufferCache[slug] || bufferLoading[slug] || htmlAudioCache[slug]) {
+      return;
+    }
+    if (warmQueue.indexOf(slug) !== -1) {
+      return;
+    }
+    warmQueue.push(slug);
+    drainWarmQueue();
+  }
+
   buttons.forEach(function (button) {
     var slug = button.getAttribute("data-sound-sample");
     if (!slug) {
@@ -278,7 +311,7 @@
     });
   });
 
-  // Decode every sample as soon as the section is near view so clicks start instantly.
+  // Warm free samples near the section; Pro samples warm on hover/focus to keep the page snappy.
   var section = document.getElementById("background-sounds");
   if (section && "IntersectionObserver" in window) {
     var warmed = false;
@@ -296,25 +329,17 @@
         warmed = true;
         observer.disconnect();
 
-        var free = [];
-        var pro = [];
         buttons.forEach(function (button) {
-          var slug = button.getAttribute("data-sound-sample");
-          if (!slug) {
+          if (!button.closest(".sound-list-free")) {
             return;
           }
-          if (button.closest(".sound-list-free")) {
-            free.push(slug);
-          } else {
-            pro.push(slug);
+          var slug = button.getAttribute("data-sound-sample");
+          if (slug) {
+            enqueueWarm(slug);
           }
         });
-
-        free.concat(pro).forEach(function (slug) {
-          warmSlug(slug);
-        });
       },
-      { rootMargin: "400px 0px" }
+      { rootMargin: "200px 0px" }
     );
     observer.observe(section);
   }
