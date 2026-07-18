@@ -112,7 +112,8 @@
   }
 
   function scheduleHero() {
-    window.setTimeout(startHero, 1800);
+    // Let LCP settle on the poster/text first; sounds stay independent of this.
+    window.setTimeout(startHero, 2800);
   }
 
   if (document.readyState === "complete") {
