@@ -83,7 +83,7 @@ const faqItems = [
   {
     title: "Is Stress Free Flow free?",
     body:
-      "The app is free to download. Pro is a one-time $4.99 unlock through Apple. No subscriptions.",
+      "The app is free to download. Pro is a one-time $4.99 unlock through Apple. No subscriptions. No ads.",
   },
   {
     title: "Does it work for sleep or focus?",
