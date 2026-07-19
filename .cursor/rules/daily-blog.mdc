@@ -7,14 +7,17 @@ alwaysApply: true
 
 When the user asks for today’s blog / daily blog / a new blog post, follow this rule plus their paste brief.
 
-## Positioning moat (every post)
+## Positioning moat (facts every post; wording must vary)
 
-- Frame Stress Free Flow as a **replacement** for people tired of wellness-subscription apps — not as “another Calm/Headspace.”
-- In the **product section**, state both:
+Same facts, **not** the same paragraph. Do not copy-paste a stock “moat” block from post to post.
+
+- **Always include (once, naturally)** in the product section and/or quiet CTA:
   - **Buy once:** free download; Pro is a **$4.99 one-time** unlock; no subscriptions; no ads.
-  - **Privacy/native:** the **app** collects no personal data and has no in-app tracking (source of truth: `privacy.html`). Do not overclaim — the **website** may use analytics.
-- Keep the guide useful first. Moat lines appear once in the product paragraph + one quiet end CTA — not as the whole article.
-- Prefer exit-intent angles: subscription fatigue, sensory overload, privacy-first Apple tools, cancel/replace searches. Rotate topics so posts do not cannibalize existing `/blog` URLs or `blogs.json` titles.
+  - **App privacy:** collects no personal data / no in-app tracking (source: `privacy.html`). Do not overclaim — the **website** may use analytics.
+- **Vary the lead** by topic: pricing when the post is about cost/cancel; privacy when trust/ADHD clutter fits; sensory/tactile when overload is the theme. Rephrase every time so archives do not read as identical CTAs.
+- **Replacement framing is optional**, not mandatory. Use “tired of subscription wellness apps” / cancel-replace language only when the keyword and angle support it. Do not force Calm/Headspace comparisons into how-to or acoustic posts.
+- Keep the guide useful first. Moat lines are one short product beat + one quiet end CTA — not the article.
+- Rotate exit-intent **topics** over time (subscription fatigue, sensory overload, privacy/native Apple tools, cancel/replace) so posts do not cannibalize existing `/blog` URLs or `blogs.json` titles.
 
 ## Sales-safe, not salesy
 
