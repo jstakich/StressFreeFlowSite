@@ -1,0 +1,43 @@
+---
+description: Daily SEO blog posts for stressfreeflow.com — positioning moat, sales-safe voice, wiring, publish
+alwaysApply: true
+---
+
+# Daily blog (Stress Free Flow website)
+
+When the user asks for today’s blog / daily blog / a new blog post, follow this rule plus their paste brief.
+
+## Positioning moat (every post)
+
+- Frame Stress Free Flow as a **replacement** for people tired of wellness-subscription apps — not as “another Calm/Headspace.”
+- In the **product section**, state both:
+  - **Buy once:** free download; Pro is a **$4.99 one-time** unlock; no subscriptions; no ads.
+  - **Privacy/native:** the **app** collects no personal data and has no in-app tracking (source of truth: `privacy.html`). Do not overclaim — the **website** may use analytics.
+- Keep the guide useful first. Moat lines appear once in the product paragraph + one quiet end CTA — not as the whole article.
+- Prefer exit-intent angles: subscription fatigue, sensory overload, privacy-first Apple tools, cancel/replace searches. Rotate topics so posts do not cannibalize existing `/blog` URLs or `blogs.json` titles.
+
+## Sales-safe, not salesy
+
+- Never frame the app or its tools as ineffective or “probably won’t help.”
+- Soften clinical honesty without killing conversion: general wellness tool (not medical treatment) → practical usefulness.
+- Competitor mentions: neutral or favorable to our buy-once / Apple-only / tactile / no-ads positioning. Never praise competitors in a way that makes SFF look lesser.
+- No hype, urgency, fake scarcity, emoji spam, or hard-sell language.
+- CTA once near the end: free download → try tools → unlock Pro once ($4.99) if useful.
+
+## Product facts (verified only)
+
+- Apple devices only (iPhone/iPad); App Store; built in Swift/Xcode.
+- Free download; Pro = one-time $4.99; no subscriptions; no ads.
+
+## Write + wire
+
+- Match recent posts: meta, canonical, OG/Twitter, BlogPosting + BreadcrumbList JSON-LD, sticky CTA, related reads, sources/disclaimer, footer, `nav-menu.js` + `sticky-cta.js`, current `styles.css?v=`.
+- Create `/blog/[slug].html`; add top entry in `blogs.json`; add URL to `sitemap.xml`; add to `blog.html` topic directory; bump `blog-feed.js?v=` on `blog.html` and `index.html` if needed.
+- Update homepage “Start here” only if the post earns a top-3 slot.
+- Outbound links: authoritative and sales-upward (NIMH, NCCIH, Apple Support, reputable explainers). Do not link pages that discourage wellness apps or say these tools are a waste.
+- Internal links: 2–4 related blog posts + homepage/App Store CTA.
+
+## Publish
+
+- After wiring, commit only relevant files and push to `origin/main` (see deploy-live rule).
+- Reply with the live URL and suggest a hard refresh.
