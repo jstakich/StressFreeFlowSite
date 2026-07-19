@@ -50,6 +50,24 @@
       "aria-label",
       (playing ? "Stop" : "Play 7 second") + " " + label + " sample"
     );
+    if (playing && button.getAttribute("data-sound-tier") === "pro") {
+      showProSampleCta(label);
+    }
+  }
+
+  function showProSampleCta(label) {
+    var cta = document.getElementById("pro-sample-cta");
+    var copy = document.getElementById("pro-sample-cta-copy");
+    if (!cta) {
+      return;
+    }
+    if (copy) {
+      copy.textContent =
+        (label || "This Pro sound") +
+        " is Pro — unlock everything for a $4.99 one-time fee.";
+    }
+    cta.hidden = false;
+    cta.classList.add("is-visible");
   }
 
   function setLoading(button, loading) {
