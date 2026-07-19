@@ -1,23 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      // Defer analytics until after load so it does not compete with LCP.
-      window.addEventListener("load", function () {
-        var script = document.createElement("script");
-        script.async = true;
-        script.src = "https://www.googletagmanager.com/gtag/js?id=G-QWZ0DDV8Z8";
-        script.onload = function () {
-          gtag("js", new Date());
-          gtag("config", "G-QWZ0DDV8Z8");
-        };
-        document.head.appendChild(script);
-      });
-    </script>
+    <script src="./analytics.js?v=1" data-defer-load></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StressFreeFlow — Official Website | stressfreeflow.com</title>
