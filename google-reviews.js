@@ -24,7 +24,7 @@
   function renderGoogleMark(label) {
     return (
       '<span class="app-store-mark google-mark">' +
-      '<img class="google-mark-icon" src="./assets/google-g.png" width="16" height="16" alt="" aria-hidden="true" />' +
+      '<img class="google-mark-icon" src="./assets/google-g.svg" width="16" height="16" alt="" aria-hidden="true" />' +
       "<span>" +
       escapeHtml(label || "Google") +
       "</span></span>"
@@ -138,14 +138,14 @@
     return (
       '<article class="card reviews-app-store-cta reviews-google-cta">' +
       '<div class="section-icon reviews-google-icon-wrap" aria-hidden="true">' +
-      '<img class="reviews-google-icon" src="./assets/google-g.png" width="40" height="40" alt="" />' +
+      '<img class="reviews-google-icon" src="./assets/google-g.svg" width="40" height="40" alt="" />' +
       "</div>" +
       "<h3>Leave a Google review</h3>" +
       "<p>Scan the code or tap the button to open Google and share your experience.</p>" +
       '<a class="reviews-google-qr-link" href="' +
       REVIEW_URL +
       '" target="_blank" rel="noopener noreferrer">' +
-      '<img class="reviews-google-qr" src="./assets/google-review-qr.png" width="280" height="280" alt="QR code to leave a Google review for Stress Free Flow" />' +
+      '<img class="reviews-google-qr" src="./assets/google-review-qr.png?v=2" width="280" height="280" alt="QR code with Google icon to leave a review for Stress Free Flow" />' +
       "</a>" +
       '<a class="button button-secondary reviews-app-store-button" href="' +
       REVIEW_URL +
