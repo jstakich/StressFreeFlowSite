@@ -1513,6 +1513,14 @@ body.nav-open {
   object-fit: contain;
 }
 
+.google-mark-icon {
+  display: block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
 .reviews-google-icon-wrap {
   display: grid;
   place-items: center;

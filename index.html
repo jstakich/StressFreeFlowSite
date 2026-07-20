@@ -278,7 +278,7 @@
         .hero-card { padding: 18px; }
       }
     </style>
-    <link rel="stylesheet" href="./styles.css?v=46" />
+    <link rel="stylesheet" href="./styles.css?v=47" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon-sprite" aria-hidden="true">
@@ -640,35 +640,18 @@
               />
               Google reviews
             </h2>
-            <p class="section-lead">
-              Prefer Google? Leave a short review there — it helps others find Stress Free Flow.
-            </p>
-            <div class="reviews-grid reviews-grid-single">
-              <article class="card reviews-app-store-cta reviews-google-cta">
-                <div class="section-icon reviews-google-icon-wrap" aria-hidden="true">
-                  <img
-                    class="reviews-google-icon"
-                    src="./assets/google-g.png"
-                    width="40"
-                    height="40"
-                    alt=""
-                  />
-                </div>
-                <h3>Leave a Google review</h3>
-                <p>
-                  Share your experience on Google. Your review helps people looking for a calm,
-                  buy-once Apple wellness app.
-                </p>
-                <a
-                  class="button button-secondary reviews-app-store-button"
-                  href="https://g.page/r/CTESlSaskrL4EBM/review"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Write a Google review
-                </a>
-              </article>
+            <div class="reviews-stats card" id="google-reviews-stats" aria-live="polite">
+              <p class="reviews-status">Loading Google ratings…</p>
             </div>
+            <p class="section-lead" id="google-reviews-summary">Loading Google ratings…</p>
+            <div class="reviews-grid" id="google-reviews">
+              <p class="reviews-status">Loading…</p>
+            </div>
+            <p class="reviews-footnote" id="google-reviews-footnote">
+              <a href="https://g.page/r/CTESlSaskrL4EBM/review" target="_blank" rel="noopener noreferrer">
+                Write a Google review
+              </a>
+            </p>
           </div>
         </div>
       </section>
@@ -1656,6 +1639,7 @@
     <script src="./nav-menu.js?v=3" defer></script>
     <script src="./preview-videos.js?v=5" defer></script>
     <script src="./app-reviews.js?v=21" defer></script>
+    <script src="./google-reviews.js?v=1" defer></script>
     <script src="./blog-feed.js?v=15" defer></script>
     <script src="./sticky-cta.js?v=3" defer></script>
   </body>
