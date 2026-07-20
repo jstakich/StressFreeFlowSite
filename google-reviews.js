@@ -141,7 +141,12 @@
       '<img class="reviews-google-icon" src="./assets/google-g.png" width="40" height="40" alt="" />' +
       "</div>" +
       "<h3>Leave a Google review</h3>" +
-      "<p>Share your experience on Google. It helps others find Stress Free Flow.</p>" +
+      "<p>Scan the code or tap the button to open Google and share your experience.</p>" +
+      '<a class="reviews-google-qr-link" href="' +
+      REVIEW_URL +
+      '" target="_blank" rel="noopener noreferrer">' +
+      '<img class="reviews-google-qr" src="./assets/google-review-qr.png" width="280" height="280" alt="QR code to leave a Google review for Stress Free Flow" />' +
+      "</a>" +
       '<a class="button button-secondary reviews-app-store-button" href="' +
       REVIEW_URL +
       '" target="_blank" rel="noopener noreferrer">Write a Google review</a>' +
