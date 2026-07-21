@@ -209,7 +209,7 @@
     }
 
     try {
-      const response = await fetch(FEED_URL + "?v=1", {
+      const response = await fetch(FEED_URL + "?v=2", {
         cache: "no-cache",
       });
       if (!response.ok) {
