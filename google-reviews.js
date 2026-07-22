@@ -86,7 +86,6 @@
       "<p><strong>" +
       TOTAL_RATINGS +
       "</strong> five-star ratings on Google</p>" +
-      "<p>Open Google to leave a review of your own.</p>" +
       "</div></div></div>";
   }
 
