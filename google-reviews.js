@@ -4,21 +4,6 @@
     "https://www.google.com/maps/search/?api=1&query=Stress%20Free%20Flow&query_place_id=ChIJAwQcAob5OGcRMRKVJqySsvg";
   const AVERAGE_RATING = 5.0;
   const TOTAL_RATINGS = 2;
-  const WRITTEN_REVIEWS = [
-    {
-      title: "Helps my grandson and me",
-      author: "Lacy Scoggins",
-      rating: 5,
-      body:
-        "My autistic grandson and I love this app. For him, it really helps to reduce the Eeeee's (If you know you know)! He loves the sounds and of course the numbers! For me its like a reset. When I get overwhelmed at work or a stressful situation comes up at home I can sit down open this app and get away for a little bit. It helps reset your mind, slow your breathing and helps you relax so you can focus.i definitely recommend this app!",
-    },
-    {
-      title: "A must try",
-      author: "Connetria Allen",
-      rating: 5,
-      body: "Best stress free app. A must try!",
-    },
-  ];
 
   const container = document.getElementById("google-reviews");
   const summary = document.getElementById("google-reviews-summary");
@@ -81,7 +66,6 @@
       return;
     }
 
-    const writtenCount = WRITTEN_REVIEWS.length;
     const averageLabel = formatAverage(AVERAGE_RATING);
 
     stats.innerHTML =
@@ -101,40 +85,9 @@
       '<div class="reviews-summary-details">' +
       "<p><strong>" +
       TOTAL_RATINGS +
-      "</strong> rating" +
-      (TOTAL_RATINGS === 1 ? "" : "s") +
-      " on Google</p>" +
-      "<p><strong>" +
-      writtenCount +
-      "</strong> written review" +
-      (writtenCount === 1 ? "" : "s") +
-      "</p>" +
+      "</strong> five-star ratings on Google</p>" +
+      "<p>Open Google to leave a review of your own.</p>" +
       "</div></div></div>";
-  }
-
-  function renderWrittenReviewCard(review) {
-    const title = escapeHtml(review.title || "Google review");
-    const author = escapeHtml(review.author || "Google reviewer");
-    const rating = review.rating || 5;
-    const body = escapeHtml(review.body || "");
-
-    return (
-      '<article class="card review-card">' +
-      '<div class="review-card-top">' +
-      renderGoogleMark("Google review") +
-      renderStars(rating) +
-      "</div>" +
-      '<h3 class="review-title">' +
-      title +
-      "</h3>" +
-      '<p class="review-body">' +
-      body +
-      "</p>" +
-      '<p class="review-author">' +
-      author +
-      "</p>" +
-      "</article>"
-    );
   }
 
   function renderGoogleCta() {
@@ -144,7 +97,7 @@
       '<img class="reviews-google-icon" src="./assets/google-g.svg" width="40" height="40" alt="" />' +
       "</div>" +
       "<h3>Leave a Google review</h3>" +
-      "<p>These written reviews match Google. Open Google to read every review and leave yours.</p>" +
+      "<p>Scan the code or tap the button to open Google and share your experience.</p>" +
       '<a class="reviews-google-qr-link" href="' +
       REVIEW_URL +
       '" target="_blank" rel="noopener noreferrer">' +
@@ -157,38 +110,28 @@
     );
   }
 
-  function renderWrittenReviews() {
-    container.innerHTML =
-      WRITTEN_REVIEWS.map(renderWrittenReviewCard).join("") + renderGoogleCta();
-    container.classList.toggle("reviews-grid-single", WRITTEN_REVIEWS.length === 1);
+  function renderSection() {
+    renderStatsPanel();
+    container.classList.add("reviews-grid-single");
+    container.innerHTML = renderGoogleCta();
     if (summary) {
       summary.textContent = "";
     }
-  }
-
-  function renderFootnote() {
-    if (!footnote) {
-      return;
+    if (footnote) {
+      footnote.innerHTML =
+        'Ratings from Google Maps.' +
+        ' <a href="' +
+        MAPS_URL +
+        '" target="_blank" rel="noopener noreferrer">See on Google Maps</a>' +
+        ' · <a href="' +
+        REVIEW_URL +
+        '" target="_blank" rel="noopener noreferrer">Write a review</a>';
     }
-    footnote.innerHTML =
-      'These written reviews match Google Maps.' +
-      ' <a href="' +
-      MAPS_URL +
-      '" target="_blank" rel="noopener noreferrer">See all on Google Maps</a>' +
-      ' · <a href="' +
-      REVIEW_URL +
-      '" target="_blank" rel="noopener noreferrer">Write a review</a>';
-  }
-
-  function loadReviews() {
-    renderStatsPanel();
-    renderWrittenReviews();
-    renderFootnote();
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", loadReviews);
+    document.addEventListener("DOMContentLoaded", renderSection);
   } else {
-    loadReviews();
+    renderSection();
   }
 })();
