@@ -2447,6 +2447,11 @@ body.nav-open {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.28), rgba(96, 165, 250, 0.12));
 }
 
+.footer-social-link-youtube {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.28), rgba(255, 80, 80, 0.12));
+}
+
 .footer-social-link:hover {
   background: rgba(255, 255, 255, 0.14);
   border-color: rgba(140, 224, 255, 0.7);
@@ -2491,6 +2496,12 @@ body.nav-open {
   border-color: rgba(96, 165, 250, 0.6);
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.22));
   box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.15), 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.social-chip-youtube {
+  border-color: rgba(255, 80, 80, 0.65);
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.42), rgba(185, 28, 28, 0.22));
+  box-shadow: 0 0 0 1px rgba(255, 80, 80, 0.15), 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 .social-chip:hover {
