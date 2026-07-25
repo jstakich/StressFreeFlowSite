@@ -626,6 +626,11 @@ body.nav-open {
   background: transparent;
 }
 
+.kinetic-sand-section .iphone-mockup-video {
+  object-fit: contain;
+  object-position: center center;
+}
+
 .iphone-mockup-video:fullscreen,
 .iphone-mockup-video:-webkit-full-screen {
   width: 100%;
