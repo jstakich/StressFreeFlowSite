@@ -1083,7 +1083,7 @@ body.nav-open {
 
 .calm-chooser-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -1120,6 +1120,10 @@ body.nav-open {
 
 .calm-choice-card:nth-child(4)::before {
   background: linear-gradient(90deg, #b69cff, #7eb7ff);
+}
+
+.calm-choice-card:nth-child(5)::before {
+  background: linear-gradient(90deg, #ffe08c, #8ce0ff);
 }
 
 .calm-choice-card:hover {
