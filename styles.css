@@ -631,6 +631,11 @@ body.nav-open {
   object-position: center center;
 }
 
+.slime-reset-section .iphone-mockup-video {
+  object-fit: contain;
+  object-position: center center;
+}
+
 .iphone-mockup-video:fullscreen,
 .iphone-mockup-video:-webkit-full-screen {
   width: 100%;
@@ -1083,7 +1088,7 @@ body.nav-open {
 
 .calm-chooser-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
