@@ -644,6 +644,14 @@ body.nav-open {
   line-height: 1.45;
 }
 
+.feature-callout {
+  margin: 14px 0 0;
+  color: #ffe8a8;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
 .iphone-mockup-video:fullscreen,
 .iphone-mockup-video:-webkit-full-screen {
   width: 100%;
