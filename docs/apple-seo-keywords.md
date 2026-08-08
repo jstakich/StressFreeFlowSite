@@ -4,7 +4,13 @@ Source: Apple SEO research sheet.
 - PDF: [`docs/apple-seo-keywords.pdf`](./apple-seo-keywords.pdf) (copied from Downloads)
 - This markdown mirrors the sheet for quick agent use.
 
-Use **best judgment**. Do not force every daily blog onto this list. Prefer these terms when the day’s angle naturally fits, or when backfilling gaps that support App Store discoverability (title / subtitle / keyword field).
+Use **best judgment** as a **blend**, not a mandate:
+
+1. Pick a strong **Google** search-intent primary keyword first (how-to / problem / comparison people already search).
+2. **Optionally** weave Apple sheet terms into the title, secondary keywords, or sections when they fit naturally.
+3. Do **not** force every daily blog onto this list, and do **not** use only Apple terms.
+
+Prefer these Apple phrases when the day’s Google angle overlaps, or when backfilling App Store–aligned discoverability (title / subtitle / keyword field).
 
 ## Current App Store metadata (reference)
 

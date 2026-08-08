@@ -7,14 +7,15 @@ alwaysApply: true
 
 When the user asks for today’s blog / daily blog / a new blog post, follow this rule plus their paste brief.
 
-## Apple SEO keyword list (judgment, not mandatory)
+## Keyword strategy (Google + Apple blend)
 
-Saved reference: [`docs/apple-seo-keywords.md`](../../docs/apple-seo-keywords.md) (App Store research sheet + current title/subtitle/keywords).
+Saved Apple list: [`docs/apple-seo-keywords.md`](../../docs/apple-seo-keywords.md) (+ PDF).
 
-- **Do not force** every post onto this list. Pick a primary Google-intent topic first.
-- **Sometimes include** a sheet term (Mental Reset, Overstimulation, Sensory Tool/Overload, Quiet Rest, Chill out, Calm Break, Mood/Mind Reset, Self Regulation, Recalm, Breath Reset, Reset Stress, Therapy Tools) when it fits the angle or supports App Store language.
-- Prefer uncovered or lightly covered sheet terms; check `blogs.json` / `/blog` to avoid cannibalizing.
-- Best judgment beats checklist coverage.
+- **Lead with Google:** research 1 primary keyword with clear search intent (problem + solution / how-to / comparison). That is the default post driver.
+- **Blend Apple terms when useful:** weave sheet phrases (Mental Reset, Overstimulation, Sensory Tool/Overload, Quiet Rest, Chill out, Calm Break, Mood/Mind Reset, Self Regulation, Recalm, Breath Reset, Reset Stress, Therapy Tools) into title, secondary keywords, or H2s **when they fit**—not as a forced checklist.
+- **Do not** make every post an Apple-list post. Alternate: sometimes Google-only angle, sometimes Google primary + Apple secondary, sometimes an Apple-strong topic if Google intent still holds.
+- Prefer uncovered or lightly covered sheet terms when blending; check `blogs.json` / `/blog` to avoid cannibalizing.
+- Best judgment beats coverage quotas.
 
 ## Positioning moat (facts every post; wording must vary)
 
