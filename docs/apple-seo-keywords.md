@@ -1,7 +1,8 @@
 # Apple App Store SEO keyword list
 
-Source: Apple SEO research sheet (saved for blog + App Store Connect metadata work).
-PDF original lived in Downloads as `Apple SEO - Sheet1.pdf` — prefer this repo copy when available.
+Source: Apple SEO research sheet.
+- PDF: [`docs/apple-seo-keywords.pdf`](./apple-seo-keywords.pdf) (copied from Downloads)
+- This markdown mirrors the sheet for quick agent use.
 
 Use **best judgment**. Do not force every daily blog onto this list. Prefer these terms when the day’s angle naturally fits, or when backfilling gaps that support App Store discoverability (title / subtitle / keyword field).
 
