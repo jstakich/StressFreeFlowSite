@@ -7,6 +7,15 @@ alwaysApply: true
 
 When the user asks for today’s blog / daily blog / a new blog post, follow this rule plus their paste brief.
 
+## Apple SEO keyword list (judgment, not mandatory)
+
+Saved reference: [`docs/apple-seo-keywords.md`](../../docs/apple-seo-keywords.md) (App Store research sheet + current title/subtitle/keywords).
+
+- **Do not force** every post onto this list. Pick a primary Google-intent topic first.
+- **Sometimes include** a sheet term (Mental Reset, Overstimulation, Sensory Tool/Overload, Quiet Rest, Chill out, Calm Break, Mood/Mind Reset, Self Regulation, Recalm, Breath Reset, Reset Stress, Therapy Tools) when it fits the angle or supports App Store language.
+- Prefer uncovered or lightly covered sheet terms; check `blogs.json` / `/blog` to avoid cannibalizing.
+- Best judgment beats checklist coverage.
+
 ## Positioning moat (facts every post; wording must vary)
 
 Same facts, **not** the same paragraph. Do not copy-paste a stock “moat” block from post to post.
