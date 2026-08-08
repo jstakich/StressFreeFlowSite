@@ -279,7 +279,7 @@
         .hero-card { padding: 18px; }
       }
     </style>
-    <link rel="stylesheet" href="./styles.css?v=54" />
+    <link rel="stylesheet" href="./styles.css?v=55" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon-sprite" aria-hidden="true">
@@ -1698,7 +1698,7 @@
         </div>
       </section>
 
-      <section class="section" id="blog">
+      <section class="section section-blog-home" id="blog">
         <div class="site-shell">
           <div class="eyebrow">From the blog</div>
           <h2>Calm reads for ADHD, sleep, sensory needs, and stress relief</h2>
@@ -1706,31 +1706,35 @@
             Practical guides on ADHD calm, sleep sounds, sensory tools, and stress relief — updated
             regularly as the app grows.
           </p>
-          <div class="blog-start-here">
+          <div class="blog-start-here blog-start-here-home">
             <p class="blog-start-here-label">Start here</p>
-            <ul class="blog-start-here-list">
+            <ul class="blog-start-here-list blog-start-here-chips">
               <li>
                 <a href="./blog/phone-overstimulation-iphone-reset.html"
-                  >Phone Overstimulation: An iPhone Reset When Your Screen Feels Too Loud</a
+                  >Phone Overstimulation</a
                 >
               </li>
               <li>
                 <a href="./blog/after-work-anxiety-iphone-wind-down.html"
-                  >After-Work Anxiety: An iPhone Wind-Down Reset</a
+                  >After-Work Anxiety</a
                 >
               </li>
               <li>
                 <a href="./blog/monday-morning-anxiety-iphone-start.html"
-                  >Monday Morning Anxiety: A Practical iPhone Start</a
+                  >Monday Morning Anxiety</a
                 >
               </li>
             </ul>
           </div>
-          <p class="blog-feed-order">Newest first</p>
+          <div class="blog-home-feed-head">
+            <p class="blog-feed-order">Newest first</p>
+            <p class="blog-feed-scroll-hint">Scroll for more</p>
+          </div>
           <div
             class="blog-feed-scroll blog-feed-scroll-home"
             data-blog-feed
-            data-blog-limit="5"
+            data-blog-limit="6"
+            data-blog-compact
             aria-live="polite"
           >
             <p class="blog-feed-status">Loading articles…</p>
@@ -1831,7 +1835,7 @@
     <script src="./preview-videos.js?v=5" defer></script>
     <script src="./app-reviews.js?v=21" defer></script>
     <script src="./google-reviews.js?v=8" defer></script>
-    <script src="./blog-feed.js?v=23" defer></script>
+    <script src="./blog-feed.js?v=24" defer></script>
     <script src="./sticky-cta.js?v=3" defer></script>
   </body>
 </html>

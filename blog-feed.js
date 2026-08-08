@@ -81,12 +81,31 @@
     });
   }
 
-  function renderPost(post) {
+  function renderPost(post, compact) {
     var tags = (post.tags || [])
       .map(function (tag) {
         return '<span class="blog-tag">' + escapeHtml(tag) + "</span>";
       })
       .join("");
+
+    if (compact) {
+      return (
+        '<article class="blog-feed-item blog-feed-item-compact card">' +
+        '<time class="blog-feed-date" datetime="' +
+        escapeHtml(post.date) +
+        '">' +
+        escapeHtml(formatDate(post.date)) +
+        "</time>" +
+        '<div class="blog-feed-body">' +
+        "<h3><a href=\"" +
+        escapeHtml(post.url) +
+        '">' +
+        escapeHtml(post.title) +
+        "</a></h3>" +
+        "</div>" +
+        "</article>"
+      );
+    }
 
     return (
       '<article class="blog-feed-item card">' +
@@ -122,6 +141,7 @@
   function renderFeed(root, posts, query) {
     var limit = root.getAttribute("data-blog-limit");
     var searchable = root.hasAttribute("data-blog-searchable");
+    var compact = root.hasAttribute("data-blog-compact");
     var visiblePosts = posts;
 
     if (searchable && searchInput && String(query || "").trim()) {
@@ -140,7 +160,11 @@
       return;
     }
 
-    root.innerHTML = visiblePosts.map(renderPost).join("");
+    root.innerHTML = visiblePosts
+      .map(function (post) {
+        return renderPost(post, compact);
+      })
+      .join("");
   }
 
   function updateSearchStatus(query, count) {
@@ -169,7 +193,7 @@
     }
   }
 
-  fetch("./blogs.json?v=14")
+  fetch("./blogs.json?v=15")
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Could not load blog posts.");
