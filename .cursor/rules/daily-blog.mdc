@@ -42,12 +42,33 @@ Same facts, **not** the same paragraph. Do not copy-paste a stock “moat” blo
 - Apple devices only (iPhone/iPad); App Store; built in Swift/Xcode.
 - Free download; Pro = one-time $4.99; no subscriptions; no ads.
 
+## Sources (vary them — don’t recycle the same three)
+
+**Problem to avoid:** past posts overused NIMH + NCCIH + Apple Support on almost every article. That looks thin and samey.
+
+**Going forward (every new post):**
+- Use **2–4 outbound sources**, and **rotate** — do not default to the same NIMH/NCCIH/Apple trio every day.
+- Prefer **topic-fit** credible pages (sales-upward only: support calm, sleep hygiene, sensory regulation, ADHD context, Apple how-tos). Never link pages that say these tools don’t work or discourage wellness apps.
+- Include **at least one source that is not** NIMH, NCCIH, or a generic Apple Support “playing audio” page when another authority fits better.
+- Over a week of posts, sources should clearly differ; reusing one core link is fine if you add different companions.
+
+**Credible pool (pick what fits the keyword):**
+- **Federal / public health:** NIMH, NCCIH, CDC, NHLBI, NIDCD, MedlinePlus, FDA (only when relevant)
+- **Research discoverability:** PubMed / NIH pages (summarize carefully; mixed results → practical usefulness, not “don’t try”)
+- **ADHD / autism orgs:** CHADD, Autism Speaks resource pages, NHS or reputable clinic explainers that are supportive
+- **Sleep / hearing:** Sleep Foundation (reputational judgment), NHLBI sleep pages, NIDCD, ASHA when acoustic
+- **Apple product how-tos:** Apple Support *specific* to the topic (Focus, Screen Time, Lock Screen, Sound, Background Sounds) — rotate which article, don’t always use the same “play audio” URL
+- **Universities / major clinics:** Cleveland Clinic, Mayo Clinic, Rochester/URMC, etc. when the explainer is balanced and sales-safe
+
+Still: sales-upward only. If a study is mixed, acknowledge variation, then emphasize safe practical use.
+
 ## Write + wire
 
 - Match recent posts: meta, canonical, OG/Twitter, BlogPosting + BreadcrumbList JSON-LD, sticky CTA, related reads, sources/disclaimer, footer, `nav-menu.js` + `sticky-cta.js`, current `styles.css?v=`.
+- Visible byline under the H1 in `blog-post-meta`: `By Jeremy Stakich · <time …>…</time> · …` (keep author in BlogPosting JSON-LD as Jeremy Stakich too).
 - Create `/blog/[slug].html`; add top entry in `blogs.json`; add URL to `sitemap.xml`; add to `blog.html` topic directory; bump `blog-feed.js?v=` on `blog.html` and `index.html` if needed.
 - Update homepage “Start here” only if the post earns a top-3 slot.
-- Outbound links: authoritative and sales-upward (NIMH, NCCIH, Apple Support, reputable explainers). Do not link pages that discourage wellness apps or say these tools are a waste.
+- Outbound links: follow **Sources** section above (varied, credible, sales-upward). Do not link pages that discourage wellness apps or say these tools are a waste.
 - Internal links: 2–4 related blog posts + homepage/App Store CTA.
 
 ## Publish
