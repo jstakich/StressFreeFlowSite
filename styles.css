@@ -1098,6 +1098,14 @@ body.nav-open {
   line-height: 1.65;
 }
 
+.interactive-view-card .preview-tap-hint {
+  margin-top: 12px;
+  color: #b8e4ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
 .preview-frame {
   border-radius: 22px;
   overflow: hidden;
