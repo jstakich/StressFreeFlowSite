@@ -1399,8 +1399,16 @@ body.nav-open {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.feature-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.feature-grid .card a,
+.my-favorite-sound-guide a {
+  color: #b8e4ff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.feature-grid .card a:hover,
+.my-favorite-sound-guide a:hover {
+  color: #e8f7ff;
 }
 
 .feature-grid.my-favorite-sound-side-grid {
