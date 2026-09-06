@@ -830,10 +830,18 @@ body.nav-open {
   margin-left: 0;
 }
 
-.sound-details-btn {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
+.sound-details-link {
+  flex-shrink: 0;
+  color: #b8e4ff;
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sound-details-link:hover {
+  color: #e8f7ff;
 }
 
 .sound-sample-btn {
