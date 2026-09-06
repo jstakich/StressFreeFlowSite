@@ -636,6 +636,11 @@ body.nav-open {
   object-position: center center;
 }
 
+.my-favorite-sound-section .iphone-mockup-video {
+  object-fit: contain;
+  object-position: center center;
+}
+
 .slime-thanks {
   margin: 14px 0 0;
   color: #ffe8a8;
