@@ -1114,6 +1114,26 @@ body.nav-open {
   gap: 10px;
 }
 
+.my-favorite-sound-guide {
+  margin-top: 24px;
+}
+
+.my-favorite-sound-guide .sound-layer-guide {
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .my-favorite-sound-guide .sound-layer-guide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 22px;
+    row-gap: 14px;
+  }
+
+  .my-favorite-sound-guide .sound-layer-guide li:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 .sound-layer-guide li {
   color: var(--muted);
   font-size: 0.92rem;
@@ -1381,6 +1401,15 @@ body.nav-open {
 
 .feature-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-grid.my-favorite-sound-side-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.feature-grid.my-favorite-sound-side-grid .card {
+  height: 100%;
 }
 
 .seo-grid,
