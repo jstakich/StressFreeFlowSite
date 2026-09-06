@@ -282,7 +282,7 @@
         .hero-card { padding: 18px; }
       }
     </style>
-    <link rel="stylesheet" href="./styles.css?v=62" />
+    <link rel="stylesheet" href="./styles.css?v=63" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon-sprite" aria-hidden="true">
@@ -1232,19 +1232,23 @@
                   <li><span class="sound-name">Rain, White, Brown &amp; Pink Mix</span> <span class="sound-badge">Pro</span><button type="button" class="sound-sample-btn" data-sound-sample="rain-white-brown-pink-mix" data-sound-label="Rain, White, Brown and Pink Mix" data-sound-tier="pro">▶ Sample</button></li>
                   <li><span class="sound-name">Pink–Brown Noise Mix</span> <span class="sound-badge">Pro</span><button type="button" class="sound-sample-btn" data-sound-sample="pink-brown-noise-mix" data-sound-label="Pink–Brown Noise Mix" data-sound-tier="pro">▶ Sample</button></li>
                   <li class="sound-list-item-favorite">
-                    <span class="sound-name">My Favorite Sound</span>
+                    <span class="sound-name-stack">
+                      <span class="sound-name">My Favorite Sound</span>
+                      <span class="sound-inline-note">Custom seven-color mixer</span>
+                    </span>
                     <span class="sound-badge">Pro</span>
-                    <span class="sound-inline-note">Custom seven-color mixer</span>
-                    <button
-                      type="button"
-                      class="sound-sample-btn"
-                      data-sound-sample="my-favorite-sound"
-                      data-sound-label="My Favorite Sound"
-                      data-sound-tier="pro"
-                    >
-                      ▶ Sample
-                    </button>
-                    <a class="sound-sample-btn sound-details-btn" href="#my-favorite-sound">Details</a>
+                    <span class="sound-row-actions">
+                      <button
+                        type="button"
+                        class="sound-sample-btn"
+                        data-sound-sample="my-favorite-sound"
+                        data-sound-label="My Favorite Sound"
+                        data-sound-tier="pro"
+                      >
+                        ▶ Sample
+                      </button>
+                      <a class="sound-sample-btn sound-details-btn" href="#my-favorite-sound">Details</a>
+                    </span>
                   </li>
                 </ol>
                 <p class="pro-sample-cta" id="pro-sample-cta" hidden>

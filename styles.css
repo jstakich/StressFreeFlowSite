@@ -799,46 +799,41 @@ body.nav-open {
 }
 
 .sound-inline-note {
-  flex-shrink: 1;
+  display: block;
   color: #9ec9e8;
   font-size: 0.78rem;
   line-height: 1.35;
-  white-space: nowrap;
+  font-weight: 500;
+}
+
+.sound-name-stack {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .sound-list-item-favorite .sound-name {
-  flex: 0 1 auto;
+  flex: none;
 }
 
-.sound-list-item-favorite .sound-sample-btn {
-  margin-left: 0;
-}
-
-.sound-list-item-favorite .sound-sample-btn:first-of-type {
+.sound-row-actions {
+  flex-shrink: 0;
   margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sound-row-actions .sound-sample-btn {
+  margin-left: 0;
 }
 
 .sound-details-btn {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-}
-
-@media (max-width: 640px) {
-  .sound-list-item-favorite {
-    flex-wrap: wrap;
-  }
-
-  .sound-inline-note {
-    white-space: normal;
-    flex: 1 1 100%;
-    order: 5;
-    margin-left: 1.6rem;
-  }
-
-  .sound-list-item-favorite .sound-sample-btn:first-of-type {
-    margin-left: auto;
-  }
 }
 
 .sound-sample-btn {
