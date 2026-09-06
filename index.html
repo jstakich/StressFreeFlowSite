@@ -280,7 +280,7 @@
         .hero-card { padding: 18px; }
       }
     </style>
-    <link rel="stylesheet" href="./styles.css?v=55" />
+    <link rel="stylesheet" href="./styles.css?v=56" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon-sprite" aria-hidden="true">
@@ -600,16 +600,16 @@
               >
             </a>
 
-            <a class="card calm-choice-card" href="#background-sounds">
+            <a class="card calm-choice-card" href="#my-favorite-sound">
               <span class="calm-choice-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><use href="#icon-sound"></use></svg>
               </span>
               <span class="calm-choice-kicker">Distracted or unfocused</span>
               <strong>Focus with sound</strong>
               <span class="calm-choice-copy">
-                Sample brown noise, pink noise, rain, ocean, and build a custom mix with My Favorite Sound.
+                Build your own favorite custom sound.
               </span>
-              <span class="calm-choice-action">Hear sound samples <span aria-hidden="true">→</span></span>
+              <span class="calm-choice-action">Try My Favorite Sound <span aria-hidden="true">→</span></span>
             </a>
 
             <a class="card calm-choice-card" href="#interactive-scenes">
@@ -1220,10 +1220,20 @@
                   <li><span class="sound-name">Winter Snowfall</span> <span class="sound-badge">Pro</span><button type="button" class="sound-sample-btn" data-sound-sample="winter-snowfall" data-sound-label="Winter Snowfall" data-sound-tier="pro">▶ Sample</button></li>
                   <li><span class="sound-name">Rain, White, Brown &amp; Pink Mix</span> <span class="sound-badge">Pro</span><button type="button" class="sound-sample-btn" data-sound-sample="rain-white-brown-pink-mix" data-sound-label="Rain, White, Brown and Pink Mix" data-sound-tier="pro">▶ Sample</button></li>
                   <li><span class="sound-name">Pink–Brown Noise Mix</span> <span class="sound-badge">Pro</span><button type="button" class="sound-sample-btn" data-sound-sample="pink-brown-noise-mix" data-sound-label="Pink–Brown Noise Mix" data-sound-tier="pro">▶ Sample</button></li>
-                  <li>
+                  <li class="sound-list-item-favorite">
                     <span class="sound-name">My Favorite Sound</span>
                     <span class="sound-badge">Pro</span>
-                    <a class="sound-sample-btn" href="#my-favorite-sound">Details</a>
+                    <span class="sound-inline-note">Custom seven-color mixer</span>
+                    <button
+                      type="button"
+                      class="sound-sample-btn"
+                      data-sound-sample="my-favorite-sound"
+                      data-sound-label="My Favorite Sound"
+                      data-sound-tier="pro"
+                    >
+                      ▶ Sample
+                    </button>
+                    <a class="sound-sample-btn sound-details-btn" href="#my-favorite-sound">Details</a>
                   </li>
                 </ol>
                 <p class="pro-sample-cta" id="pro-sample-cta" hidden>
@@ -1897,7 +1907,7 @@
         <p class="footer-copyright">Copyright © 2026 Jeremy Stakich – Stress Free Flow</p>
       </div>
     </footer>
-    <script src="./sound-samples.js?v=13" defer></script>
+    <script src="./sound-samples.js?v=14" defer></script>
     <script src="./lazy-videos.js?v=8" defer></script>
     <script src="./nav-menu.js?v=3" defer></script>
     <script src="./preview-videos.js?v=5" defer></script>

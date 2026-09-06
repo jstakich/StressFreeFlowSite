@@ -8,7 +8,7 @@
    */
   var SAMPLE_SECONDS = 7;
   var SAMPLE_BASE = "/assets/sound-samples/";
-  var SAMPLE_VERSION = "7";
+  var SAMPLE_VERSION = "8";
   var SILENT_WAV =
     "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
 
@@ -36,8 +36,13 @@
   var playToken = 0;
   var unlockPromise = null;
 
+  var SAMPLE_EXT = {
+    "my-favorite-sound": "m4a"
+  };
+
   function sampleUrl(slug) {
-    return SAMPLE_BASE + slug + ".mp3?v=" + SAMPLE_VERSION;
+    var ext = SAMPLE_EXT[slug] || "mp3";
+    return SAMPLE_BASE + slug + "." + ext + "?v=" + SAMPLE_VERSION;
   }
 
   function setPlaying(button, playing) {
