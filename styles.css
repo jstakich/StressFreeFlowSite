@@ -2697,15 +2697,15 @@ body.nav-open {
 }
 
 .blog-share-facebook {
-  color: #fff;
-  background: #1877f2;
-  border-color: #166fe5;
-  box-shadow: 0 6px 16px rgba(24, 119, 242, 0.35);
+  color: #e8f2ff;
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.55), rgba(59, 130, 246, 0.28));
+  border-color: rgba(147, 197, 253, 0.7);
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.18), 0 6px 16px rgba(37, 99, 235, 0.22);
 }
 
 .blog-share-facebook:hover,
 .blog-share-facebook:focus-visible {
-  background: #166fe5;
+  background: linear-gradient(135deg, rgba(125, 186, 255, 0.65), rgba(59, 130, 246, 0.38));
 }
 
 .blog-share-native {
@@ -2895,8 +2895,9 @@ body.nav-open {
 }
 
 .footer-social-link-facebook {
-  border-color: rgba(96, 165, 250, 0.5);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.28), rgba(96, 165, 250, 0.12));
+  border-color: rgba(147, 197, 253, 0.7);
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.55), rgba(59, 130, 246, 0.28));
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.18), 0 6px 16px rgba(37, 99, 235, 0.22);
 }
 
 .footer-social-link-youtube {
@@ -2945,9 +2946,9 @@ body.nav-open {
 }
 
 .social-chip-facebook {
-  border-color: rgba(96, 165, 250, 0.6);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.22));
-  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.15), 0 8px 20px rgba(0, 0, 0, 0.25);
+  border-color: rgba(147, 197, 253, 0.7);
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.55), rgba(59, 130, 246, 0.28));
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.18), 0 8px 20px rgba(37, 99, 235, 0.22);
 }
 
 .social-chip-youtube {
