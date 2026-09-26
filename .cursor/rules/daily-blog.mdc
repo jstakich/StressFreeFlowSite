@@ -17,6 +17,22 @@ Saved Apple list: [`docs/apple-seo-keywords.md`](../../docs/apple-seo-keywords.m
 - Prefer uncovered or lightly covered sheet terms when blending; check `blogs.json` / `/blog` to avoid cannibalizing.
 - Best judgment beats coverage quotas.
 
+## Post style rotation (keep voice; change shape)
+
+Same sales-safe voice and moat facts. Do **not** make every daily post the same “Focus + headphones + sound bed + tactile reset” protocol.
+
+**Rotate shapes** week to week (and within multi-post days). Check the last 3–5 `blogs.json` titles before picking:
+
+1. **Situation protocol** — concrete scene how-to (cafe, study hall, bedtime, open office). Steps + Focus/sounds/tools. Example: `focus-noisy-cafe-iphone`.
+2. **Buyer / trust decision** — commercial or trust filter people search before they download (privacy labels, no-account, subscription vs buy-once, feature worth-it checklists). Deeper explanation + checklist; product beat fits the trust angle. Example: `app-privacy-label-calm-app-iphone` (Sep 26, 2026 “new style” reference).
+3. **Mind / habit / sensory** — regulation without a full acoustic stack (mind break without feed, habit stack, sensory exit plan, overstimulation self-regulation).
+
+Rules:
+- Prefer a **different shape** from yesterday unless the user asks to continue a series.
+- Space **distinct search intents** — do not clone cafe/office/study Focus posts back-to-back.
+- Buyer/trust posts still lead with Google intent; they are not Soft sell essays. Useful first, CTA quiet at the end.
+- When the user asks for “today’s example” / “new style,” default toward buyer/trust or a clearly non-protocol angle unless they specify otherwise.
+
 ## Positioning moat (facts every post; wording must vary)
 
 Same facts, **not** the same paragraph. Do not copy-paste a stock “moat” block from post to post.
