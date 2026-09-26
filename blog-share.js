@@ -1,14 +1,21 @@
 (function () {
+  var ICON_FACEBOOK =
+    '<svg class="blog-share-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M14 8h2.5V4.8c-.4-.1-1.5-.2-2.8-.2-2.8 0-4.7 1.7-4.7 4.8V12H7v3.5h2V22h3.5v-6.5H15l.5-3.5h-3V10c0-1 .3-1.9 1.5-1.9z"/></svg>';
+  var ICON_SHARE =
+    '<svg class="blog-share-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 3v10"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4 4 4"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
+  var ICON_COPY =
+    '<svg class="blog-share-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M5 15V5a2 2 0 0 1 2-2h9"/></svg>';
+
   function fallbackCopy(text, onSuccess, setStatus) {
     try {
-      const input = document.createElement("textarea");
+      var input = document.createElement("textarea");
       input.value = text;
       input.setAttribute("readonly", "");
       input.style.position = "fixed";
       input.style.left = "-9999px";
       document.body.appendChild(input);
       input.select();
-      const ok = document.execCommand("copy");
+      var ok = document.execCommand("copy");
       document.body.removeChild(input);
       if (ok) {
         onSuccess();
@@ -21,13 +28,13 @@
   }
 
   function buildBar(options) {
-    const shareUrl = options.url;
-    const shareTitle = options.title;
-    const label = options.label;
-    const fbUrl =
+    var shareUrl = options.url;
+    var shareTitle = options.title;
+    var label = options.label;
+    var fbUrl =
       "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl);
 
-    const wrap = document.createElement("div");
+    var wrap = document.createElement("div");
     wrap.className = "blog-share" + (options.extraClass ? " " + options.extraClass : "");
     wrap.setAttribute("role", "region");
     wrap.setAttribute("aria-label", label);
@@ -38,15 +45,21 @@
       '<div class="blog-share-actions">' +
       '<a class="blog-share-btn blog-share-facebook" href="' +
       fbUrl +
-      '" target="_blank" rel="noopener noreferrer">Facebook</a>' +
-      '<button type="button" class="blog-share-btn blog-share-native" hidden>Share</button>' +
-      '<button type="button" class="blog-share-btn blog-share-copy">Copy link</button>' +
+      '" target="_blank" rel="noopener noreferrer">' +
+      ICON_FACEBOOK +
+      "<span>Facebook</span></a>" +
+      '<button type="button" class="blog-share-btn blog-share-native" hidden>' +
+      ICON_SHARE +
+      "<span>Share</span></button>" +
+      '<button type="button" class="blog-share-btn blog-share-copy">' +
+      ICON_COPY +
+      "<span>Copy link</span></button>" +
       "</div>" +
       '<p class="blog-share-status" aria-live="polite" hidden></p>';
 
-    const status = wrap.querySelector(".blog-share-status");
-    const copyBtn = wrap.querySelector(".blog-share-copy");
-    const nativeBtn = wrap.querySelector(".blog-share-native");
+    var status = wrap.querySelector(".blog-share-status");
+    var copyBtn = wrap.querySelector(".blog-share-copy");
+    var nativeBtn = wrap.querySelector(".blog-share-native");
 
     function setStatus(message) {
       status.hidden = !message;
@@ -61,7 +74,7 @@
     }
 
     copyBtn.addEventListener("click", function () {
-      const done = function () {
+      var done = function () {
         setStatus("Link copied");
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -88,23 +101,22 @@
   }
 
   function pageShareUrl() {
-    const canonical = document.querySelector('link[rel="canonical"]');
+    var canonical = document.querySelector('link[rel="canonical"]');
     return (canonical && canonical.href) || window.location.href.split("#")[0].split("?")[0];
   }
 
   function pageShareTitle() {
-    const titleEl = document.querySelector("h1");
+    var titleEl = document.querySelector("h1");
     return (titleEl && titleEl.textContent.trim()) || document.title;
   }
 
-  // Explicit mounts (homepage / other pages)
   document.querySelectorAll("[data-site-share]").forEach(function (mount) {
     if (mount.dataset.shareReady === "1") {
       return;
     }
-    const url = mount.getAttribute("data-share-url") || pageShareUrl();
-    const title = mount.getAttribute("data-share-title") || pageShareTitle();
-    const label = mount.getAttribute("data-share-label") || "Share this page";
+    var url = mount.getAttribute("data-share-url") || pageShareUrl();
+    var title = mount.getAttribute("data-share-title") || pageShareTitle();
+    var label = mount.getAttribute("data-share-label") || "Share this page";
     mount.appendChild(
       buildBar({
         url: url,
@@ -116,35 +128,34 @@
     mount.dataset.shareReady = "1";
   });
 
-  // Blog posts: top under byline + bottom before related/CTA
-  const article = document.querySelector(".blog-post-page article");
+  var article = document.querySelector(".blog-post-page article");
   if (!article || article.dataset.shareReady === "1") {
     return;
   }
 
-  const shareUrl = pageShareUrl();
-  const shareTitle = pageShareTitle();
-  const label = "Share this article";
+  var shareUrl = pageShareUrl();
+  var shareTitle = pageShareTitle();
+  var label = "Share this article";
 
-  const topBar = buildBar({ url: shareUrl, title: shareTitle, label: label });
-  const meta = article.querySelector(".blog-post-meta");
+  var topBar = buildBar({ url: shareUrl, title: shareTitle, label: label });
+  var meta = article.querySelector(".blog-post-meta");
   if (meta && meta.parentNode) {
     meta.insertAdjacentElement("afterend", topBar);
   } else {
-    const content = article.querySelector(".blog-post-content");
+    var content = article.querySelector(".blog-post-content");
     if (content) {
       content.insertAdjacentElement("beforebegin", topBar);
     }
   }
 
-  const bottomBar = buildBar({
+  var bottomBar = buildBar({
     url: shareUrl,
     title: shareTitle,
     label: label,
     extraClass: "blog-share-bottom",
   });
-  const related = article.querySelector(".blog-related");
-  const cta = article.querySelector(".blog-cta");
+  var related = article.querySelector(".blog-related");
+  var cta = article.querySelector(".blog-cta");
   if (related) {
     related.insertAdjacentElement("beforebegin", bottomBar);
   } else if (cta) {

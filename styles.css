@@ -2633,28 +2633,63 @@ body.nav-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
-  padding: 0 14px;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
   border-radius: 999px;
-  border: 1px solid rgba(140, 224, 255, 0.28);
-  background: rgba(12, 24, 55, 0.55);
-  color: #d8f4ff;
+  border: 1px solid transparent;
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.blog-share-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  display: block;
 }
 
 .blog-share-btn:hover,
 .blog-share-btn:focus-visible {
-  border-color: rgba(140, 224, 255, 0.5);
-  background: rgba(140, 224, 255, 0.1);
+  transform: translateY(-1px);
+  filter: brightness(1.08);
   outline: none;
 }
 
+.blog-share-btn:focus-visible {
+  outline: 2px solid rgba(140, 224, 255, 0.55);
+  outline-offset: 2px;
+}
+
 .blog-share-facebook {
-  border-color: rgba(24, 119, 242, 0.45);
+  color: #fff;
+  background: #1877f2;
+  border-color: #166fe5;
+  box-shadow: 0 6px 16px rgba(24, 119, 242, 0.35);
+}
+
+.blog-share-facebook:hover,
+.blog-share-facebook:focus-visible {
+  background: #166fe5;
+}
+
+.blog-share-native {
+  color: #06203a;
+  background: linear-gradient(135deg, #8ce0ff, #6bc4f0);
+  border-color: rgba(140, 224, 255, 0.8);
+  box-shadow: 0 6px 16px rgba(107, 196, 240, 0.28);
+}
+
+.blog-share-copy {
+  color: #e8fff4;
+  background: linear-gradient(135deg, #1f8f6a, #146b50);
+  border-color: rgba(61, 184, 140, 0.65);
+  box-shadow: 0 6px 16px rgba(20, 107, 80, 0.3);
 }
 
 .blog-share-status {
