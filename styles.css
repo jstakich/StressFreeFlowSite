@@ -234,6 +234,36 @@ body.nav-open {
   white-space: nowrap;
 }
 
+.link-pill-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(140, 224, 255, 0.45);
+  background: linear-gradient(135deg, rgba(140, 224, 255, 0.28), rgba(107, 196, 240, 0.14));
+  color: #d8f4ff;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(140, 224, 255, 0.1), 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.link-pill-share:hover,
+.link-pill-share:focus-visible {
+  filter: brightness(1.08);
+  outline: none;
+}
+
+.link-pill-share:focus-visible {
+  outline: 2px solid rgba(140, 224, 255, 0.55);
+  outline-offset: 2px;
+}
+
+.link-pill-share-icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+
 .nav-menu-group {
   display: none;
 }
