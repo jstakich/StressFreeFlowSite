@@ -6,11 +6,7 @@
   var ICON_COPY =
     '<svg class="blog-share-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M5 15V5a2 2 0 0 1 2-2h9"/></svg>';
 
-  function isMobile() {
-    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || "");
-  }
-
-  function fallbackCopy(text, onSuccess, onFail) {
+  function fallbackCopy(text, onSuccess, setStatus) {
     try {
       var input = document.createElement("textarea");
       input.value = text;
@@ -23,36 +19,11 @@
       document.body.removeChild(input);
       if (ok) {
         onSuccess();
-      } else if (onFail) {
-        onFail();
+      } else {
+        setStatus("Copy failed — select the URL in the address bar");
       }
     } catch (err) {
-      if (onFail) {
-        onFail();
-      }
-    }
-  }
-
-  function copyText(text) {
-    return new Promise(function (resolve) {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(resolve).catch(function () {
-          fallbackCopy(text, resolve, resolve);
-        });
-      } else {
-        fallbackCopy(text, resolve, resolve);
-      }
-    });
-  }
-
-  function openFacebookForPaste(shareUrl) {
-    // Facebook's sharer.php "Post" button often hangs. Copy + open Facebook is reliable.
-    var href = isMobile()
-      ? "https://m.facebook.com/"
-      : "https://www.facebook.com/";
-    var popup = window.open(href, "sff_fb_share", "noopener,noreferrer");
-    if (!popup) {
-      window.location.href = href;
+      setStatus("Copy failed — select the URL in the address bar");
     }
   }
 
@@ -60,6 +31,8 @@
     var shareUrl = options.url;
     var shareTitle = options.title;
     var label = options.label;
+    var fbUrl =
+      "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl);
 
     var wrap = document.createElement("div");
     wrap.className = "blog-share" + (options.extraClass ? " " + options.extraClass : "");
@@ -70,9 +43,11 @@
       label +
       "</p>" +
       '<div class="blog-share-actions">' +
-      '<button type="button" class="blog-share-btn blog-share-facebook">' +
+      '<a class="blog-share-btn blog-share-facebook" href="' +
+      fbUrl +
+      '" target="_blank" rel="noopener noreferrer">' +
       ICON_FACEBOOK +
-      "<span>Facebook</span></button>" +
+      "<span>Facebook</span></a>" +
       '<button type="button" class="blog-share-btn blog-share-native" hidden>' +
       ICON_SHARE +
       "<span>Share</span></button>" +
@@ -85,9 +60,8 @@
     var status = wrap.querySelector(".blog-share-status");
     var copyBtn = wrap.querySelector(".blog-share-copy");
     var nativeBtn = wrap.querySelector(".blog-share-native");
-    var facebookBtn = wrap.querySelector(".blog-share-facebook");
 
-    function setStatus(message, holdMs) {
+    function setStatus(message) {
       status.hidden = !message;
       status.textContent = message || "";
       if (message) {
@@ -95,32 +69,21 @@
         setStatus._timer = window.setTimeout(function () {
           status.hidden = true;
           status.textContent = "";
-        }, holdMs || 2800);
+        }, 2200);
       }
     }
 
     copyBtn.addEventListener("click", function () {
-      copyText(shareUrl).then(function () {
+      var done = function () {
         setStatus("Link copied");
-      });
-    });
-
-    facebookBtn.addEventListener("click", function () {
-      copyText(shareUrl).then(function () {
-        // Phones: system sheet is the reliable path (includes Facebook)
-        if (isMobile() && typeof navigator.share === "function") {
-          setStatus("Link copied — choose Facebook in the share list", 4000);
-          navigator.share({ title: shareTitle, url: shareUrl, text: shareTitle }).catch(function () {
-            setStatus("Link copied — open Facebook and paste", 5000);
-            openFacebookForPaste(shareUrl);
-          });
-          return;
-        }
-
-        // Desktop: skip Facebook's broken sharer Post button
-        setStatus("Link copied — paste it into your Facebook post", 5000);
-        openFacebookForPaste(shareUrl);
-      });
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(done).catch(function () {
+          fallbackCopy(shareUrl, done, setStatus);
+        });
+      } else {
+        fallbackCopy(shareUrl, done, setStatus);
+      }
     });
 
     if (typeof navigator.share === "function") {
