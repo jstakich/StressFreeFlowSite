@@ -2699,13 +2699,20 @@ body.nav-open {
 }
 
 .section-site-share {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.site-share-panel {
+  padding: 22px 22px 18px;
+  border-radius: 20px;
+  background: rgba(140, 224, 255, 0.08);
+  border: 1px solid rgba(140, 224, 255, 0.22);
 }
 
 .site-share-heading {
   margin: 0 0 8px;
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   color: #d8f4ff;
 }
 
@@ -2716,7 +2723,8 @@ body.nav-open {
 
 .blog-share-site {
   margin: 0;
-  padding: 14px 0 4px;
+  padding: 0;
+  border: 0;
 }
 
 .blog-post-content h2 {
