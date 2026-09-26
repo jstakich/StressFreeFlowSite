@@ -2177,6 +2177,123 @@ body.nav-open {
   color: #d8f4ff;
 }
 
+.privacy-scope-badge {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(152, 245, 199, 0.45);
+  background: rgba(152, 245, 199, 0.12);
+  color: #b7f0c8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.privacy-scope-badge-site {
+  border-color: rgba(140, 224, 255, 0.4);
+  background: rgba(140, 224, 255, 0.1);
+  color: #c0d7ff;
+}
+
+.privacy-scope-callout {
+  margin: 0 0 28px;
+  padding: 18px 18px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(152, 245, 199, 0.35);
+  background: linear-gradient(135deg, rgba(152, 245, 199, 0.12), rgba(140, 224, 255, 0.06));
+}
+
+.privacy-scope-callout strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #e8fff4;
+  font-size: 1.05rem;
+}
+
+.privacy-scope-callout p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.privacy-scope-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-scope-link {
+  font-size: 0.95rem;
+}
+
+.privacy-highlights {
+  margin: 0 0 14px;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.privacy-highlights li {
+  margin-bottom: 8px;
+}
+
+.privacy-hub-grid {
+  display: grid;
+  gap: 16px;
+  margin: 0 0 28px;
+}
+
+@media (min-width: 720px) {
+  .privacy-hub-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.privacy-hub-card {
+  display: block;
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(140, 224, 255, 0.22);
+  background: rgba(12, 24, 55, 0.45);
+  color: inherit;
+  text-decoration: none;
+}
+
+a.privacy-hub-card-app {
+  border-color: rgba(152, 245, 199, 0.4);
+  background: linear-gradient(160deg, rgba(152, 245, 199, 0.14), rgba(12, 24, 55, 0.5));
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+a.privacy-hub-card-app:hover,
+a.privacy-hub-card-app:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(152, 245, 199, 0.65);
+  outline: none;
+}
+
+.privacy-hub-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+  color: #d8f4ff;
+}
+
+.privacy-hub-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.privacy-hub-cta {
+  color: #98f5c7;
+  font-weight: 700;
+}
+
+.app-privacy-card .legal-effective {
+  margin-bottom: 20px;
+}
+
 .legal-section p {
   margin: 0 0 12px;
   color: var(--muted);
