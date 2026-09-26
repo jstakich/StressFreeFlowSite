@@ -2603,6 +2603,66 @@ body.nav-open {
   font-size: 0.95rem;
 }
 
+.blog-share {
+  margin: 0 0 28px;
+  padding: 14px 0 4px;
+  border-top: 1px solid rgba(140, 224, 255, 0.12);
+  border-bottom: 1px solid rgba(140, 224, 255, 0.12);
+}
+
+.blog-share-bottom {
+  margin: 28px 0 0;
+}
+
+.blog-share-label {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.blog-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.blog-share-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(140, 224, 255, 0.28);
+  background: rgba(12, 24, 55, 0.55);
+  color: #d8f4ff;
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.blog-share-btn:hover,
+.blog-share-btn:focus-visible {
+  border-color: rgba(140, 224, 255, 0.5);
+  background: rgba(140, 224, 255, 0.1);
+  outline: none;
+}
+
+.blog-share-facebook {
+  border-color: rgba(24, 119, 242, 0.45);
+}
+
+.blog-share-status {
+  margin: 10px 0 0;
+  color: #b7f0c8;
+  font-size: 0.88rem;
+}
+
 .blog-post-content h2 {
   margin: 28px 0 12px;
   font-size: 1.28rem;
