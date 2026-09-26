@@ -45,22 +45,12 @@
     });
   }
 
-  function facebookSharerUrl(shareUrl) {
-    var encoded = encodeURIComponent(shareUrl);
-    // Mobile web sharer is usually lighter than www
-    if (isMobile()) {
-      return "https://m.facebook.com/sharer.php?u=" + encoded;
-    }
-    return "https://www.facebook.com/sharer/sharer.php?u=" + encoded;
-  }
-
-  function openFacebookShare(shareUrl) {
-    var href = facebookSharerUrl(shareUrl);
-    var popup = window.open(
-      href,
-      "sff_fb_share",
-      "noopener,noreferrer,width=640,height=720,scrollbars=yes"
-    );
+  function openFacebookForPaste(shareUrl) {
+    // Facebook's sharer.php "Post" button often hangs. Copy + open Facebook is reliable.
+    var href = isMobile()
+      ? "https://m.facebook.com/"
+      : "https://www.facebook.com/";
+    var popup = window.open(href, "sff_fb_share", "noopener,noreferrer");
     if (!popup) {
       window.location.href = href;
     }
@@ -116,24 +106,20 @@
     });
 
     facebookBtn.addEventListener("click", function () {
-      // Copy first so a slow Facebook window never blocks sharing
       copyText(shareUrl).then(function () {
-        setStatus("Link copied — opening Facebook. If it stalls, paste into a new post.", 5000);
-
-        // On phones, system share sheet is much faster than Facebook’s web sharer
+        // Phones: system sheet is the reliable path (includes Facebook)
         if (isMobile() && typeof navigator.share === "function") {
-          navigator
-            .share({ title: shareTitle, url: shareUrl, text: shareTitle })
-            .then(function () {
-              setStatus("Shared");
-            })
-            .catch(function () {
-              openFacebookShare(shareUrl);
-            });
+          setStatus("Link copied — choose Facebook in the share list", 4000);
+          navigator.share({ title: shareTitle, url: shareUrl, text: shareTitle }).catch(function () {
+            setStatus("Link copied — open Facebook and paste", 5000);
+            openFacebookForPaste(shareUrl);
+          });
           return;
         }
 
-        openFacebookShare(shareUrl);
+        // Desktop: skip Facebook's broken sharer Post button
+        setStatus("Link copied — paste it into your Facebook post", 5000);
+        openFacebookForPaste(shareUrl);
       });
     });
 
