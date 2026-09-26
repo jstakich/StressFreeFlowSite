@@ -2663,6 +2663,27 @@ body.nav-open {
   font-size: 0.88rem;
 }
 
+.section-site-share {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.site-share-heading {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+  color: #d8f4ff;
+}
+
+.site-share-lead {
+  margin-bottom: 16px;
+  max-width: 36rem;
+}
+
+.blog-share-site {
+  margin: 0;
+  padding: 14px 0 4px;
+}
+
 .blog-post-content h2 {
   margin: 28px 0 12px;
   font-size: 1.28rem;

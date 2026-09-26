@@ -1,23 +1,40 @@
 (function () {
-  const article = document.querySelector(".blog-post-page article");
-  if (!article) {
-    return;
+  function fallbackCopy(text, onSuccess, setStatus) {
+    try {
+      const input = document.createElement("textarea");
+      input.value = text;
+      input.setAttribute("readonly", "");
+      input.style.position = "fixed";
+      input.style.left = "-9999px";
+      document.body.appendChild(input);
+      input.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(input);
+      if (ok) {
+        onSuccess();
+      } else {
+        setStatus("Copy failed — select the URL in the address bar");
+      }
+    } catch (err) {
+      setStatus("Copy failed — select the URL in the address bar");
+    }
   }
 
-  const canonical = document.querySelector('link[rel="canonical"]');
-  const shareUrl = (canonical && canonical.href) || window.location.href.split("#")[0].split("?")[0];
-  const titleEl = document.querySelector("h1");
-  const shareTitle = (titleEl && titleEl.textContent.trim()) || document.title;
-  const fbUrl =
-    "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl);
+  function buildBar(options) {
+    const shareUrl = options.url;
+    const shareTitle = options.title;
+    const label = options.label;
+    const fbUrl =
+      "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl);
 
-  function buildBar() {
     const wrap = document.createElement("div");
-    wrap.className = "blog-share";
+    wrap.className = "blog-share" + (options.extraClass ? " " + options.extraClass : "");
     wrap.setAttribute("role", "region");
-    wrap.setAttribute("aria-label", "Share this article");
+    wrap.setAttribute("aria-label", label);
     wrap.innerHTML =
-      '<p class="blog-share-label">Share this article</p>' +
+      '<p class="blog-share-label">' +
+      label +
+      "</p>" +
       '<div class="blog-share-actions">' +
       '<a class="blog-share-btn blog-share-facebook" href="' +
       fbUrl +
@@ -70,28 +87,46 @@
     return wrap;
   }
 
-  function fallbackCopy(text, onSuccess, setStatus) {
-    try {
-      const input = document.createElement("textarea");
-      input.value = text;
-      input.setAttribute("readonly", "");
-      input.style.position = "fixed";
-      input.style.left = "-9999px";
-      document.body.appendChild(input);
-      input.select();
-      const ok = document.execCommand("copy");
-      document.body.removeChild(input);
-      if (ok) {
-        onSuccess();
-      } else {
-        setStatus("Copy failed — select the URL in the address bar");
-      }
-    } catch (err) {
-      setStatus("Copy failed — select the URL in the address bar");
-    }
+  function pageShareUrl() {
+    const canonical = document.querySelector('link[rel="canonical"]');
+    return (canonical && canonical.href) || window.location.href.split("#")[0].split("?")[0];
   }
 
-  const topBar = buildBar();
+  function pageShareTitle() {
+    const titleEl = document.querySelector("h1");
+    return (titleEl && titleEl.textContent.trim()) || document.title;
+  }
+
+  // Explicit mounts (homepage / other pages)
+  document.querySelectorAll("[data-site-share]").forEach(function (mount) {
+    if (mount.dataset.shareReady === "1") {
+      return;
+    }
+    const url = mount.getAttribute("data-share-url") || pageShareUrl();
+    const title = mount.getAttribute("data-share-title") || pageShareTitle();
+    const label = mount.getAttribute("data-share-label") || "Share this page";
+    mount.appendChild(
+      buildBar({
+        url: url,
+        title: title,
+        label: label,
+        extraClass: "blog-share-site",
+      })
+    );
+    mount.dataset.shareReady = "1";
+  });
+
+  // Blog posts: top under byline + bottom before related/CTA
+  const article = document.querySelector(".blog-post-page article");
+  if (!article || article.dataset.shareReady === "1") {
+    return;
+  }
+
+  const shareUrl = pageShareUrl();
+  const shareTitle = pageShareTitle();
+  const label = "Share this article";
+
+  const topBar = buildBar({ url: shareUrl, title: shareTitle, label: label });
   const meta = article.querySelector(".blog-post-meta");
   if (meta && meta.parentNode) {
     meta.insertAdjacentElement("afterend", topBar);
@@ -102,8 +137,12 @@
     }
   }
 
-  const bottomBar = buildBar();
-  bottomBar.classList.add("blog-share-bottom");
+  const bottomBar = buildBar({
+    url: shareUrl,
+    title: shareTitle,
+    label: label,
+    extraClass: "blog-share-bottom",
+  });
   const related = article.querySelector(".blog-related");
   const cta = article.querySelector(".blog-cta");
   if (related) {
@@ -111,4 +150,6 @@
   } else if (cta) {
     cta.insertAdjacentElement("beforebegin", bottomBar);
   }
+
+  article.dataset.shareReady = "1";
 })();
