@@ -17,6 +17,16 @@ Saved Apple list: [`docs/apple-seo-keywords.md`](../../docs/apple-seo-keywords.m
 - Prefer uncovered or lightly covered sheet terms when blending; check `blogs.json` / `/blog` to avoid cannibalizing.
 - Best judgment beats coverage quotas.
 
+## App Store download banner (every new post)
+
+Every new `blog/<slug>.html` must include Apple’s Smart App Banner directly after the viewport meta tag:
+
+```html
+<meta name="apple-itunes-app" content="app-id=6757947997, app-argument=https://stressfreeflow.com/blog/<slug>.html" />
+```
+
+Do not edit existing posts for anything else when adding it.
+
 ## Post style rotation (keep voice; change shape)
 
 Same sales-safe voice and moat facts. Do **not** make every daily post the same “Focus + headphones + sound bed + tactile reset” protocol.
