@@ -27,6 +27,10 @@ Every new `blog/<slug>.html` must include Apple’s Smart App Banner directly af
 
 Do not edit existing posts for anything else when adding it.
 
+## Real search phrases only (user correction, Sep 27, 2026)
+
+Only target phrases people actually type into Google. Verify demand first (autocomplete, People Also Ask, related searches) and use the exact popular wording—e.g. “brown noise vs white noise”, not invented niche versions like “…for sensory regulation”. Audience/benefit goes in the title and H2s, not the primary keyword. If real people don’t search it, pick another phrase or topic. Never invent keywords; treat the user’s topic examples as direction and verify each phrase.
+
 ## Audience and click strategy (from Sep 27, 2026)
 
 - New posts target plain-language searches from parents, caregivers, teachers, therapists, and people with sleep trouble or anxiety. Title = exact search phrase + number or clear promise; avoid ending titles in “on iPhone”. Title, H1, meta, quick answer, H2s, and FAQ all match the same phrase. The app is one helpful step, not the topic.
