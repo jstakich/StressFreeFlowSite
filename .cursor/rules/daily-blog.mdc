@@ -27,6 +27,10 @@ Every new `blog/<slug>.html` must include Apple’s Smart App Banner directly af
 
 Do not edit existing posts for anything else when adding it.
 
+## Quick answer at the top (every new post)
+
+Directly after the H1/byline, the first paragraph is 2–3 plain sentences that answer the search question outright (featured-snippet target), with the primary keyword included naturally. No throat-clearing before it. Existing posts are not retrofitted unless the user asks.
+
 ## Post style rotation (keep voice; change shape)
 
 Same sales-safe voice and moat facts. Do **not** make every daily post the same “Focus + headphones + sound bed + tactile reset” protocol.
