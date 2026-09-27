@@ -27,6 +27,13 @@ Every new `blog/<slug>.html` must include Apple’s Smart App Banner directly af
 
 Do not edit existing posts for anything else when adding it.
 
+## Audience and click strategy (from Sep 27, 2026)
+
+- New posts target plain-language searches from parents, caregivers, teachers, therapists, and people with sleep trouble or anxiety. Title = exact search phrase + number or clear promise; avoid ending titles in “on iPhone”. Title, H1, meta, quick answer, H2s, and FAQ all match the same phrase. The app is one helpful step, not the topic.
+- Prefer higher-demand phrases (e.g. what to do during sensory overload; calming activities for an autistic child; best sounds for sensory overload; how to help an overstimulated child calm down; brown noise vs white noise for sensory regulation; sensory reset activities for adults).
+- Each new post links, where it genuinely fits, to 1–2 near-page-1 posts: offline-calm-app-iphone-no-wifi, sensory-tool-overstimulation-iphone-guide, stress-relief-without-subscriptions, best-stress-relief-app-iphone-ipad-no-subscription, lock-screen-background-sounds-iphone-sleep, blue-noise-colored-noise-guide, iphone-white-noise-machine-sleep-focus, one-time-purchase-calm-app-vs-subscription, free-calm-app-iphone-no-account, end-of-summer-anxiety-iphone-reset. Refresh this list from new Search Console data.
+- Do not change existing URLs.
+
 ## IndexNow (after every publish)
 
 Once the push is live, run `python3 scripts/indexnow-submit.py blog/<slug>.html blog.html` (full network). Use `--all` after site-wide edits. Never delete the root key file `e0a3a7baa14dbc0cad914cbae8ff7381.txt`.
