@@ -29,7 +29,7 @@ Do not edit existing posts for anything else when adding it.
 
 ## Quick answer at the top (every new post)
 
-Directly after the H1/byline, the first paragraph is 2–3 plain sentences that answer the search question outright (featured-snippet target), with the primary keyword included naturally. No throat-clearing before it. Existing posts are not retrofitted unless the user asks.
+Directly after the H1/byline, the first paragraph is 2–3 plain sentences that answer the search question outright (featured-snippet target), with the primary keyword included naturally. No throat-clearing before it. Format: `<p><strong>Quick answer:</strong> …</p>` as the first element inside `blog-post-content`. All existing posts have one (added Sep 27, 2026); edits to existing posts are fine when title, content, and answer still match.
 
 ## Post style rotation (keep voice; change shape)
 
