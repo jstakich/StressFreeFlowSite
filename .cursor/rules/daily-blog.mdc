@@ -27,6 +27,10 @@ Every new `blog/<slug>.html` must include Apple’s Smart App Banner directly af
 
 Do not edit existing posts for anything else when adding it.
 
+## IndexNow (after every publish)
+
+Once the push is live, run `python3 scripts/indexnow-submit.py blog/<slug>.html blog.html` (full network). Use `--all` after site-wide edits. Never delete the root key file `e0a3a7baa14dbc0cad914cbae8ff7381.txt`.
+
 ## Quick answer at the top (every new post)
 
 Directly after the H1/byline, the first paragraph is 2–3 plain sentences that answer the search question outright (featured-snippet target), with the primary keyword included naturally. No throat-clearing before it. Format: `<p><strong>Quick answer:</strong> …</p>` as the first element inside `blog-post-content`. All existing posts have one (added Sep 27, 2026); edits to existing posts are fine when title, content, and answer still match.
