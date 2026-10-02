@@ -8,8 +8,32 @@
   </url>
   <url>
     <loc>https://stressfreeflow.com/blog.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/how-to-fall-back-asleep.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/sensory-overload-in-adults.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/calm-down-corner-ideas.html</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stressfreeflow.com/blog/calming-apps-for-autism.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
